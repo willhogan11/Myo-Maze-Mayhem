@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="Myo_Maze_Mayhem.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Myo_Maze_Mayhem"
+    RequestedTheme="Light">
+
+</Application>
