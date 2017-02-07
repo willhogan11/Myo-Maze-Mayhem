@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource bookBrush}">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
 
         <!-- Multiple copies of the Header text with varying levels of opacity -->
         <StackPanel Margin="0 50 0 0">
@@ -55,7 +55,9 @@
                     FontWeight="Bold"
                     Height="35"
                     Width="Auto"
+                    x:Name="connectMyoButton"
                     Content="Connect Your Myo" />
+
             <Button FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
@@ -65,7 +67,9 @@
                     Foreground="White"
                     Visibility="Collapsed"
                     x:Name="startButton"
-                    Width="Auto">Make this Visible</Button>
+                    Width="140"
+                    Content="Start Game" 
+                    Click="startButton_Click"/>
         </StackPanel>
         <!-- End Animation -->
 

@@ -6,7 +6,8 @@
     RequestedTheme="Light">
 
     <Application.Resources>
-        <ImageBrush x:Key="bookBrush" ImageSource="Assets/myo.png" Stretch="Fill" Opacity="0.75" />
+        <ImageBrush x:Key="myoBrush" ImageSource="Assets/myo.png" Stretch="Fill" Opacity="0.75" />
+        <ImageBrush x:Key="mazeBrush" ImageSource="Assets/maze.jpg" Stretch="Fill" Opacity="0.75" />
     </Application.Resources>
 
 </Application>

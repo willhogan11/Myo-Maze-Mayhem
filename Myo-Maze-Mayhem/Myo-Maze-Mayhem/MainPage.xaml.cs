@@ -47,6 +47,7 @@ namespace Myo_Maze_Mayhem
                 await message.ShowAsync();
 
                 startButton.Visibility = Visibility.Visible;
+                connectMyoButton.Visibility = Visibility.Collapsed;
             }
             catch (Exception)
             {
@@ -55,6 +56,14 @@ namespace Myo_Maze_Mayhem
                 await message.ShowAsync();
                 throw;
             }
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            //MessageDialog message = new MessageDialog("New Button Responding nicely...");
+            //await message.ShowAsync();
+
+            Frame.Navigate(typeof(MenuPage));
         }
     }
 }
