@@ -23,7 +23,51 @@
                             FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.03" 
                             FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.02" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.01" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
         </StackPanel>
+
+
+        <!-- Animation that sits below the "Tap to Begin" TextBlock" -->
+        <!--  Adapted from [ref] https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.animation.doubleanimation.aspx -->
+        <StackPanel Margin="0 450 0 0">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="myStoryboard">
+                        <DoubleAnimation Storyboard.TargetName="MyAnimatedRectangle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="1.0" To="0.0" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                    </Storyboard>
+                </StackPanel.Resources>
+                <StackPanel Margin="0 0 0 -35">
+                    <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle"
+                            Width="140" Height="35" Fill="white" />
+                </StackPanel>
+            </StackPanel>
+            <Button Click="Button_Click"
+                    FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Height="35"
+                    Width="Auto"
+                    Content="Connect Your Myo" />
+            <Button FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Height="35"
+                    Foreground="White"
+                    Visibility="Collapsed"
+                    x:Name="startButton"
+                    Width="Auto">Make this Visible</Button>
+        </StackPanel>
+        <!-- End Animation -->
 
     </Grid>
 </Page>
