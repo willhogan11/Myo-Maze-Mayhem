@@ -7,7 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource bookBrush}">
+
+        <!-- Multiple copies of the Header text with varying levels of opacity -->
+        <StackPanel Margin="0 50 0 0">
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.2" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.15"
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.1" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.05" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.03" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+        </StackPanel>
 
     </Grid>
 </Page>

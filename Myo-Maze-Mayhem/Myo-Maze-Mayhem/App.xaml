@@ -5,4 +5,8 @@
     xmlns:local="using:Myo_Maze_Mayhem"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ImageBrush x:Key="bookBrush" ImageSource="Assets/myo.png" Stretch="Fill" Opacity="0.75" />
+    </Application.Resources>
+
 </Application>
