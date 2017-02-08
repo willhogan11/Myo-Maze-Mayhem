@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using Myo;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -14,18 +17,20 @@ namespace Myo_Maze_Mayhem
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private readonly global::Myo.Myo _myo;
+        // private readonly global::Myo.Myo _myo;
 
         public MainPage()
         {
             this.InitializeComponent();
-            _myo = new global::Myo.Myo(); //  Initialise
+            // _myo = new global::Myo.Myo(); //  Initialise
 
             // Add event handlers
-            //_myo.OnPoseDetected += _myo_OnPoseDetected;
-            //_myo.OnEMGAvailable += _myo_OnEMGAvailable;
-            //_myo.DataAvailable += _myo_DataAvailable;
+            // _myo.OnPoseDetected += _myo_OnPoseDetected;
+            // _myo.OnEMGAvailable += _myo_OnEMGAvailable;
+            // _myo.DataAvailable += _myo_DataAvailable;
         }
+
+      
 
         // Start an animation that fades in and out on the "Tap to Begin" textBlock when the object loads
         // Adapted from[ref] https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.animation.doubleanimation.aspx
@@ -34,12 +39,14 @@ namespace Myo_Maze_Mayhem
             myStoryboard.Begin();
         }
 
+
+
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                _myo.Connect();
-                _myo.Vibrate();
+                //_myo.Connect();
+                //_myo.Vibrate();
 
                 Debug.WriteLine("Myo Successfully Connected...");
 
@@ -58,12 +65,45 @@ namespace Myo_Maze_Mayhem
             }
         }
 
+
+
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            //MessageDialog message = new MessageDialog("New Button Responding nicely...");
-            //await message.ShowAsync();
-
             Frame.Navigate(typeof(MenuPage));
         }
+
+
+
+        //private void _myo_OnPoseDetected(object sender, MyoPoseEventArgs e)
+        //{
+        //    try
+        //    {
+        //        // MessageDialog message;
+        //        switch (e.Pose)
+        //        {
+        //            case MyoPoseEventArgs.PoseType.Rest:
+        //                break;
+        //            case MyoPoseEventArgs.PoseType.Fist:
+        //                break;
+        //            case MyoPoseEventArgs.PoseType.WaveIn:
+        //                break;
+        //            case MyoPoseEventArgs.PoseType.WaveOut:
+        //                break;
+        //            case MyoPoseEventArgs.PoseType.DoubleTap:
+        //                //message = new MessageDialog("Double Tap");
+        //                //await message.ShowAsync();
+        //                testText.Text = "Double Tap Gesture";
+        //                break;
+        //            case MyoPoseEventArgs.PoseType.FingersSpread:
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        // throw;
+        //    }
+        //}
     }
 }

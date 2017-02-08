@@ -69,7 +69,9 @@
                     x:Name="startButton"
                     Width="140"
                     Content="Start Game" 
-                    Click="startButton_Click"/>
+                    Click="startButton_Click" />
+
+            <TextBlock TextAlignment="Center" Width="150" Foreground="White" FontSize="12" x:Name="testText" />
         </StackPanel>
         <!-- End Animation -->
 

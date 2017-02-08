@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="LayoutRoot" Background="{StaticResource mazeBrush}">
-        <StackPanel>
-            <TextBlock Foreground="white" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Text="Test Text" FontSize="40" />
-        </StackPanel>
+    <Grid x:Name="LayoutRoot">
+        <Canvas x:Name="myCanvas" Background="LightGray" Height="500" Width="350" 
+                Margin="5,200,5,0">
+            <Rectangle x:Name="myRectangle" Canvas.Left="310" Canvas.Top="29" Fill="Blue" Height="40" Width="40" />
+        </Canvas>
     </Grid>
 </Page>
