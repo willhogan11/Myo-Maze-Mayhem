@@ -32,5 +32,22 @@ namespace Myo_Maze_Mayhem
             myStoryboard.Begin();
         }
 
+        private void connectMyoButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Will need to insert all myo connectiont related code here
+            startButton.Visibility = Visibility.Visible;
+            howToPlayButton.Visibility = Visibility.Visible;
+            connectMyoButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Frame.Navigate(typeof(MenuPage));
+        }
+
+        private void howToPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
