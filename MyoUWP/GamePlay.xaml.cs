@@ -90,18 +90,18 @@ namespace MyoUWP
             }
 
 
-            double x = eMyo.ActualHeight / 2;
-            double y = eMyo.ActualWidth / 2;
+            //double x = eMyo.ActualHeight / 2;
+            //double y = eMyo.ActualWidth / 2;
 
-            double canvasCeiling = cvsRoller.ActualHeight;
+            //double canvasCeiling = cvsRoller.ActualHeight;
 
-            Debug.WriteLine("x : " + x);
-            Debug.WriteLine("y : " + y);
+            //Debug.WriteLine("x : " + x);
+            //Debug.WriteLine("y : " + y);
 
-            if(x >= canvasCeiling)
-            {
-                Debug.WriteLine("Collision on Ceiling?");
-            }
+            //if(x >= canvasCeiling)
+            //{
+            //    Debug.WriteLine("Collision on Ceiling?");
+            //}
 
         }
         #endregion

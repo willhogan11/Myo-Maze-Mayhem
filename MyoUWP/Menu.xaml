@@ -30,6 +30,23 @@
         </StackPanel>
 
         <StackPanel Margin="0 275 0 0">
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="myStoryboard">
+                        <DoubleAnimation Storyboard.TargetName="MyAnimatedRectangle"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="1.0" To="0.0" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                    </Storyboard>
+                </StackPanel.Resources>
+                <StackPanel Margin="0 0 0 -35">
+                    <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle"
+                               Width="140" Height="35" Fill="white" />
+                </StackPanel>
+            </StackPanel>
+      
+                     
             <Button Click="connectMyoButton_Click"
                     FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
@@ -39,23 +56,55 @@
                     Foreground="White"
                     Margin="0 0 0 20"
                     Height="35"
-                    Width="Auto"
+                    Width="140"
                     x:Name="connectMyoButton"
                     Content="Connect Your Myo" />
 
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="myStoryboard1">
+                        <DoubleAnimation Storyboard.TargetName="MyAnimatedRectangle1"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="1.0" To="0.0" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                    </Storyboard>
+                </StackPanel.Resources>
+                <StackPanel Margin="0 0 0 -35">
+                    <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle1"
+                               Width="140" Height="35" Fill="white" />
+                </StackPanel>
+            </StackPanel>
 
             <Button FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
                     FontSize="14"
                     FontWeight="Bold"
+                    Foreground="White"
                     Height="35"
                     Margin="0 0 0 20"
-                    Foreground="White"
+                    
                     x:Name="startButton"
                     Width="140"
                     Content="Start Game"
                     Click="startButton_Click" />
+
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="myStoryboard2">
+                        <DoubleAnimation Storyboard.TargetName="MyAnimatedRectangle2"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="1.0" To="0.0" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                    </Storyboard>
+                </StackPanel.Resources>
+                <StackPanel Margin="0 0 0 -35">
+                    <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle2"
+                               Width="140" Height="35" Fill="white" />
+                </StackPanel>
+            </StackPanel>
 
             <Button FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
@@ -67,7 +116,7 @@
                     x:Name="howToPlayButton"
                     Width="140"
                     Content="Hot To Play"
-                    Click="howToPlayButton_Click" />
+                    Click="howToPlayButton_Click" Margin="110,0" />
         </StackPanel>
 
     </Grid>

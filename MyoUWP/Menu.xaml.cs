@@ -67,6 +67,16 @@ namespace MyoUWP
         }
 
 
+        // Start an animation that fades in and out on the "Tap to Begin" textBlock when the object loads
+        // Adapted from[ref] https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.animation.doubleanimation.aspx
+        private void Start_Animation(object sender, RoutedEventArgs e)
+        {
+            myStoryboard.Begin();
+            myStoryboard1.Begin();
+            myStoryboard2.Begin();
+        }
+
+
         private void connectMyoButton_Click(object sender, RoutedEventArgs e)
         {
 
