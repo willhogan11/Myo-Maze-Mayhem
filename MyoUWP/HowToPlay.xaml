@@ -9,5 +9,12 @@
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
 
+        <StackPanel>
+
+            <TextBlock Margin="30 20 0 0" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="How to Play...."/>
+            <TextBlock Margin="30 20 0 0" Foreground="White" FontFamily="Century Gothic">This is how to play the game......</TextBlock>
+
+        </StackPanel>
+
     </Grid>
 </Page>
