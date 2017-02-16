@@ -57,6 +57,34 @@ namespace MyoUWP
 
         }
 
+
+        // Get key press events working first or as a backup if myo isn't available or can't connect
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        {
+            if (args.VirtualKey == VirtualKey.Down)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Down Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+            }
+            if (args.VirtualKey == VirtualKey.Up)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Up Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+            }
+            if (args.VirtualKey == VirtualKey.Left)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Left Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+            }
+            if (args.VirtualKey == VirtualKey.Right)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Right Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+            }
+        }
+
+
+
         #region timers methods
         private void setupTimers()
         {
@@ -72,22 +100,22 @@ namespace MyoUWP
 
         private void _orientationTimer_Tick(object sender, object e)
         {
-            if (_currentRoll < 0)
-            {   // move to the right
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 5);
-            }
-            else if (_currentPitch >= 0)
-            {   // Move up
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 5);
-            }
-            else if (_currentRoll >= 0)
-            {   // move to the left
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 5);
-            }
-            else if (_currentPitch < 0)
-            {   // Move down
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
-            }
+            //if (_currentRoll < 0)
+            //{   // move to the right
+            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 5);
+            //}
+            //else if (_currentPitch >= 0)
+            //{   // Move up
+            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 5);
+            //}
+            //else if (_currentRoll >= 0)
+            //{   // move to the left
+            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 5);
+            //}
+            //else if (_currentPitch < 0)
+            //{   // Move down
+            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
+            //}
 
 
             //double x = eMyo.ActualHeight / 2;
@@ -105,6 +133,9 @@ namespace MyoUWP
 
         }
         #endregion
+
+
+
 
         #region Myo Setup Methods
         private void btnMyo_Click(object sender, RoutedEventArgs e)

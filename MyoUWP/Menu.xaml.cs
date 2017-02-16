@@ -84,7 +84,7 @@ namespace MyoUWP
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(GamePlay));
+            Frame.Navigate(typeof(Test));
         }
 
         private void howToPlayButton_Click(object sender, RoutedEventArgs e)
