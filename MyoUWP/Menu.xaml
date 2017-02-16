@@ -8,6 +8,67 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
-        
+
+        <!-- Multiple copies of the Header text with varying levels of opacity -->
+        <StackPanel Margin="0 50 0 0">
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.2" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.15"
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.1" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.05" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.03" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.02" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+            <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.01" 
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+        </StackPanel>
+
+        <StackPanel Margin="0 275 0 0">
+            <Button Click="connectMyoButton_Click"
+                    FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Margin="0 0 0 20"
+                    Height="35"
+                    Width="Auto"
+                    x:Name="connectMyoButton"
+                    Content="Connect Your Myo" />
+
+
+            <Button FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Height="35"
+                    Margin="0 0 0 20"
+                    Foreground="White"
+                    x:Name="startButton"
+                    Width="140"
+                    Content="Start Game"
+                    Click="startButton_Click" />
+
+            <Button FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Height="35"
+                    Foreground="White"
+                    x:Name="howToPlayButton"
+                    Width="140"
+                    Content="Hot To Play"
+                    Click="howToPlayButton_Click" />
+        </StackPanel>
+
     </Grid>
 </Page>

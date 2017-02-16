@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using Windows.UI.Popups;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Core;
-using Windows.ApplicationModel.Core;
+using MyoUWP;
+
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -16,13 +12,11 @@ namespace Myo_Maze_Mayhem
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        // private readonly global::Myo.Myo _myo;
 
         public MainPage()
         {
             this.InitializeComponent();
         }
-
       
 
         // Start an animation that fades in and out on the "Tap to Begin" textBlock when the object loads
@@ -32,22 +26,11 @@ namespace Myo_Maze_Mayhem
             myStoryboard.Begin();
         }
 
-        private void connectMyoButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Will need to insert all myo connectiont related code here
-            startButton.Visibility = Visibility.Visible;
-            howToPlayButton.Visibility = Visibility.Visible;
-            connectMyoButton.Visibility = Visibility.Collapsed;
-        }
 
-        private void startButton_Click(object sender, RoutedEventArgs e)
+        // Navigates to the Menu page, when button is clicked
+        private void begin_Click(object sender, RoutedEventArgs e)
         {
-            // Frame.Navigate(typeof(MenuPage));
-        }
-
-        private void howToPlayButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            Frame.Navigate(typeof(Menu));
         }
     }
 }

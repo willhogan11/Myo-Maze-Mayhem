@@ -43,11 +43,11 @@
                 </StackPanel.Resources>
                 <StackPanel Margin="0 0 0 -35">
                     <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle"
-                            Width="140" Height="35" Fill="white" />
+                               Width="58" Height="35" Fill="white" />
                 </StackPanel>
             </StackPanel>
 
-            <Button Click="connectMyoButton_Click"
+            <Button Click="begin_Click"
                     FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
@@ -55,35 +55,8 @@
                     FontWeight="Bold"
                     Height="35"
                     Width="Auto"
-                    x:Name="connectMyoButton"
-                    Content="Connect Your Myo" />
-
-            <Button FontFamily="Century-Gothic"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    FontWeight="Bold"
-                    Height="35"
-                    Foreground="White"
-                    x:Name="startButton"
-                    Visibility="Collapsed"
-                    Width="140"
-                    Content="Start Game"
-                    Click="startButton_Click" />
-
-            <Button FontFamily="Century-Gothic"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    FontWeight="Bold"
-                    Height="35"
-                    Foreground="White"
-                    Visibility="Collapsed"
-                    x:Name="howToPlayButton"
-                    Width="140"
-                    Content="Hot To Play"
-                    Click="howToPlayButton_Click" />
-
+                    x:Name="begin"
+                    Content="Begin" />
 
             <TextBlock TextAlignment="Center" Width="150" Foreground="White" FontSize="12" x:Name="testText" />
         </StackPanel>
