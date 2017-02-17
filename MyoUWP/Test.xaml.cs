@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -22,13 +24,41 @@ namespace MyoUWP
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var ellipse1 = new Ellipse();
-            ellipse1.Fill = new SolidColorBrush(Windows.UI.Colors.SteelBlue);
-            ellipse1.Width = 50;
-            ellipse1.Height = 50;
+            int numberOfRectangles = 300;
 
-            myCanvas.Children.Add(ellipse1);
+            for(int i = 0; i < numberOfRectangles; i++)
+            {
+                CreateRectangle();
+            }
         }
+
+        //private void CreateCanvas()
+        //{
+
+        //}
+
+
+        private void CreateRectangle()
+        {
+            Random random = new Random();
+
+            Rectangle rect = new Rectangle();
+            rect.Width = 25;
+            rect.Height = 25;
+
+            
+            CompositeTransform transform = new CompositeTransform();
+            transform.TranslateX = random.Next(0, 450);
+            transform.TranslateY = random.Next(0, 800);
+            rect.RenderTransform = transform;
+
+            Color color = Color.FromArgb(255, (byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
+            rect.Fill = new SolidColorBrush(color);
+            
+            myCanvas.Children.Add(rect);
+        }
+
+
 
 
 

@@ -9,9 +9,8 @@
     Loaded="Page_Loaded">
 
     <Grid x:Name="layoutRoot">
-        <Canvas x:Name="myCanvas" Background="LightGray" Height="500" Width="350" Margin="5,200,5,0">
+        <Canvas x:Name="myCanvas" Background="LightGray" Margin="0 20 0 20" Height="Auto" Width="500">
 
-            <!--<Rectangle x:Name="eMyo" Canvas.Left="310" Canvas.Top="29" Fill="Blue" Height="40" Width="40" />-->
         </Canvas>
     </Grid>
 </Page>
