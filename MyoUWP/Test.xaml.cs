@@ -15,6 +15,8 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class Test : Page
     {
+        Canvas myCanvas;
+
         public Test()
         {
             this.InitializeComponent();
@@ -24,7 +26,9 @@ namespace MyoUWP
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            int numberOfRectangles = 300;
+            CreateCanvas();
+
+            int numberOfRectangles = 400;
 
             for(int i = 0; i < numberOfRectangles; i++)
             {
@@ -32,10 +36,19 @@ namespace MyoUWP
             }
         }
 
-        //private void CreateCanvas()
-        //{
+        private void CreateCanvas()
+        {
+            if(myCanvas == null)
+            {
+                myCanvas = new Canvas();
+                SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
 
-        //}
+                myCanvas.Background = lightGrayBrush;
+                myCanvas.Width = 500;
+
+                layoutRoot.Children.Add(myCanvas);
+            }
+        }
 
 
         private void CreateRectangle()
@@ -43,8 +56,8 @@ namespace MyoUWP
             Random random = new Random();
 
             Rectangle rect = new Rectangle();
-            rect.Width = 25;
-            rect.Height = 25;
+            rect.Width = random.Next(5, 100);
+            rect.Height = random.Next(5, 100);
 
             
             CompositeTransform transform = new CompositeTransform();
