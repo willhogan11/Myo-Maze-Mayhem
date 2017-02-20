@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,11 +16,12 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class Test : Page
     {
+        Ellipse movableCircle;
         Canvas myCanvas;
-
+       
         public Test()
         {
-            this.InitializeComponent();
+            this.InitializeComponent(); 
         }
 
 
@@ -27,13 +29,14 @@ namespace MyoUWP
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CreateCanvas();
+            CreateShip();
 
-            int numberOfRectangles = 400;
+            // int numberOfRectangles = 800;
 
-            for(int i = 0; i < numberOfRectangles; i++)
-            {
-                CreateRectangle();
-            }
+            //for(int i = 0; i < numberOfRectangles; i++)
+            //{
+            //    CreateRectangle();
+            //}
         }
 
         private void CreateCanvas()
@@ -44,30 +47,66 @@ namespace MyoUWP
                 SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
 
                 myCanvas.Background = lightGrayBrush;
-                myCanvas.Width = 500;
+                myCanvas.Width = 800;
 
                 layoutRoot.Children.Add(myCanvas);
             }
         }
 
 
+        private void CreateShip()
+        {
+            SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
+            
+            if(movableCircle == null)
+            {
+                movableCircle = new Ellipse();
+                movableCircle.Width = 25;
+                movableCircle.Height = 25;
+                movableCircle.Fill = blackBrush;
+
+                layoutRoot.Children.Add(movableCircle);
+            }
+        }
+
+
+        private void CreateEllipse()
+        {
+            Random random = new Random();
+            Ellipse ellipse = new Ellipse();
+
+            ellipse.Width = random.Next(5, 100);
+            ellipse.Height = random.Next(5, 100);
+
+            CompositeTransform transform = new CompositeTransform();
+            transform.TranslateX = random.Next(0, 720);
+            transform.TranslateY = random.Next(0, 800);
+            ellipse.RenderTransform = transform;
+
+            Color color = Color.FromArgb(255, (byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
+            ellipse.Fill = new SolidColorBrush(color);
+
+            myCanvas.Children.Add(ellipse);
+        }
+
+
         private void CreateRectangle()
         {
             Random random = new Random();
+            Rectangle rect;
 
-            Rectangle rect = new Rectangle();
+            rect = new Rectangle();
             rect.Width = random.Next(5, 100);
             rect.Height = random.Next(5, 100);
 
-            
             CompositeTransform transform = new CompositeTransform();
-            transform.TranslateX = random.Next(0, 450);
+            transform.TranslateX = random.Next(0, 720);
             transform.TranslateY = random.Next(0, 800);
             rect.RenderTransform = transform;
 
             Color color = Color.FromArgb(255, (byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
             rect.Fill = new SolidColorBrush(color);
-            
+
             myCanvas.Children.Add(rect);
         }
 
@@ -81,27 +120,48 @@ namespace MyoUWP
         //    if (args.VirtualKey == VirtualKey.Down)
         //    {
         //        System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+        //        movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) + 2);
         //    }
         //    if (args.VirtualKey == VirtualKey.Up)
         //    {
         //        System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+        //        movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) - 2);
         //    }
         //    if (args.VirtualKey == VirtualKey.Left)
         //    {
         //        System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+        //        movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) - 2);
         //    }
         //    if (args.VirtualKey == VirtualKey.Right)
         //    {
         //        System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+        //        movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) + 2);
         //    }
         //}
 
 
-
-
+        private void layoutRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs args)
+        {
+            if (args.Key == VirtualKey.Down)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Down Pressed");
+                movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) + 2);
+            }
+            if (args.Key == VirtualKey.Up)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Up Pressed");
+                movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) - 2);
+            }
+            if (args.Key == VirtualKey.Left)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Left Pressed");
+                movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) - 2);
+            }
+            if (args.Key == VirtualKey.Right)
+            {
+                System.Diagnostics.Debug.WriteLine("Key Right Pressed");
+                movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) + 2);
+            }
+        }
     }
 }
