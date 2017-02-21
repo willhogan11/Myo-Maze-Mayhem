@@ -13,6 +13,7 @@
         <Canvas x:Name="cvsRoller" Height="500" VerticalAlignment="Center" Background="Gray" Width="Auto">
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="100" Canvas.Top="175" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
+            <Rectangle x:Name="blockObject2" Height="35" Width="50" Fill="Black" Canvas.Left="180" Canvas.Top="250" />
 
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">

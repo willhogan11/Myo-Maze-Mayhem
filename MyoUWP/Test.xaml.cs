@@ -168,6 +168,9 @@ namespace MyoUWP
 
         private void detectCollision(object sender, object e)
         {
+            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
+
             Rectangle rect1 = new Rectangle();
             rect1.RadiusX = (float)Canvas.GetLeft(eMyo);
             rect1.RadiusY = (float)Canvas.GetTop(eMyo);
@@ -180,25 +183,37 @@ namespace MyoUWP
             rect2.Width = (float)blockObject.Width;
             rect2.Height = (float)blockObject.Height;
 
-
-            // Debug.WriteLine(rect1.RadiusX + rect1.Width);
-            // Debug.WriteLine("Rect 2 X :" + rect2.RadiusX);
-            // Debug.WriteLine(rect1.RadiusX <= rect2.RadiusX + rect2.Width);
-
-
-            //if (rect1.RadiusX + rect1.Width >= rect2.RadiusX)
-            //{
-            //    Debug.WriteLine("Collision Detected on RIght side of Rect 1");
-            //}
+            Rectangle rect3 = new Rectangle();
+            rect3.RadiusX = (float)Canvas.GetLeft(blockObject2);
+            rect3.RadiusY = (float)Canvas.GetTop(blockObject2);
+            rect3.Width = (float)blockObject2.Width;
+            rect3.Height = (float)blockObject2.Height;
 
 
-
-            if( (rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
+            if ( (rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
                 (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
                 (rect1.RadiusY + rect1.Height >= rect2.RadiusY) &&
                 (rect1.RadiusY <= rect2.RadiusY + rect2.Height) )
             {
                 Debug.WriteLine("Collision Detected...");
+                eMyo.Fill = redBrush;
+            }
+            else
+            {
+                eMyo.Fill = whiteBrush;
+            }
+
+            if ((rect1.RadiusX + rect1.Width >= rect3.RadiusX) &&
+                (rect1.RadiusX <= rect3.RadiusX + rect3.Width) &&
+                (rect1.RadiusY + rect1.Height >= rect3.RadiusY) &&
+                (rect1.RadiusY <= rect3.RadiusY + rect3.Height))
+            {
+                Debug.WriteLine("Collision Detected...");
+                eMyo.Fill = redBrush;
+            }
+            else
+            {
+                eMyo.Fill = whiteBrush;
             }
 
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
