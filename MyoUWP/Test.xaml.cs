@@ -183,10 +183,20 @@ namespace MyoUWP
 
             // Debug.WriteLine(rect1.RadiusX + rect1.Width);
             // Debug.WriteLine("Rect 2 X :" + rect2.RadiusX);
+            // Debug.WriteLine(rect1.RadiusX <= rect2.RadiusX + rect2.Width);
+
 
             if (rect1.RadiusX + rect1.Width >= rect2.RadiusX)
             {
-                Debug.WriteLine("Collision Detected!!");
+                Debug.WriteLine("Collision Detected on RIght side of Rect 1");
+            }
+            else if (
+                    (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
+                    (rect1.RadiusY + rect1.Height >= rect2.RadiusY) &&
+                    (rect1.RadiusY <= rect2.RadiusY + rect2.Height)
+                    )
+            {
+                Debug.WriteLine("Collision Detected Elsewhere");
             }
 
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
