@@ -144,23 +144,23 @@ namespace MyoUWP
             
             if (args.VirtualKey == VirtualKey.Down)
             {
-                // System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+                System.Diagnostics.Debug.WriteLine("Key Down Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
             }
             if (args.VirtualKey == VirtualKey.Up)
             {
-                // System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+                System.Diagnostics.Debug.WriteLine("Key Up Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 5);
             }
             if (args.VirtualKey == VirtualKey.Left)
             {
-                // System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+                System.Diagnostics.Debug.WriteLine("Key Left Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 5);
             }
             if (args.VirtualKey == VirtualKey.Right)
             {
-                // System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+                System.Diagnostics.Debug.WriteLine("Key Right Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 5);
             }
             detectCollision(sender, args);
         }
@@ -186,17 +186,19 @@ namespace MyoUWP
             // Debug.WriteLine(rect1.RadiusX <= rect2.RadiusX + rect2.Width);
 
 
-            if (rect1.RadiusX + rect1.Width >= rect2.RadiusX)
+            //if (rect1.RadiusX + rect1.Width >= rect2.RadiusX)
+            //{
+            //    Debug.WriteLine("Collision Detected on RIght side of Rect 1");
+            //}
+
+
+
+            if( (rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
+                (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
+                (rect1.RadiusY + rect1.Height >= rect2.RadiusY) &&
+                (rect1.RadiusY <= rect2.RadiusY + rect2.Height) )
             {
-                Debug.WriteLine("Collision Detected on RIght side of Rect 1");
-            }
-            else if (
-                    (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
-                    (rect1.RadiusY + rect1.Height >= rect2.RadiusY) &&
-                    (rect1.RadiusY <= rect2.RadiusY + rect2.Height)
-                    )
-            {
-                Debug.WriteLine("Collision Detected Elsewhere");
+                Debug.WriteLine("Collision Detected...");
             }
 
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
