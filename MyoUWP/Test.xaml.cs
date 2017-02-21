@@ -180,18 +180,20 @@ namespace MyoUWP
             rect2.Width = (float)blockObject.Width;
             rect2.Height = (float)blockObject.Height;
 
+
+            // Debug.WriteLine(rect1.RadiusX + rect1.Width);
+            // Debug.WriteLine("Rect 2 X :" + rect2.RadiusX);
+
+            if (rect1.RadiusX + rect1.Width >= rect2.RadiusX)
+            {
+                Debug.WriteLine("Collision Detected!!");
+            }
+
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
             rect1Y.Text = ("Rect 1 Y : " + rect1.RadiusY.ToString());
 
             rect2X.Text = ("Rect 2 X : " + rect2.RadiusX.ToString());
             rect2Y.Text = ("Rect 2 Y : " + rect2.RadiusY.ToString());
-        }
-
-
-
-        private void testButton_Click(object sender, RoutedEventArgs e)
-        {
-            detectCollision(sender, e);       
         }
        
     }
