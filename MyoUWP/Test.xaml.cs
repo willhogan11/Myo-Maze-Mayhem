@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Numerics;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -18,18 +21,22 @@ namespace MyoUWP
     {
         Ellipse movableCircle;
         Canvas myCanvas;
-       
+
         public Test()
         {
-            this.InitializeComponent(); 
+            this.InitializeComponent();
+
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
+            // CreateCanvas();
+            // CreateShip();
         }
 
 
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CreateCanvas();
-            CreateShip();
+
 
             // int numberOfRectangles = 800;
 
@@ -41,7 +48,7 @@ namespace MyoUWP
 
         private void CreateCanvas()
         {
-            if(myCanvas == null)
+            if (myCanvas == null)
             {
                 myCanvas = new Canvas();
                 SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
@@ -57,8 +64,8 @@ namespace MyoUWP
         private void CreateShip()
         {
             SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-            
-            if(movableCircle == null)
+
+            if (movableCircle == null)
             {
                 movableCircle = new Ellipse();
                 movableCircle.Width = 25;
@@ -67,6 +74,26 @@ namespace MyoUWP
 
                 layoutRoot.Children.Add(movableCircle);
             }
+        }
+
+
+        private void checkIntersect()
+        {
+            Rectangle rect1 = new Rectangle();
+            rect1.RadiusX = (float)Canvas.GetLeft(eMyo);
+            rect1.RadiusY = (float)Canvas.GetTop(eMyo);
+            rect1.Width = (float)eMyo.Width;
+            rect1.Height = (float)eMyo.Height;
+
+            Rectangle rect2 = new Rectangle();
+            rect2.RadiusX = (float)Canvas.GetLeft(blockObject);
+            rect2.RadiusY = (float)Canvas.GetTop(blockObject);
+            rect2.Width = (float)blockObject.Width;
+            rect2.Height = (float)blockObject.Height;
+
+
+
+            // bool collision = rect1.IntersectsWith(rect2);
         }
 
 
@@ -111,57 +138,61 @@ namespace MyoUWP
         }
 
 
-
-
-
         // Get key press events working first or as a backup if myo isn't available or can't connect
-        //private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
-        //{
-        //    if (args.VirtualKey == VirtualKey.Down)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-        //        movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) + 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Up)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-        //        movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) - 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Left)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-        //        movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) - 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Right)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-        //        movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) + 2);
-        //    }
-        //}
-
-
-        private void layoutRoot_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs args)
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
-            if (args.Key == VirtualKey.Down)
+            
+            if (args.VirtualKey == VirtualKey.Down)
             {
-                System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-                movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) + 2);
+                // System.Diagnostics.Debug.WriteLine("Key Down Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
             }
-            if (args.Key == VirtualKey.Up)
+            if (args.VirtualKey == VirtualKey.Up)
             {
-                System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-                movableCircle.SetValue(Canvas.TopProperty, (double)movableCircle.GetValue(Canvas.TopProperty) - 2);
+                // System.Diagnostics.Debug.WriteLine("Key Up Pressed");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
             }
-            if (args.Key == VirtualKey.Left)
+            if (args.VirtualKey == VirtualKey.Left)
             {
-                System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-                movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) - 2);
+                // System.Diagnostics.Debug.WriteLine("Key Left Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
             }
-            if (args.Key == VirtualKey.Right)
+            if (args.VirtualKey == VirtualKey.Right)
             {
-                System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-                movableCircle.SetValue(Canvas.LeftProperty, (double)movableCircle.GetValue(Canvas.LeftProperty) + 2);
+                // System.Diagnostics.Debug.WriteLine("Key Right Pressed");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
             }
+            detectCollision(sender, args);
         }
+
+
+        private void detectCollision(object sender, object e)
+        {
+            Rectangle rect1 = new Rectangle();
+            rect1.RadiusX = (float)Canvas.GetLeft(eMyo);
+            rect1.RadiusY = (float)Canvas.GetTop(eMyo);
+            rect1.Width = (float)eMyo.Width;
+            rect1.Height = (float)eMyo.Height;
+
+            Rectangle rect2 = new Rectangle();
+            rect2.RadiusX = (float)Canvas.GetLeft(blockObject);
+            rect2.RadiusY = (float)Canvas.GetTop(blockObject);
+            rect2.Width = (float)blockObject.Width;
+            rect2.Height = (float)blockObject.Height;
+
+            rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
+            rect1Y.Text = ("Rect 1 Y : " + rect1.RadiusY.ToString());
+
+            rect2X.Text = ("Rect 2 X : " + rect2.RadiusX.ToString());
+            rect2Y.Text = ("Rect 2 Y : " + rect2.RadiusY.ToString());
+        }
+
+
+
+        private void testButton_Click(object sender, RoutedEventArgs e)
+        {
+            detectCollision(sender, e);       
+        }
+       
     }
 }

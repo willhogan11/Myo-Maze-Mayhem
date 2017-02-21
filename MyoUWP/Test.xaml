@@ -8,5 +8,25 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Grid x:Name="layoutRoot" KeyDown="layoutRoot_KeyDown"></Grid>
+    <Grid x:Name="layoutRoot">
+        
+        <Canvas x:Name="cvsRoller" Height="500" VerticalAlignment="Center" Background="Gray" Width="Auto">
+            <Rectangle x:Name="eMyo" Height="40" Width="40" Fill="white" Canvas.Left="100" Canvas.Top="175" />
+            <Rectangle x:Name="blockObject" Height="40" Width="40" Fill="Black" Canvas.Left="250" Canvas.Top="175" />
+
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="rect1X" Width="150" Foreground="White" FontSize="15" />
+                    <TextBlock x:Name="rect2X" Width="150" Foreground="White" FontSize="15" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="rect1Y" Width="150" Foreground="White" FontSize="15" />
+                    <TextBlock x:Name="rect2Y" Width="150" Foreground="White" FontSize="15" />
+                </StackPanel>
+            </StackPanel>
+            
+        </Canvas>
+        
+        <Button Margin="0 350 0 0" Click="testButton_Click" x:Name="testButton" Content="Click" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+    </Grid>
 </Page>
