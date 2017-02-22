@@ -4,6 +4,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -171,10 +172,10 @@ namespace MyoUWP
             rect3.Height = (float)blockObject2.Height;
 
 
-            if ( (rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
+            if ((rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
                 (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
                 (rect1.RadiusY + rect1.Height >= rect2.RadiusY) &&
-                (rect1.RadiusY <= rect2.RadiusY + rect2.Height) )
+                (rect1.RadiusY <= rect2.RadiusY + rect2.Height))
             {
                 Debug.WriteLine("Collision Detected...");
                 eMyo.Fill = redBrush;
@@ -195,6 +196,14 @@ namespace MyoUWP
             else
             {
                 eMyo.Fill = whiteBrush;
+            }
+
+
+            if (rect1.RadiusX >= 930 && rect1.RadiusY <= 34)
+            {
+                Debug.WriteLine("You Reached the Escape Pod!! Well done");
+                winGame.Visibility = Visibility.Visible;
+                cvsRoller.Background = whiteBrush;
             }
 
 
@@ -223,11 +232,7 @@ namespace MyoUWP
 
 
             // Update the Display Text boxes on screen with X Y Coordinates
-            rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
-            rect1Y.Text = ("Rect 1 Y : " + rect1.RadiusY.ToString());
-            rect2X.Text = ("Rect 2 X : " + rect2.RadiusX.ToString());
-            rect2Y.Text = ("Rect 2 Y : " + rect2.RadiusY.ToString());
+            rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString()); 
         }
-       
     }
 }
