@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Numerics;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -37,7 +34,7 @@ namespace MyoUWP
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
 
             // int numberOfRectangles = 800;
 
@@ -165,12 +162,6 @@ namespace MyoUWP
             rect2.Width = (float)blockObject.Width;
             rect2.Height = (float)blockObject.Height;
 
-            Rectangle rect3 = new Rectangle();
-            rect3.RadiusX = (float)Canvas.GetLeft(blockObject2);
-            rect3.RadiusY = (float)Canvas.GetTop(blockObject2);
-            rect3.Width = (float)blockObject2.Width;
-            rect3.Height = (float)blockObject2.Height;
-
 
             if ((rect1.RadiusX + rect1.Width >= rect2.RadiusX) &&
                 (rect1.RadiusX <= rect2.RadiusX + rect2.Width) &&
@@ -185,18 +176,6 @@ namespace MyoUWP
                 eMyo.Fill = whiteBrush;
             }
 
-            if ((rect1.RadiusX + rect1.Width >= rect3.RadiusX) &&
-                (rect1.RadiusX <= rect3.RadiusX + rect3.Width) &&
-                (rect1.RadiusY + rect1.Height >= rect3.RadiusY) &&
-                (rect1.RadiusY <= rect3.RadiusY + rect3.Height))
-            {
-                Debug.WriteLine("Collision Detected...");
-                eMyo.Fill = redBrush;
-            }
-            else
-            {
-                eMyo.Fill = whiteBrush;
-            }
 
 
             if (rect1.RadiusX >= 930 && rect1.RadiusY <= 34)
@@ -233,6 +212,11 @@ namespace MyoUWP
 
             // Update the Display Text boxes on screen with X Y Coordinates
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString()); 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ellipseStoryBoard.Begin();
         }
     }
 }

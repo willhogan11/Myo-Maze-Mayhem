@@ -115,7 +115,7 @@
                     Foreground="White"
                     x:Name="howToPlayButton"
                     Width="140"
-                    Content="Hot To Play"
+                    Content="How To Play"
                     Click="howToPlayButton_Click" Margin="110,0" />
         </StackPanel>
 

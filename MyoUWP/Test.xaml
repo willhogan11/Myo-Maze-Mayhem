@@ -8,6 +8,19 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <Storyboard x:Name="ellipseStoryBoard">
+            <!-- Animate the center point of the ellipse. -->
+            <PointAnimation Storyboard.TargetName="MyAnimatedEllipseGeometry"
+                            Storyboard.TargetProperty="Center"
+                            Duration="0:0:5"
+                            From="20,20"
+                            To="400,400"
+                            EnableDependentAnimation="True" 
+                            RepeatBehavior="Forever" />
+        </Storyboard>
+    </Page.Resources>
+
     <Grid x:Name="layoutRoot" Width="Auto" Background="LightBlue">
 
         <StackPanel Orientation="Vertical" Margin="150 0 0 0">
@@ -20,12 +33,19 @@
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="Gray">
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="900" Canvas.Top="80" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
-            <Rectangle x:Name="blockObject2" Height="35" Width="50" Fill="Black" Canvas.Left="180" Canvas.Top="250" />
             <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
                         Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
                 <TextBlock Foreground="Red" FontSize="15" Text="ESCAPE" />
                 <TextBlock Foreground="Red" FontSize="15" Text="POD" />
             </StackPanel>
+
+            <Path Fill="Blue">
+                <Path.Data>
+                    <RectangleGeometry x:Name="MyAnimatedEllipseGeometry" />
+                </Path.Data>
+            </Path>
+
+            <Button Click="Button_Click" Width="65" Height="30" Margin="2" Content="Begin" />
 
             <StackPanel Visibility="Collapsed" x:Name="winGame" Margin="300 180 0 0" Width="400" Height="180">
                 <TextBlock HorizontalAlignment="Center" FontWeight="Bold" Visibility="Visible" TextAlignment="Center" 
