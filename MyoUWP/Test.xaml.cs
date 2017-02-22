@@ -34,7 +34,11 @@ namespace MyoUWP
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
+
+            ellipseStoryBoard.Begin();
+
+
 
             // int numberOfRectangles = 800;
 
@@ -169,6 +173,9 @@ namespace MyoUWP
                 (rect1.RadiusY <= rect2.RadiusY + rect2.Height))
             {
                 Debug.WriteLine("Collision Detected...");
+                winGame.Visibility = Visibility.Visible;
+                cvsRoller.Background = whiteBrush;
+                gameText.Text = ("YOUR CRASHED!");
                 eMyo.Fill = redBrush;
             }
             else
@@ -177,13 +184,17 @@ namespace MyoUWP
             }
 
 
+            
+
 
             if (rect1.RadiusX >= 930 && rect1.RadiusY <= 34)
             {
-                Debug.WriteLine("You Reached the Escape Pod!! Well done");
+                Debug.WriteLine("YOU REACHED THE ESCAPE POD!");
                 winGame.Visibility = Visibility.Visible;
                 cvsRoller.Background = whiteBrush;
             }
+
+            
 
 
             // Do something when Controlled Object is at the Canvas Edge
@@ -210,13 +221,14 @@ namespace MyoUWP
             }
 
 
+            //if(MyAnimatedEllipseGeometry.RadiusX > cvsRoller.Height)
+            //{
+            //    Debug.WriteLine("Ball hit canvas edge....");
+            //}
+
+
             // Update the Display Text boxes on screen with X Y Coordinates
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString()); 
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ellipseStoryBoard.Begin();
         }
     }
 }
