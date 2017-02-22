@@ -8,11 +8,13 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Grid x:Name="layoutRoot" Background="LightBlue">
+    <Grid x:Name="layoutRoot" Width="620" Background="LightBlue">
         <Canvas x:Name="cvsRoller" Height="500" Width="600" VerticalAlignment="Center" Background="Gray">
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="100" Canvas.Top="175" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
             <Rectangle x:Name="blockObject2" Height="35" Width="50" Fill="Black" Canvas.Left="180" Canvas.Top="250" />
+            <Rectangle x:Name="exitRect" Height="35" Width="50" Fill="Beige" Margin=" 550 0 0 0"/>
+            <TextBlock  Margin="550 0 0 0" Foreground="Red" FontSize="25" Text="EXIT" />
 
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
