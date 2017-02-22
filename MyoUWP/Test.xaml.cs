@@ -54,7 +54,7 @@ namespace MyoUWP
                 SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
 
                 myCanvas.Background = lightGrayBrush;
-                myCanvas.Width = 800;
+                // myCanvas.Width = 800;
 
                 layoutRoot.Children.Add(myCanvas);
             }
@@ -76,25 +76,6 @@ namespace MyoUWP
             }
         }
 
-
-        private void checkIntersect()
-        {
-            Rectangle rect1 = new Rectangle();
-            rect1.RadiusX = (float)Canvas.GetLeft(eMyo);
-            rect1.RadiusY = (float)Canvas.GetTop(eMyo);
-            rect1.Width = (float)eMyo.Width;
-            rect1.Height = (float)eMyo.Height;
-
-            Rectangle rect2 = new Rectangle();
-            rect2.RadiusX = (float)Canvas.GetLeft(blockObject);
-            rect2.RadiusY = (float)Canvas.GetTop(blockObject);
-            rect2.Width = (float)blockObject.Width;
-            rect2.Height = (float)blockObject.Height;
-
-
-
-            // bool collision = rect1.IntersectsWith(rect2);
-        }
 
 
         private void CreateEllipse()
@@ -215,6 +196,25 @@ namespace MyoUWP
             {
                 eMyo.Fill = whiteBrush;
             }
+
+
+            if(rect1.RadiusX <= 0)
+            {
+                Debug.WriteLine("At Left Edge of Canvas");
+            }
+            if (rect1.RadiusY <= 0)
+            {
+                Debug.WriteLine("At Top Edge of Canvas");
+            }
+            if(rect1.RadiusX + eMyo.Width >= cvsRoller.Width)
+            {
+                Debug.WriteLine("At Right Edge of Canvas");
+            }
+            if (rect1.RadiusY + eMyo.Height >= cvsRoller.Height)
+            {
+                Debug.WriteLine("At Bottom Edge of Canvas");
+            }
+
 
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
             rect1Y.Text = ("Rect 1 Y : " + rect1.RadiusY.ToString());
