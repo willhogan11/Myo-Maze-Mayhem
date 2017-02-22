@@ -126,22 +126,22 @@ namespace MyoUWP
             if (args.VirtualKey == VirtualKey.Down)
             {
                 System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
             }
             if (args.VirtualKey == VirtualKey.Up)
             {
                 System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 5);
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
             }
             if (args.VirtualKey == VirtualKey.Left)
             {
                 System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 5);
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
             }
             if (args.VirtualKey == VirtualKey.Right)
             {
                 System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 5);
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
             }
             detectCollision(sender, args);
         }
@@ -198,27 +198,33 @@ namespace MyoUWP
             }
 
 
-            if(rect1.RadiusX <= 0)
+            // Do something when Controlled Object is at the Canvas Edge
+            // Need to Redraw the Rectangle at Edge
+            if (rect1.RadiusX <= 0)
             {
                 Debug.WriteLine("At Left Edge of Canvas");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
             }
             if (rect1.RadiusY <= 0)
             {
                 Debug.WriteLine("At Top Edge of Canvas");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
             }
             if(rect1.RadiusX + eMyo.Width >= cvsRoller.Width)
             {
                 Debug.WriteLine("At Right Edge of Canvas");
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
             }
             if (rect1.RadiusY + eMyo.Height >= cvsRoller.Height)
             {
                 Debug.WriteLine("At Bottom Edge of Canvas");
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
             }
 
 
+            // Update the Display Text boxes on screen with X Y Coordinates
             rect1X.Text = ("Rect 1 X : " + rect1.RadiusX.ToString());
             rect1Y.Text = ("Rect 1 Y : " + rect1.RadiusY.ToString());
-
             rect2X.Text = ("Rect 2 X : " + rect2.RadiusX.ToString());
             rect2Y.Text = ("Rect 2 Y : " + rect2.RadiusY.ToString());
         }

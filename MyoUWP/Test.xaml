@@ -9,7 +9,6 @@
     Loaded="Page_Loaded">
 
     <Grid x:Name="layoutRoot" Background="LightBlue">
-
         <Canvas x:Name="cvsRoller" Height="500" Width="600" VerticalAlignment="Center" Background="Gray">
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="100" Canvas.Top="175" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
@@ -25,7 +24,6 @@
                     <TextBlock x:Name="rect2Y" Width="150" Foreground="White" FontSize="15" />
                 </StackPanel>
             </StackPanel>
-
         </Canvas>
     </Grid>
 </Page>
