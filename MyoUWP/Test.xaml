@@ -42,7 +42,7 @@
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="900" Canvas.Top="80" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
 
-            <Rectangle Fill="Black" x:Name="randomBlock" Height="50" Width="50" Canvas.Left="700" Canvas.Top="200" />
+            <Rectangle Fill="Black" x:Name="randomBlock" Height="50" Width="50" Canvas.Left="800" Canvas.Top="100" />
             
             
             <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 

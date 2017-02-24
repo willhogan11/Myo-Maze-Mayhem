@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.System;
 using Windows.UI;
@@ -20,6 +21,7 @@ namespace MyoUWP
         Canvas myCanvas;
         Rectangle debris;
         Rectangle ship;
+        List<Rectangle> debrisArray = new List<Rectangle>(); 
 
         public Test()
         {
@@ -43,7 +45,7 @@ namespace MyoUWP
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
-                CreateRectangle();
+                CreateDebris();
             }
         }
 
@@ -99,7 +101,7 @@ namespace MyoUWP
         }
 
 
-        private void CreateRectangle()
+        private void CreateDebris()
         {
             Random random = new Random();
             debris = new Rectangle();
@@ -114,10 +116,10 @@ namespace MyoUWP
             debris.RenderTransform = transform;
             debris.Fill = blueBrush;
 
+            debrisArray.Add(debris);
+
             cvsRoller.Children.Add(debris);
         }
-
-
 
 
         // Working Version of Rectangle Collision
@@ -175,7 +177,10 @@ namespace MyoUWP
 
         private void detectCollision(object sender, object e)
         {
-            debris = new Rectangle();
+
+            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+
+            // debris = new Rectangle();
             debris.RadiusX = (float)Canvas.GetLeft(randomBlock);
             debris.RadiusY = (float)Canvas.GetTop(randomBlock);
             debris.Width = (float)randomBlock.Width;
@@ -188,13 +193,41 @@ namespace MyoUWP
             ship.Height = (float)eMyo.Height;
 
 
-            if ((ship.RadiusX + ship.Width >= debris.RadiusX) &&
-                (ship.RadiusX <= debris.RadiusX + debris.Width) &&
-                (ship.RadiusY + ship.Height >= debris.RadiusY) &&
-                (ship.RadiusY <= debris.RadiusY + debris.Height))
+
+
+            // Figure out Collisions based on values in the 'debrisArray' list
+
+            //Rectangle rectSample = debrisArray[0];
+            for (int i = 0; i < debrisArray.Count; i++)
             {
-                Debug.WriteLine("Collision Detected");
+                if ((ship.RadiusX + ship.Width >= debrisArray[i].RadiusX) &&
+                   (ship.RadiusX <= debrisArray[i].RadiusX + debrisArray[i].Width) &&
+                   (ship.RadiusY + ship.Height >= debrisArray[i].RadiusY) &&
+                   (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
+                   {
+                       Debug.WriteLine("Collision Detected");
+                       ship.Fill = redBrush;
+                       eMyo.Fill = redBrush;
+                   }
             }
+
+
+            //if (ship.RadiusX <= 0)
+            //{
+            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+            //}
+            //if (ship.RadiusY <= 0)
+            //{
+            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+            //}
+            //if (ship.RadiusX + eMyo.Width >= cvsRoller.Width)
+            //{
+            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+            //}
+            //if (ship.RadiusY + eMyo.Height >= cvsRoller.Height)
+            //{
+            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+            //}
         }
 
 
