@@ -113,7 +113,11 @@ namespace MyoUWP
             CompositeTransform transform = new CompositeTransform();
             transform.TranslateX = random.Next(0, 975);
             transform.TranslateY = random.Next(0, 525);
+
             debris.RenderTransform = transform;
+            debris.RadiusX = transform.TranslateX; // random.Next(0, 975);
+            debris.RadiusY = transform.TranslateY; // random.Next(0, 525);
+
             debris.Fill = blueBrush;
 
             debrisArray.Add(debris);
@@ -179,6 +183,7 @@ namespace MyoUWP
         {
 
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+            SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
             // debris = new Rectangle();
             debris.RadiusX = (float)Canvas.GetLeft(randomBlock);
@@ -186,30 +191,29 @@ namespace MyoUWP
             debris.Width = (float)randomBlock.Width;
             debris.Height = (float)randomBlock.Height;
 
-            ship = new Rectangle();
+
+            // ship = new Rectangle();
             ship.RadiusX = (float)Canvas.GetLeft(eMyo);
             ship.RadiusY = (float)Canvas.GetTop(eMyo);
             ship.Width = (float)eMyo.Width;
             ship.Height = (float)eMyo.Height;
 
 
-
-
             // Figure out Collisions based on values in the 'debrisArray' list
-
-            //Rectangle rectSample = debrisArray[0];
             for (int i = 0; i < debrisArray.Count; i++)
             {
-                if ((ship.RadiusX + ship.Width >= debrisArray[i].RadiusX) &&
-                   (ship.RadiusX <= debrisArray[i].RadiusX + debrisArray[i].Width) &&
-                   (ship.RadiusY + ship.Height >= debrisArray[i].RadiusY) &&
-                   (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
+                   if ((ship.RadiusX + ship.Width >= debrisArray[i].RadiusX) &&
+                       (ship.RadiusX <= debrisArray[i].RadiusX + debrisArray[i].Width) &&
+                       (ship.RadiusY + ship.Height >= debrisArray[i].RadiusY) &&
+                       (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
                    {
                        Debug.WriteLine("Collision Detected");
                        ship.Fill = redBrush;
                        eMyo.Fill = redBrush;
                    }
             }
+
+
 
 
             //if (ship.RadiusX <= 0)

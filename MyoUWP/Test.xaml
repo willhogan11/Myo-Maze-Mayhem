@@ -39,12 +39,14 @@
         </StackPanel>
 
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="Gray">
+
+            <StackPanel x:Name="objectHolder" Height="550" Width="1000"></StackPanel>
+            
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="900" Canvas.Top="80" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
 
             <Rectangle Fill="Black" x:Name="randomBlock" Height="50" Width="50" Canvas.Left="800" Canvas.Top="100" />
-            
-            
+
             <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
                         Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
                 <TextBlock Foreground="Red" FontSize="15" Text="ESCAPE" />
