@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,6 +26,9 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class Menu : Page
     {
+
+        
+
         public Menu()
         {
             this.InitializeComponent();
@@ -82,10 +88,16 @@ namespace MyoUWP
 
         }
 
-        private void startButton_Click(object sender, RoutedEventArgs e)
+
+        private async void startButton_Click(object sender, RoutedEventArgs e)
         {
+            loadingText.Text += "LOADING GAME\nPLEASE WAIT.....";
+            MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
+            await message.ShowAsync();
+
             Frame.Navigate(typeof(Test));
         }
+
 
         private void howToPlayButton_Click(object sender, RoutedEventArgs e)
         {

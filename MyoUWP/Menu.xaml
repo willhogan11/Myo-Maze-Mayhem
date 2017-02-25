@@ -84,12 +84,10 @@
                     Foreground="White"
                     Height="35"
                     Margin="0 0 0 20"
-                    
                     x:Name="startButton"
                     Width="140"
                     Content="Start Game"
                     Click="startButton_Click" />
-
 
             <StackPanel>
                 <StackPanel.Resources>
@@ -116,7 +114,12 @@
                     x:Name="howToPlayButton"
                     Width="140"
                     Content="How To Play"
-                    Click="howToPlayButton_Click" Margin="110,0" />
+                    Click="howToPlayButton_Click" 
+                    Margin="110,0" />
+
+            <TextBlock x:Name="loadingText" Foreground="White" 
+                       FontFamily="Century-gothic" Margin="0 40 0 0" Width="Auto" TextAlignment="Center"/>
+
         </StackPanel>
 
     </Grid>

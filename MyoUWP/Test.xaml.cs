@@ -27,7 +27,6 @@ namespace MyoUWP
         public Test()
         {
             this.InitializeComponent();
-
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
@@ -43,7 +42,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 800;
+            int numberOfRectangles = 900;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -108,8 +107,8 @@ namespace MyoUWP
         {
             Random random = new Random();
             debris = new Rectangle();
-            SolidColorBrush blueBrush = new SolidColorBrush(Windows.UI.Colors.Blue);
-            SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
+            SolidColorBrush brownBrush = new SolidColorBrush(Windows.UI.Colors.Brown);
+            // SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
             debris.Width = 25;
             debris.Height = 25;
@@ -124,46 +123,20 @@ namespace MyoUWP
 
             if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
             {
-                this.debris.Fill = whiteBrush;
+                // this.debris.Fill = whiteBrush;
                 this.debris = null;
                 Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
             }
             else
             {
-                debris.Fill = blueBrush;
+                debris.Fill = brownBrush;
                 debrisArray.Add(debris);
                 cvsRoller.Children.Add(debris);
             }
         }
 
 
-        // Working Version of Rectangle Collision
-        #region
-        //private void CreateRectangle()
-        //{
-        //    Random random = new Random();
-        //    Rectangle rect;
-
-        //    rect = new Rectangle();
-        //    rect.Width = random.Next(5, 100);
-        //    rect.Height = random.Next(5, 100);
-
-        //    CompositeTransform transform = new CompositeTransform();
-        //    transform.TranslateX = random.Next(0, 920);
-        //    transform.TranslateY = random.Next(0, 800);
-        //    rect.RenderTransform = transform;
-
-        //    Color color = Color.FromArgb(255, (byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
-        //    rect.Fill = new SolidColorBrush(color);
-
-        //    myCanvas.Children.Add(rect);
-        //}
-        #endregion
-
-
-
-
-
+        
         // Get key press events working first or as a backup if myo isn't available or can't connect
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
@@ -226,10 +199,6 @@ namespace MyoUWP
                     debrisArray.Clear();
 
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-                }
-                else
-                {
-                    eMyo.Fill = whiteBrush;
                 }
             }
 
