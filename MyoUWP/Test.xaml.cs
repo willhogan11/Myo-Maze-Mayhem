@@ -205,7 +205,7 @@ namespace MyoUWP
             ship.Width = (float)eMyo.Width;
             ship.Height = (float)eMyo.Height;
 
-            // Figure out Collisions based on values in the 'debrisArray' list
+
             for (int i = 0; i < debrisArray.Count; i++)
             {
                 if ((ship.RadiusX + ship.Width >= debrisArray[i].RadiusX) &&
@@ -223,7 +223,7 @@ namespace MyoUWP
 
                     winGame.Visibility = Visibility.Visible;
                     cvsRoller.Background = whiteBrush;
-                    gameText.Text = ("YOU CRASHED!");
+                    gameText.Text = ("YOU CRASHED, GAME OVER");
 
                     debrisArray.Clear();
 
@@ -254,13 +254,16 @@ namespace MyoUWP
             }
 
 
-            if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
+            if (ship.RadiusX >= 900 && ship.RadiusY <= 65)
             {
                 winGame.Visibility = Visibility.Visible;
                 cvsRoller.Background = whiteBrush;
                 debrisArray.Clear();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
+
+            rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
+            rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
         }
     }
 }
