@@ -24,16 +24,25 @@ namespace MyoUWP
         Rectangle debris;
         Rectangle ship;
         List<Rectangle> debrisArray = new List<Rectangle>();
-
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
         private long ms, ss, mm, hh, dd;
+        private Boolean keyCount = false;
 
 
         public Test()
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
+
+
+        // Example one Shape created on page load
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            CreateShip();
+            CreateAllDebris();
+
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
@@ -76,20 +85,9 @@ namespace MyoUWP
             dd = hh / 24;
             hh = hh % 24;
 
-            gameTimer.Text = hh.ToString("00") + ":" +
-                             mm.ToString("00") + ":" +
-                             ss.ToString("00") + ":" +
-                             ms.ToString("000");
-             
+            gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
         }
 
-
-        // Example one Shape created on page load
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            CreateShip();
-            CreateAllDebris();
-        }
 
 
         private void CreateAllDebris()
@@ -135,6 +133,8 @@ namespace MyoUWP
         }
 
 
+
+        #region
         private void CreateEllipse()
         {
             Random random = new Random();
@@ -153,6 +153,8 @@ namespace MyoUWP
 
             myCanvas.Children.Add(ellipse);
         }
+        #endregion
+
 
 
         private void CreateDebris()
@@ -190,6 +192,16 @@ namespace MyoUWP
         // Get key press events working first or as a backup if myo isn't available or can't connect
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
+            if (keyCount == false)
+            {
+                myStopwatchTimer.Start();
+                stopWatch.Start();
+            }
+            else
+            {
+                keyCount = true;
+            }
+                
             if (args.VirtualKey == VirtualKey.Down)
             {
                 eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
@@ -212,7 +224,6 @@ namespace MyoUWP
 
         private void detectCollision(object sender, object e)
         {
-
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
             SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
@@ -283,31 +294,18 @@ namespace MyoUWP
             rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
         }
 
-        private void startTimer_Click(object sender, RoutedEventArgs e)
-        {
-            if (startTimer.Content.ToString() == "Start")
-            {
-                // start the timer, change the text
-                myStopwatchTimer.Start();
-                stopWatch.Start();
-                //btnLapReset.Content = "Lap";
-                //btnStartStop.Content = "Stop";
-                //btnStartStop.Background = new SolidColorBrush(Colors.Red);
-            }
-            else   //equal to stop
-            {
-                myStopwatchTimer.Stop();
-                stopWatch.Stop();
-                //btnLapReset.Content = "Reset";
-                //btnStartStop.Content = "Start";
-                //btnStartStop.Background = new SolidColorBrush(Colors.Green);
-            }
-        }
 
-        private void stopTimer_Click(object sender, RoutedEventArgs e)
-        {
-            //gameTimer.Text = timer.Elapsed.ToString();
-            //timer.Stop();
-        }
+
+        //private void startTimer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    myStopwatchTimer.Start();
+        //    stopWatch.Start();
+        //}
+
+        //private void stopTimer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    myStopwatchTimer.Stop();
+        //    stopWatch.Stop();
+        //}
     }
 }
