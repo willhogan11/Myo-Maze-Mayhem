@@ -68,6 +68,8 @@ namespace MyoUWP
 
         private void MyStopwatchTimer_Tick(object sender, object e)
         {
+            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+
             // update the textblock with the time elapsed
             // figure out the elapsed time using the timer properties
             // some maths division and modulus
@@ -86,6 +88,25 @@ namespace MyoUWP
             hh = hh % 24;
 
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
+
+
+            if(gameTimer.Text == "00:20")
+            {
+                gameTimer.Foreground = redBrush;
+                gameTimer.FontSize = 35;
+            }
+
+            if (gameTimer.Text == "00:30")
+            {
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+                debrisArray.Clear();
+                eMyo.Fill = redBrush;
+                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = ("YOU RAN OUT OF TIME!");
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
         }
 
 
@@ -198,11 +219,8 @@ namespace MyoUWP
                 stopWatch.Start();
                 readyText.Visibility = Visibility.Collapsed;
             }
-            else
-            {
-                keyCount = true;
-               
-            }
+
+            keyCount = true;
 
             if (args.VirtualKey == VirtualKey.Down)
             {
@@ -248,20 +266,17 @@ namespace MyoUWP
                     (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
                 {
                     Debug.WriteLine("Collision Detected");
-                    ship.Fill = redBrush;
+                    // ship.Fill = redBrush;
                     eMyo.Fill = redBrush;
-
-                    debris.Visibility = Visibility.Collapsed;
 
                     Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
+                    debrisArray.Clear();
+
                     winGame.Visibility = Visibility.Visible;
-                    cvsRoller.Background = whiteBrush;
                     gameText.Text = ("YOU CRASHED, GAME OVER");
                     myStopwatchTimer.Stop();
                     stopWatch.Stop();
-
-                    debrisArray.Clear();
 
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 }
@@ -289,7 +304,8 @@ namespace MyoUWP
             if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
             {
                 winGame.Visibility = Visibility.Visible;
-                cvsRoller.Background = whiteBrush;
+                gameText.Text = "YOU REACHED THE ESCAPE POD!";
+                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
                 myStopwatchTimer.Stop();
                 stopWatch.Stop();
                 debrisArray.Clear();
@@ -299,19 +315,5 @@ namespace MyoUWP
             rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
         }
-
-
-
-        //private void startTimer_Click(object sender, RoutedEventArgs e)
-        //{
-        //    myStopwatchTimer.Start();
-        //    stopWatch.Start();
-        //}
-
-        //private void stopTimer_Click(object sender, RoutedEventArgs e)
-        //{
-        //    myStopwatchTimer.Stop();
-        //    stopWatch.Stop();
-        //}
     }
 }

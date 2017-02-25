@@ -38,9 +38,9 @@
                 <TextBlock Foreground="Red" FontSize="15" Text="HAB-1" />
             </StackPanel>
 
-            <StackPanel Visibility="Collapsed" x:Name="winGame" Margin="300 120 0 0" Width="400" Height="Auto">
-                <TextBlock x:Name="gameText" HorizontalAlignment="Center" FontWeight="Bold" Visibility="Visible" TextAlignment="Center" 
-                           TextWrapping="Wrap" Text="YOU REACHED THE ESCAPE POD!" Foreground="Red" FontSize="60" />
+            <StackPanel Canvas.ZIndex="1" Visibility="Collapsed" x:Name="winGame" Margin="300 120 0 0" Width="400" Height="Auto">
+                <TextBlock x:Name="gameText" HorizontalAlignment="Center" FontWeight="Bold" Visibility="Visible" 
+                           TextAlignment="Center" TextWrapping="Wrap" Foreground="Black" FontSize="60" />
             </StackPanel>
         </Canvas>
 
@@ -52,5 +52,27 @@
 
         <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
                    FontSize="25" Text="Ready? Move to Start" TextAlignment="Center" />
+
+        <!--<TextBlock
+        Name="MyFadingText"
+        Margin="20" 
+        Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Maroon">
+        This is fading text
+
+        --><!-- Animates the text block's opacity. --><!--
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                  Storyboard.TargetName="MyFadingText" 
+                  Storyboard.TargetProperty="(TextBlock.Opacity)"
+                  From="1.0" To="0.0" Duration="0:0:5" 
+                  AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>-->
     </Grid>
 </Page>
