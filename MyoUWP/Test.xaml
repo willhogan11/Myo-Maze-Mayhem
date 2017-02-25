@@ -29,7 +29,7 @@
         </Storyboard>
     </Page.Resources>-->
 
-    <Grid x:Name="layoutRoot" Width="Auto" Background="LightBlue">
+    <Grid x:Name="layoutRoot" Width="Auto" Background="LightSteelBlue">
 
         <StackPanel Orientation="Vertical" Margin="150 0 0 0">
             <StackPanel Orientation="Horizontal">
@@ -38,11 +38,11 @@
             </StackPanel>
         </StackPanel>
 
-        <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="Gray">
+        <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
 
             <StackPanel x:Name="objectHolder" Height="550" Width="1000"></StackPanel>
             
-            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="0" Canvas.Top="525" />
+            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Black" Canvas.Left="220" Canvas.Top="150" />
 
             <Rectangle Fill="Black" x:Name="randomBlock" Height="50" Width="50" Canvas.Left="800" Canvas.Top="100" />
@@ -51,6 +51,12 @@
                         Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
                 <TextBlock Foreground="Red" FontSize="15" Text="ESCAPE" />
                 <TextBlock Foreground="Red" FontSize="15" Text="POD" />
+            </StackPanel>
+
+            <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
+                        Background="Beige" Width="60" Height="60" Margin="0 490 0 0">
+                <TextBlock Foreground="Red" FontSize="15" Text="MARS" />
+                <TextBlock Foreground="Red" FontSize="15" Text="HAB-1" />
             </StackPanel>
 
             <!--<Path Fill="Blue">

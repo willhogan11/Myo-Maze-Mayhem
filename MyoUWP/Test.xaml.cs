@@ -109,6 +109,7 @@ namespace MyoUWP
             Random random = new Random();
             debris = new Rectangle();
             SolidColorBrush blueBrush = new SolidColorBrush(Windows.UI.Colors.Blue);
+            SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
             debris.Width = 25;
             debris.Height = 25;
@@ -118,14 +119,23 @@ namespace MyoUWP
             transform.TranslateY = random.Next(0, 525);
 
             debris.RenderTransform = transform;
-            debris.RadiusX = transform.TranslateX; 
+            debris.RadiusX = transform.TranslateX;
             debris.RadiusY = transform.TranslateY;
 
-            debris.Fill = blueBrush;
+            if (debris.RadiusX >= 930 && debris.RadiusY <= 34)
+            {
+                this.debris.Fill = whiteBrush;
+                this.debris = null;
+                Debug.WriteLine("Debris on Escape Pod Removed");
+            }
+            else
+            {
+                debris.Fill = blueBrush;
 
-            debrisArray.Add(debris);
+                debrisArray.Add(debris);
 
-            cvsRoller.Children.Add(debris);
+                cvsRoller.Children.Add(debris);
+            }
         }
 
 
