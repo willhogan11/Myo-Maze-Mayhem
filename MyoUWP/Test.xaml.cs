@@ -7,6 +7,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
 
@@ -22,13 +23,64 @@ namespace MyoUWP
         Canvas myCanvas;
         Rectangle debris;
         Rectangle ship;
-        List<Rectangle> debrisArray = new List<Rectangle>(); 
+        List<Rectangle> debrisArray = new List<Rectangle>();
+
+        DispatcherTimer myStopwatchTimer;
+        Stopwatch stopWatch;
+        private long ms, ss, mm, hh, dd;
+
 
         public Test()
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+        }
+
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (stopWatch == null)
+            {
+                stopWatch = new Stopwatch();
+            }
+            // check for the timer and then set up.
+            if (myStopwatchTimer == null)
+            {
+                ms = ss = mm = hh = dd = 0;
+                myStopwatchTimer = new DispatcherTimer();
+                myStopwatchTimer.Tick += MyStopwatchTimer_Tick;
+                myStopwatchTimer.Interval = new TimeSpan(0, 0, 0, 0, 1); // 1 millisecond
+            }
+            base.OnNavigatedTo(e);
+        }
+
+
+
+        private void MyStopwatchTimer_Tick(object sender, object e)
+        {
+            // update the textblock with the time elapsed
+            // figure out the elapsed time using the timer properties
+            // some maths division and modulus
+            ms = stopWatch.ElapsedMilliseconds;
+
+            ss = ms / 1000;
+            ms = ms % 1000;
+
+            mm = ss / 60;
+            ss = ss % 60;
+
+            hh = mm % 60;
+            mm = mm % 60;
+
+            dd = hh / 24;
+            hh = hh % 24;
+
+            gameTimer.Text = hh.ToString("00") + ":" +
+                             mm.ToString("00") + ":" +
+                             ss.ToString("00") + ":" +
+                             ms.ToString("000");
+             
         }
 
 
@@ -108,7 +160,6 @@ namespace MyoUWP
             Random random = new Random();
             debris = new Rectangle();
             SolidColorBrush brownBrush = new SolidColorBrush(Windows.UI.Colors.Brown);
-            // SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
             debris.Width = 25;
             debris.Height = 25;
@@ -123,7 +174,6 @@ namespace MyoUWP
 
             if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
             {
-                // this.debris.Fill = whiteBrush;
                 this.debris = null;
                 Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
             }
@@ -231,6 +281,33 @@ namespace MyoUWP
 
             rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
+        }
+
+        private void startTimer_Click(object sender, RoutedEventArgs e)
+        {
+            if (startTimer.Content.ToString() == "Start")
+            {
+                // start the timer, change the text
+                myStopwatchTimer.Start();
+                stopWatch.Start();
+                //btnLapReset.Content = "Lap";
+                //btnStartStop.Content = "Stop";
+                //btnStartStop.Background = new SolidColorBrush(Colors.Red);
+            }
+            else   //equal to stop
+            {
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+                //btnLapReset.Content = "Reset";
+                //btnStartStop.Content = "Start";
+                //btnStartStop.Background = new SolidColorBrush(Colors.Green);
+            }
+        }
+
+        private void stopTimer_Click(object sender, RoutedEventArgs e)
+        {
+            //gameTimer.Text = timer.Elapsed.ToString();
+            //timer.Stop();
         }
     }
 }

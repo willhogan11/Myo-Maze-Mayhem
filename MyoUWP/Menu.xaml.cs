@@ -27,7 +27,8 @@ namespace MyoUWP
     public sealed partial class Menu : Page
     {
 
-        
+        DispatcherTimer gameTimer;
+        Stopwatch stopwatch;
 
         public Menu()
         {
