@@ -43,7 +43,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 700;
+            int numberOfRectangles = 800;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -122,18 +122,16 @@ namespace MyoUWP
             debris.RadiusX = transform.TranslateX;
             debris.RadiusY = transform.TranslateY;
 
-            if (debris.RadiusX >= 930 && debris.RadiusY <= 34)
+            if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
             {
                 this.debris.Fill = whiteBrush;
                 this.debris = null;
-                Debug.WriteLine("Debris on Escape Pod Removed");
+                Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
             }
             else
             {
                 debris.Fill = blueBrush;
-
                 debrisArray.Add(debris);
-
                 cvsRoller.Children.Add(debris);
             }
         }
@@ -254,7 +252,7 @@ namespace MyoUWP
             }
 
 
-            if (ship.RadiusX >= 900 && ship.RadiusY <= 65)
+            if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
             {
                 winGame.Visibility = Visibility.Visible;
                 cvsRoller.Background = whiteBrush;
