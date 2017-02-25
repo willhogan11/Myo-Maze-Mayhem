@@ -23,9 +23,12 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class HowToPlay : Page
     {
+        private static int missionTime = 30;
+
         public HowToPlay()
         {
             this.InitializeComponent();
+            Story();
         }
 
 
@@ -48,6 +51,18 @@ namespace MyoUWP
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                     AppViewBackButtonVisibility.Collapsed;
             }
+        }
+
+
+
+        private void Story()
+        {
+            story.Text =
+                "Its the year 2034 and humans are beginning to colonise Mars.\n\nUpon receiving news from NASA back on earth, that a storm of " +
+                "gargantuan proportions is on a collision course with your Habitat, the future of human existence on Mars is uncertain.\n\nHowever, these is hope.....\n" +
+                "Your job is to ferry your crew out of harms way and get to the escape pod located in a nearby location, before the Storms hits.\nYou have " +
+                + missionTime + " seconds to get from the Hab to the Escape pod without time running out, or coming into contact with hazardous " +
+                "debris or it literally is Game Over!\nThe World is counting on you........"; 
         }
 
 

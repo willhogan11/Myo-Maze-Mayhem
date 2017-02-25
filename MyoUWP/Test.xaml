@@ -59,7 +59,7 @@
         Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Maroon">
         This is fading text
 
-        --><!-- Animates the text block's opacity. --><!--
+         Animates the text block's opacity. 
             <TextBlock.Triggers>
                 <EventTrigger RoutedEvent="TextBlock.Loaded">
                     <BeginStoryboard>
@@ -74,5 +74,6 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>-->
+        
     </Grid>
 </Page>
