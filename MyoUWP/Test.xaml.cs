@@ -196,12 +196,14 @@ namespace MyoUWP
             {
                 myStopwatchTimer.Start();
                 stopWatch.Start();
+                readyText.Visibility = Visibility.Collapsed;
             }
             else
             {
                 keyCount = true;
+               
             }
-                
+
             if (args.VirtualKey == VirtualKey.Down)
             {
                 eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
@@ -256,6 +258,8 @@ namespace MyoUWP
                     winGame.Visibility = Visibility.Visible;
                     cvsRoller.Background = whiteBrush;
                     gameText.Text = ("YOU CRASHED, GAME OVER");
+                    myStopwatchTimer.Stop();
+                    stopWatch.Stop();
 
                     debrisArray.Clear();
 
@@ -286,6 +290,8 @@ namespace MyoUWP
             {
                 winGame.Visibility = Visibility.Visible;
                 cvsRoller.Background = whiteBrush;
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
                 debrisArray.Clear();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }

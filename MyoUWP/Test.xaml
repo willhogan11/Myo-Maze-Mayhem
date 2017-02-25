@@ -44,13 +44,13 @@
             </StackPanel>
         </Canvas>
 
-        <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+        <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Vertical" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
+            
             <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
-            
-            <!--<Button Content="Start" Click="startTimer_Click" x:Name="startTimer"></Button>
-            <Button Content="Stop" Click="stopTimer_Click" x:Name="stopTimer"></Button>-->
-            
         </StackPanel>
 
+        <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
+                   FontSize="25" Text="Ready? Move to Start" TextAlignment="Center" />
     </Grid>
 </Page>
