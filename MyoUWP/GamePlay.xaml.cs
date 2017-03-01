@@ -42,7 +42,6 @@ namespace MyoUWP
         IHub _myoHub;
         IHub _myoHub1;
 
-        Pose _currentPose;
         double _currentRoll;
         double _currentYaw;
         double _currentPitch;
@@ -58,40 +57,14 @@ namespace MyoUWP
         }
 
 
-        // Get key press events working first or as a backup if myo isn't available or can't connect
-        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
-        {
-            if (args.VirtualKey == VirtualKey.Down)
-            {
-                System.Diagnostics.Debug.WriteLine("Key Down Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
-            }
-            if (args.VirtualKey == VirtualKey.Up)
-            {
-                System.Diagnostics.Debug.WriteLine("Key Up Pressed");
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
-            }
-            if (args.VirtualKey == VirtualKey.Left)
-            {
-                System.Diagnostics.Debug.WriteLine("Key Left Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
-            }
-            if (args.VirtualKey == VirtualKey.Right)
-            {
-                System.Diagnostics.Debug.WriteLine("Key Right Pressed");
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
-            }
-        }
-
-
-
+        
         #region timers methods
         private void setupTimers()
         {
             if( _orientationTimer == null)
             {
                 _orientationTimer = new DispatcherTimer();
-                _orientationTimer.Interval = TimeSpan.FromMilliseconds(20);
+                _orientationTimer.Interval = TimeSpan.FromMilliseconds(10);
                 _orientationTimer.Tick += _orientationTimer_Tick;
             }
         }
@@ -100,37 +73,22 @@ namespace MyoUWP
 
         private void _orientationTimer_Tick(object sender, object e)
         {
-            //if (_currentRoll < 0)
-            //{   // move to the right
-            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 5);
-            //}
-            //else if (_currentPitch >= 0)
-            //{   // Move up
-            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 5);
-            //}
-            //else if (_currentRoll >= 0)
-            //{   // move to the left
-            //    eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 5);
-            //}
-            //else if (_currentPitch < 0)
-            //{   // Move down
-            //    eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
-            //}
-
-
-            //double x = eMyo.ActualHeight / 2;
-            //double y = eMyo.ActualWidth / 2;
-
-            //double canvasCeiling = cvsRoller.ActualHeight;
-
-            //Debug.WriteLine("x : " + x);
-            //Debug.WriteLine("y : " + y);
-
-            //if(x >= canvasCeiling)
-            //{
-            //    Debug.WriteLine("Collision on Ceiling?");
-            //}
-
+            if (_currentRoll < 0)
+            {   // move to the right
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+            }
+            else if (_currentPitch >= 0)
+            {   // Move up
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+            }
+            else if (_currentRoll >= 0)
+            {   // move to the left
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+            }
+            else if (_currentPitch < 0)
+            {   // Move down
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+            }
         }
         #endregion
 
@@ -173,8 +131,7 @@ namespace MyoUWP
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                tblUpdates.Text = tblUpdates.Text + System.Environment.NewLine +
-                                    "Myo disconnected";
+                tblUpdates.Text = tblUpdates.Text + System.Environment.NewLine + "Myo disconnected";
             });
             _myoHub.MyoConnected -= _myoHub_MyoConnected;
             _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
@@ -297,7 +254,7 @@ namespace MyoUWP
                     case Pose.Rest:
                         break;
                     case Pose.Fist:
-                        // eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 10);            
+                        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);            
                         break;
                     case Pose.WaveIn:
                         // eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 10);
