@@ -1,29 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-using MyoUWP.Classes;
-
 using MyoSharp.Communication;
 using MyoSharp.Device;
 using MyoSharp.Exceptions;
 using MyoSharp.Poses;
-using Windows.UI;
-using System.Diagnostics;
-using Windows.System;
-
-
 
 
 
@@ -52,8 +33,7 @@ namespace MyoUWP
         {
             this.InitializeComponent();
             setupTimers();
-            _orientationTimer.Start();
-
+            // _orientationTimer.Start();
         }
 
 
@@ -96,8 +76,9 @@ namespace MyoUWP
 
 
         #region Myo Setup Methods
-        private void btnMyo_Click(object sender, RoutedEventArgs e)
-        { // communication, device, exceptions, poses
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            // communication, device, exceptions, poses
             // create the channel
             _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
                                     MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
@@ -127,6 +108,8 @@ namespace MyoUWP
 
         }
 
+
+
         private async void _myoHub_MyoDisconnected(object sender, MyoEventArgs e)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -148,7 +131,6 @@ namespace MyoUWP
             // add the pose changed event here
             e.Myo.PoseChanged += Myo_PoseChanged;
             e.Myo.OrientationDataAcquired += Myo_OrientationDataAcquired;
-            e.Myo.GyroscopeDataAcquired += Myo_GyroscopeDataAcquired;
             
            
             // unlock the Myo so that it doesn't keep locking between our poses
@@ -168,29 +150,8 @@ namespace MyoUWP
         }
         #endregion
 
-        #region Gryoscope data
-        private async void Myo_GyroscopeDataAcquired(object sender, GyroscopeDataEventArgs e)
-        {
-            
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                showGryoscopeData(e.Gyroscope.X, e.Gyroscope.Y, e.Gyroscope.Z);
-            });
 
-        }
 
-        private void showGryoscopeData(float x, float y, float z)
-        {
-            var pitchDegree = (x * 180.0) / System.Math.PI;
-            var yawDegree = (y * 180.0) / System.Math.PI;
-            var rollDegree = (z * 180.0) / System.Math.PI;
-
-            tblXGyro.Text = "Gyro X: " + (pitchDegree).ToString("0.00");
-            tblYGyro.Text = "Gyro Y: " + (yawDegree).ToString("0.00");
-            tblZGyro.Text = "Gyro R: " + (rollDegree).ToString("0.00");
-
-        }
-        #endregion
 
         #region Accelerometer Orientation Data
         private async void Myo_OrientationDataAcquired(object sender, OrientationDataEventArgs e)
@@ -223,6 +184,8 @@ namespace MyoUWP
         }
         #endregion
 
+
+
         #region Pose related methods
 
         private async void Sequence_PoseSequenceCompleted(object sender, PoseSequenceEventArgs e)
@@ -232,6 +195,8 @@ namespace MyoUWP
                 tblUpdates.Text = "Pose Sequence completed";
             });
         }
+
+
 
         private async void Pose_Triggered(object sender, PoseEventArgs e)
         {
@@ -254,7 +219,8 @@ namespace MyoUWP
                     case Pose.Rest:
                         break;
                     case Pose.Fist:
-                        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);            
+                        _orientationTimer.Start();
+                        // eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);            
                         break;
                     case Pose.WaveIn:
                         // eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 10);
@@ -263,7 +229,7 @@ namespace MyoUWP
                         // eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 10);
                         break;
                     case Pose.FingersSpread:
-                        // eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 10);
+                        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
                         break;
                     case Pose.DoubleTap:
                         break;
@@ -282,5 +248,6 @@ namespace MyoUWP
             
 
         }
+
     }
 }

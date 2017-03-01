@@ -34,16 +34,14 @@ namespace MyoUWP
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
 
-        // Example one Shape created on page load
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loading(FrameworkElement sender, object args)
         {
             CreateShip();
             CreateAllDebris();
-
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
 
@@ -111,7 +109,7 @@ namespace MyoUWP
 
 
 
-        private void CreateAllDebris()
+        private  void CreateAllDebris()
         {
             int numberOfRectangles = 900;
 
@@ -152,6 +150,8 @@ namespace MyoUWP
                 cvsRoller.Children.Add(ship);
             }
         }
+
+        
 
 
 

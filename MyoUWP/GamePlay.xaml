@@ -5,15 +5,18 @@
     xmlns:local="using:MyoUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock x:Name="tblUpdates" Text="Updates" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="10, 20, 0, 0" />
+        
         <StackPanel Visibility="Visible" Orientation="Horizontal" Margin="10,50, 0,0" HorizontalAlignment="Left" >
             <TextBlock x:Name="tblXValue" Text="x: " Margin="5" Foreground="Red" FontSize="28"/>
             <TextBlock x:Name="tblYValue" Text="x: " Margin="5" Foreground="Green" FontSize="28"/>
             <TextBlock x:Name="tblZValue" Text="x: " Margin="5" Foreground="Blue" FontSize="28"/>
         </StackPanel>
+        
         <Canvas x:Name="cvsLines">
             <Line x:Name="pitchLine" X1="200" Y1="350" X2="200" Y2="350" Stroke="Red" StrokeThickness="4" />
             <Line x:Name="yawLine" X1="200" Y1="350" X2="200" Y2="350" Stroke="Green" StrokeThickness="4" />
@@ -21,18 +24,11 @@
         </Canvas>
 
         <Canvas x:Name="cvsRoller" Height="500" VerticalAlignment="Center" Background="Gray"  >
-            <Rectangle x:Name="eMyo" Height="40" Width="40" Fill="white" 
-                     Canvas.Left="150" Canvas.Top="175" />
+            <Rectangle x:Name="eMyo" Height="40" Width="40" Fill="white" Canvas.Left="200" Canvas.Top="450" />
         </Canvas>
-        
-        <StackPanel Visibility="Visible" Orientation="Horizontal" Margin="0,500, 0,0" HorizontalAlignment="Center" >
-            <TextBlock x:Name="tblXGyro" Text="x: " Margin="5" Foreground="Red" FontSize="28"/>
-            <TextBlock x:Name="tblYGyro" Text="x: " Margin="5" Foreground="Green" FontSize="28"/>
-            <TextBlock x:Name="tblZGyro" Text="x: " Margin="5" Foreground="Blue" FontSize="28"/>
-        </StackPanel>
 
-        <Button x:Name="btnMyo" Content="Find Myo" HorizontalAlignment="Center" 
-                Margin="0, 0, 0, 25" VerticalAlignment="Bottom" Click="btnMyo_Click"/>
+        <!--<Button x:Name="btnMyo" Content="Find Myo" HorizontalAlignment="Center" 
+                Margin="0, 0, 0, 25" VerticalAlignment="Bottom" Click="btnMyo_Click"/>-->
 
     </Grid>
 </Page>
