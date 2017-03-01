@@ -82,8 +82,8 @@ namespace MyoUWP
             MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
             await message.ShowAsync();
 
-            // Frame.Navigate(typeof(Test));
-            Frame.Navigate(typeof(GamePlay));
+            Frame.Navigate(typeof(Test));
+            // Frame.Navigate(typeof(GamePlay));
         }
 
 
