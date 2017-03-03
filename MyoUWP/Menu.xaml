@@ -12,21 +12,21 @@
         <!-- Multiple copies of the Header text with varying levels of opacity -->
         <StackPanel Margin="0 50 0 0">
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.2" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.15"
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.1" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.05" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.03" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.02" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
             <TextBlock HorizontalAlignment="Center" FontFamily="Century-Gothic" Opacity="0.01" 
-                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Maze Mayhem" />
+                            FontSize="28" Foreground="White" FontWeight="ExtraBold" Text="Myo Mars Mayhem" />
         </StackPanel>
 
         <StackPanel Margin="0 275 0 0">
@@ -58,7 +58,7 @@
                     Height="35"
                     Width="140"
                     x:Name="connectMyoButton"
-                    Content="Connect Your Myo" />
+                    Content="Play using MYO" />
 
 
             <StackPanel>
@@ -86,7 +86,7 @@
                     Margin="0 0 0 20"
                     x:Name="startButton"
                     Width="140"
-                    Content="Start Game"
+                    Content="Play using Keys"
                     Click="startButton_Click" />
 
             <StackPanel>

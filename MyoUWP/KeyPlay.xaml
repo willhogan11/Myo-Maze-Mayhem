@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="MyoUWP.KeyPlay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyoUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+    
+
+    <Grid x:Name="layoutRoot" Width="Auto" Background="LightSteelBlue">
+
+        <StackPanel Orientation="Vertical" Margin="150 0 0 0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="rect1X" Width="150" Foreground="Black" FontSize="15" />
+                <TextBlock x:Name="rect1Y" Width="150" Foreground="Black" FontSize="15" />
+            </StackPanel>
+        </StackPanel>
+
+        <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
+
+            <StackPanel x:Name="objectHolder" Height="550" Width="1000"></StackPanel>
+
+            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />
+            <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Brown" Canvas.Left="250" Canvas.Top="50" />
+
+            <Rectangle x:Name="randomBlock" Fill="Brown" Height="50" Width="50" Canvas.Left="700" Canvas.Top="300" />
+
+            <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
+                        Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
+                <TextBlock Foreground="Red" FontSize="15" Text="ESCAPE" />
+                <TextBlock Foreground="Red" FontSize="15" Text="POD" />
+            </StackPanel>
+
+            <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
+                        Background="Beige" Width="60" Height="60" Margin="0 490 0 0">
+                <TextBlock Foreground="Red" FontSize="15" Text="MARS" />
+                <TextBlock Foreground="Red" FontSize="15" Text="HAB-1" />
+            </StackPanel>
+
+            <StackPanel Canvas.ZIndex="1" Visibility="Collapsed" x:Name="winGame" Margin="300 120 0 0" Width="400" Height="Auto">
+                <TextBlock x:Name="gameText" HorizontalAlignment="Center" FontWeight="Bold" Visibility="Visible" 
+                           TextAlignment="Center" TextWrapping="Wrap" Foreground="Black" FontSize="60" />
+            </StackPanel>
+        </Canvas>
+
+        <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Vertical" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
+
+            <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
+        </StackPanel>
+
+        <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
+                   FontSize="25" Text="Ready? Move to Start" TextAlignment="Center" />
+
+        <!--<TextBlock
+        Name="MyFadingText"
+        Margin="20" 
+        Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Maroon">
+        This is fading text
+         Animates the text block's opacity. 
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="TextBlock.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                  Storyboard.TargetName="MyFadingText" 
+                  Storyboard.TargetProperty="(TextBlock.Opacity)"
+                  From="1.0" To="0.0" Duration="0:0:5" 
+                  AutoReverse="True" RepeatBehavior="Forever" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>-->
+
+
+
+    </Grid>
+</Page>

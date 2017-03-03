@@ -70,9 +70,13 @@ namespace MyoUWP
         }
 
 
-        private void connectMyoButton_Click(object sender, RoutedEventArgs e)
+        private async void connectMyoButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            loadingText.Text += "LOADING GAME\nPLEASE WAIT.....";
+            MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
+            await message.ShowAsync();
+
+            Frame.Navigate(typeof(Test));
         }
 
 
@@ -82,8 +86,8 @@ namespace MyoUWP
             MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
             await message.ShowAsync();
 
-            Frame.Navigate(typeof(Test));
-            // Frame.Navigate(typeof(GamePlay));
+            Frame.Navigate(typeof(KeyPlay));
+            
         }
 
 
