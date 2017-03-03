@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 
@@ -16,9 +18,10 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class Menu : Page
     {
+
         public Menu()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();     
         }
 
 
@@ -76,7 +79,7 @@ namespace MyoUWP
             MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
             await message.ShowAsync();
 
-            Frame.Navigate(typeof(Test));
+            Frame.Navigate(typeof(MyoPlay));
         }
 
 
@@ -87,7 +90,6 @@ namespace MyoUWP
             await message.ShowAsync();
 
             Frame.Navigate(typeof(KeyPlay));
-            
         }
 
 

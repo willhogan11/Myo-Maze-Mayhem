@@ -117,8 +117,8 @@
                     Click="howToPlayButton_Click" 
                     Margin="110,0" />
 
-            <TextBlock x:Name="loadingText" Foreground="White" 
-                       FontFamily="Century-gothic" Margin="0 40 0 0" Width="Auto" TextAlignment="Center"/>
+            <TextBlock x:Name="loadingText" Foreground="White" FontFamily="Century-gothic" 
+                       Margin="0 40 0 0" Width="Auto" TextAlignment="Center"/>
 
         </StackPanel>
 

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -22,7 +23,7 @@ namespace MyoUWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Test : Page
+    public sealed partial class MyoPlay : Page
     {
 
         // Myo Related variable Declarations
@@ -47,7 +48,7 @@ namespace MyoUWP
         private Boolean keyCount = false;
 
 
-        public Test()
+        public MyoPlay()
         {
             this.InitializeComponent();
             setupTimers();
@@ -64,42 +65,55 @@ namespace MyoUWP
         }
 
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            // communication, device, exceptions, poses
-            // create the channel
-            _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                    MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
+            try
+            {
+                // communication, device, exceptions, poses
+                // create the channel
 
-            // create the hub with the channel
-            _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
-            // create the event handlers for connect and disconnect
-            _myoHub.MyoConnected += _myoHub_MyoConnected;
-            _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
+                if(_myoChannel == null)
+                {
+                    Frame.Navigate(typeof(Menu));
+                    MessageDialog message = new MessageDialog("Issue with Connection to Myo......");
+                    await message.ShowAsync();
+                }
+                else
+                {
+                    _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
+                                       MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-            // start listening 
-            _myoChannel.StartListening();
+                    // create the hub with the channel
+                    _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
+                    // create the event handlers for connect and disconnect
+                    _myoHub.MyoConnected += _myoHub_MyoConnected;
+                    _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
+
+                    // start listening 
+                    _myoChannel.StartListening();
 
 
-            // create the channel
-            _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                    MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
+                    // create the channel
+                    _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
+                                            MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-            // create the hub with the channel
-            _myoHub1 = MyoSharp.Device.Hub.Create(_myoChannel1);
-            // create the event handlers for connect and disconnect
-            _myoHub1.MyoConnected += _myoHub_MyoConnected;
-            _myoHub1.MyoDisconnected += _myoHub_MyoDisconnected;
+                    // create the hub with the channel
+                    _myoHub1 = MyoSharp.Device.Hub.Create(_myoChannel1);
+                    // create the event handlers for connect and disconnect
+                    _myoHub1.MyoConnected += _myoHub_MyoConnected;
+                    _myoHub1.MyoDisconnected += _myoHub_MyoDisconnected;
 
-            // start listening 
-            _myoChannel1.StartListening();
-
+                    // start listening 
+                    _myoChannel1.StartListening();
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                throw;
+            }
         }
-
-
-
-
-       
 
 
 
