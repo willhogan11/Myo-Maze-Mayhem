@@ -52,7 +52,8 @@ namespace MyoUWP
             this.InitializeComponent();
             setupTimers();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            
+            // Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
 
@@ -98,39 +99,7 @@ namespace MyoUWP
 
 
 
-        #region timers methods
-        private void setupTimers()
-        {
-            if (_orientationTimer == null)
-            {
-                _orientationTimer = new DispatcherTimer();
-                _orientationTimer.Interval = TimeSpan.FromMilliseconds(10);
-                _orientationTimer.Tick += _orientationTimer_Tick;
-            }
-        }
-
-
-
-        private void _orientationTimer_Tick(object sender, object e)
-        {
-            if (_currentRoll < 0)
-            {   // move to the right
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
-            }
-            else if (_currentPitch >= 0)
-            {   // Move up
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
-            }
-            else if (_currentRoll >= 0)
-            {   // move to the left
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
-            }
-            else if (_currentPitch < 0)
-            {   // Move down
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
-            }
-        }
-        #endregion
+       
 
 
 
@@ -163,12 +132,12 @@ namespace MyoUWP
 
             // unlock the Myo so that it doesn't keep locking between our poses
             e.Myo.Unlock(UnlockType.Hold);
+            
 
             try
             {
                 var sequence = PoseSequence.Create(e.Myo, Pose.FingersSpread, Pose.WaveIn);
                 sequence.PoseSequenceCompleted += Sequence_PoseSequenceCompleted;
-
             }
             catch (Exception myoErr)
             {
@@ -176,6 +145,45 @@ namespace MyoUWP
             }
 
         }
+
+
+
+        #region timers methods
+        private void setupTimers()
+        {
+            if (_orientationTimer == null)
+            {
+                _orientationTimer = new DispatcherTimer();
+                _orientationTimer.Interval = TimeSpan.FromMilliseconds(10);
+                _orientationTimer.Tick += _orientationTimer_Tick;
+            }
+        }
+
+
+
+        private void _orientationTimer_Tick(object sender, object e)
+        {
+            if (_currentRoll < 0)
+            {   // move to the right
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+            }
+            else if (_currentPitch >= 0)
+            {   // Move up
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+            }
+            else if (_currentRoll >= 0)
+            {   // move to the left
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+            }
+            else if (_currentPitch < 0)
+            {   // Move down
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+            }
+            detectCollision(sender, e);
+        }
+        #endregion
+
+
 
 
 
@@ -247,6 +255,9 @@ namespace MyoUWP
                         break;
                     case Pose.Fist:
                         _orientationTimer.Start();
+                        myStopwatchTimer.Start();
+                        stopWatch.Start();
+                        readyText.Visibility = Visibility.Collapsed;
                         // eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);            
                         break;
                     case Pose.WaveIn:
@@ -327,7 +338,9 @@ namespace MyoUWP
                 stopWatch.Stop();
                 debrisArray.Clear();
                 eMyo.Fill = redBrush;
-                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
+                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = ("YOU RAN OUT OF TIME!");
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -438,35 +451,35 @@ namespace MyoUWP
 
         
         // Get key press events working first or as a backup if myo isn't available or can't connect
-        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
-        {
-            if (keyCount == false)
-            {
-                myStopwatchTimer.Start();
-                stopWatch.Start();
-                readyText.Visibility = Visibility.Collapsed;
-            }
+        //private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
+        //{
+        //    if (keyCount == false)
+        //    {
+        //        myStopwatchTimer.Start();
+        //        stopWatch.Start();
+        //        readyText.Visibility = Visibility.Collapsed;
+        //    }
 
-            keyCount = true;
+        //    keyCount = true;
 
-            if (args.VirtualKey == VirtualKey.Down)
-            {
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
-            }
-            if (args.VirtualKey == VirtualKey.Up)
-            {
-                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
-            }
-            if (args.VirtualKey == VirtualKey.Left)
-            {
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
-            }
-            if (args.VirtualKey == VirtualKey.Right)
-            {
-                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
-            }
-            detectCollision(sender, args);
-        }
+        //    if (args.VirtualKey == VirtualKey.Down)
+        //    {
+        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+        //    }
+        //    if (args.VirtualKey == VirtualKey.Up)
+        //    {
+        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+        //    }
+        //    if (args.VirtualKey == VirtualKey.Left)
+        //    {
+        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+        //    }
+        //    if (args.VirtualKey == VirtualKey.Right)
+        //    {
+        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+        //    }
+        //    detectCollision(sender, args);
+        //}
 
 
         private void detectCollision(object sender, object e)
@@ -495,7 +508,9 @@ namespace MyoUWP
                     Debug.WriteLine("Collision Detected");
                     eMyo.Fill = redBrush;
 
-                    Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+                    // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
+                    _orientationTimer.Stop();
 
                     debrisArray.Clear();
 
@@ -531,7 +546,8 @@ namespace MyoUWP
             {
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = "YOU REACHED THE ESCAPE POD!";
-                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
                 myStopwatchTimer.Stop();
                 stopWatch.Stop();
                 debrisArray.Clear();
@@ -540,6 +556,11 @@ namespace MyoUWP
 
             rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
+        }
+
+        private void _myoHub_MyoDisconnected1(object sender, MyoEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
