@@ -5,7 +5,6 @@ using MyoSharp.Poses;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -45,7 +44,9 @@ namespace MyoUWP
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
         private long ms, ss, mm, hh, dd;
-        private Boolean keyCount = false;
+        private bool myoMove = true;
+        // private bool keyCount = false;
+
 
 
         public MyoPlay()
@@ -53,7 +54,8 @@ namespace MyoUWP
             this.InitializeComponent();
             setupTimers();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            
+            readyText.Text = "Ready? Make a Fist to Start";
+
             // Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
@@ -72,17 +74,17 @@ namespace MyoUWP
                 // communication, device, exceptions, poses
                 // create the channel
 
-                if(_myoChannel == null)
+                _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
+                                      MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
+
+                if (_myoChannel == null)
                 {
                     Frame.Navigate(typeof(Menu));
-                    MessageDialog message = new MessageDialog("Issue with Connection to Myo......");
+                    MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
                     await message.ShowAsync();
                 }
                 else
                 {
-                    _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                       MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
-
                     // create the hub with the channel
                     _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
                     // create the event handlers for connect and disconnect
@@ -268,17 +270,17 @@ namespace MyoUWP
                     case Pose.Rest:
                         break;
                     case Pose.Fist:
-                        _orientationTimer.Start();
-                        myStopwatchTimer.Start();
-                        stopWatch.Start();
-                        readyText.Visibility = Visibility.Collapsed;
-                        // eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);            
+                        if(myoMove)
+                        {
+                            _orientationTimer.Start();
+                            myStopwatchTimer.Start();
+                            stopWatch.Start();
+                            readyText.Visibility = Visibility.Collapsed;
+                        }          
                         break;
                     case Pose.WaveIn:
-                        // eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 10);
                         break;
                     case Pose.WaveOut:
-                        // eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 10);
                         break;
                     case Pose.FingersSpread:
                         eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
@@ -340,32 +342,36 @@ namespace MyoUWP
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
 
-            if(gameTimer.Text == "00:20")
+            if(gameTimer.Text == "00:30")
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
             }
 
-            if (gameTimer.Text == "00:30")
+            if (gameTimer.Text == "0:40")
             {
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = ("YOU RAN OUT OF TIME!");
+                myoMove = false;
+
                 myStopwatchTimer.Stop();
                 stopWatch.Stop();
+                _orientationTimer.Stop();
+
                 debrisArray.Clear();
                 eMyo.Fill = redBrush;
 
-                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-
-                winGame.Visibility = Visibility.Visible;
-                gameText.Text = ("YOU RAN OUT OF TIME!");
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
             }
         }
 
 
 
-        private  void CreateAllDebris()
+        private void CreateAllDebris()
         {
-            int numberOfRectangles = 900;
+            int numberOfRectangles = 500;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -463,7 +469,7 @@ namespace MyoUWP
         }
 
 
-        
+        #region KeyEvents
         // Get key press events working first or as a backup if myo isn't available or can't connect
         //private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         //{
@@ -494,17 +500,13 @@ namespace MyoUWP
         //    }
         //    detectCollision(sender, args);
         //}
+        #endregion
 
 
         private void detectCollision(object sender, object e)
         {
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
             SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
-
-            debris.RadiusX = (float)Canvas.GetLeft(randomBlock);
-            debris.RadiusY = (float)Canvas.GetTop(randomBlock);
-            debris.Width = (float)randomBlock.Width;
-            debris.Height = (float)randomBlock.Height;
 
             ship.RadiusX = (float)Canvas.GetLeft(eMyo);
             ship.RadiusY = (float)Canvas.GetTop(eMyo);
@@ -524,12 +526,13 @@ namespace MyoUWP
 
                     // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
-                    _orientationTimer.Stop();
-
-                    debrisArray.Clear();
-
                     winGame.Visibility = Visibility.Visible;
                     gameText.Text = ("YOU CRASHED, GAME OVER");
+                    debrisArray.Clear();
+
+                    myoMove = false;
+
+                    _orientationTimer.Stop();
                     myStopwatchTimer.Stop();
                     stopWatch.Stop();
 
@@ -560,8 +563,12 @@ namespace MyoUWP
             {
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = "YOU REACHED THE ESCAPE POD!";
+
                 // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
+                myoMove = false;
+
+                _orientationTimer.Stop();
                 myStopwatchTimer.Stop();
                 stopWatch.Stop();
                 debrisArray.Clear();
@@ -570,11 +577,6 @@ namespace MyoUWP
 
             rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
-        }
-
-        private void _myoHub_MyoDisconnected1(object sender, MyoEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }

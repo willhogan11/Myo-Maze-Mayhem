@@ -20,12 +20,7 @@
 
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
 
-            <StackPanel x:Name="objectHolder" Height="550" Width="1000"></StackPanel>
-            
             <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />
-            <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Brown" Canvas.Left="250" Canvas.Top="50" />
-
-            <Rectangle x:Name="randomBlock" Fill="Brown" Height="50" Width="50" Canvas.Left="700" Canvas.Top="300" />
 
             <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
                         Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
@@ -53,7 +48,12 @@
         </StackPanel>
 
         <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
-                   FontSize="25" Text="Ready? Move to Start" TextAlignment="Center" />
+                   FontSize="25"  TextAlignment="Center" />
+
+        
+        <!-- Text="" -->
+        
+        
 
         <!--<TextBlock
         Name="MyFadingText"
