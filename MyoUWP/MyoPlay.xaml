@@ -11,11 +11,21 @@
 
     <Grid x:Name="layoutRoot" Width="Auto" Background="LightSteelBlue">
 
-        <StackPanel Orientation="Vertical" Margin="150 0 0 0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="rect1X" Width="150" Foreground="Black" FontSize="15" />
-                <TextBlock x:Name="rect1Y" Width="150" Foreground="Black" FontSize="15" />
-            </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="180 20 0 0">
+            <TextBlock Text="Rover Coordinates:" FontWeight="ExtraBold" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="180 40 0 0">
+            <TextBlock x:Name="rect1X" Width="150" Foreground="Black" FontSize="15" />
+            <TextBlock x:Name="rect1Y" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 20 110 0">
+            <TextBlock Text="MYO Info:" FontWeight="ExtraBold" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="0 40 180 0">
+            <TextBlock x:Name="tblUpdates" FontSize="15" />
         </StackPanel>
 
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
@@ -42,40 +52,12 @@
 
         <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Horizontal" 
                     VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
-            
             <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
-            <TextBlock x:Name="tblUpdates" FontSize="25" />
+           
         </StackPanel>
 
-        <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
-                   FontSize="25"  TextAlignment="Center" />
+        <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" 
+                   FontWeight="Bold" FontSize="25"  TextAlignment="Center" />
 
-        
-        <!-- Text="" -->
-        
-        
-
-        <!--<TextBlock
-        Name="MyFadingText"
-        Margin="20" 
-        Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Maroon">
-        This is fading text
-
-         Animates the text block's opacity. 
-            <TextBlock.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                  Storyboard.TargetName="MyFadingText" 
-                  Storyboard.TargetProperty="(TextBlock.Opacity)"
-                  From="1.0" To="0.0" Duration="0:0:5" 
-                  AutoReverse="True" RepeatBehavior="Forever" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </TextBlock.Triggers>
-        </TextBlock>-->
-        
     </Grid>
 </Page>

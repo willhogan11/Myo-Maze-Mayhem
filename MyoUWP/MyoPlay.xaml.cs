@@ -342,13 +342,13 @@ namespace MyoUWP
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
 
-            if(gameTimer.Text == "00:30")
+            if(gameTimer.Text == "1:50")
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
             }
 
-            if (gameTimer.Text == "0:40")
+            if (gameTimer.Text == "2:00")
             {
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = ("YOU RAN OUT OF TIME!");
@@ -371,7 +371,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 500;
+            int numberOfRectangles = 300;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -575,8 +575,8 @@ namespace MyoUWP
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
 
-            rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
-            rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
+            rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
+            rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
         }
     }
 }
