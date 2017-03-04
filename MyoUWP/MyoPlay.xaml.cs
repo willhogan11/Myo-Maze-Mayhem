@@ -395,6 +395,7 @@ namespace MyoUWP
         }
 
 
+       
         private void CreateShip()
         {
             if (ship == null)
@@ -577,6 +578,24 @@ namespace MyoUWP
 
             rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
+        }
+
+
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((bool)easy.IsChecked)
+            {
+                Debug.WriteLine("Easy Was checked");
+            }
+            else if ((bool)medium.IsChecked)
+            {
+                Debug.WriteLine("Medium Was checked");
+            }
+            else if ((bool)hard.IsChecked)
+            {
+                Debug.WriteLine("Hard Was checked");
+            }
         }
     }
 }
