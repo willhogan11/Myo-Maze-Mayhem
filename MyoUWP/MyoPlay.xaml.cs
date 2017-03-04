@@ -45,16 +45,37 @@ namespace MyoUWP
         Stopwatch stopWatch;
         private long ms, ss, mm, hh, dd;
         private bool myoMove = true;
-        // private bool keyCount = false;
+        string easyLevel;
+        string mediumLevel;
+        string hardLevel;
 
+        Dictionary<String, String> difficulty; // = new Dictionary<string, string>();
+        List<string> levelTimes;
 
 
         public MyoPlay()
         {
             this.InitializeComponent();
             setupTimers();
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             readyText.Text = "Ready? Make a Fist to Start";
+
+            difficulty = new Dictionary<string, string>();
+            difficulty.Add("easy", "01:30");
+            difficulty.Add("medium", "01:00");
+            difficulty.Add("hard", "00:30");
+
+            levelTimes = new List<string>();
+            levelTimes.Add("01:30");
+            levelTimes.Add("01:00");
+            levelTimes.Add("00:30");
+
+            foreach (KeyValuePair<string, string> entry in difficulty)
+            {
+                Debug.WriteLine("Key: " + entry.Key);
+                Debug.WriteLine("Value: " + entry.Value);
+            }
 
             // Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
@@ -216,22 +237,6 @@ namespace MyoUWP
             });
         }
 
-        //private void showOrientationData(double pitch, double yaw, double roll)
-        //{
-
-        //    var pitchDegree = (pitch * 180.0) / System.Math.PI;
-        //    var yawDegree = (yaw * 180.0) / System.Math.PI;
-        //    var rollDegree = (roll * 180.0) / System.Math.PI;
-
-        //    tblXValue.Text = "Pitch: " + (pitchDegree).ToString("0.00");
-        //    tblYValue.Text = "Yaw: " + (yawDegree).ToString("0.00");
-        //    tblZValue.Text = "Roll: " + (rollDegree).ToString("0.00");
-
-        //    pitchLine.X2 = pitchLine.X1 + pitchDegree;
-        //    yawLine.Y2 = yawLine.Y1 - yawDegree;
-        //    rollLine.X2 = rollLine.X1 - rollDegree;
-        //    rollLine.Y2 = rollLine.Y1 + rollDegree;
-        //}
         #endregion
 
 
@@ -342,13 +347,17 @@ namespace MyoUWP
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
 
-            if(gameTimer.Text == "1:50")
+            if ( (gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
+                 (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
+                 (gameTimer.Text == "01:30" && (bool)easy.IsChecked) )
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
             }
 
-            if (gameTimer.Text == "2:00")
+            if ( (gameTimer.Text == levelTimes[2].ToString() && (bool)hard.IsChecked) || 
+                 (gameTimer.Text == levelTimes[1].ToString() && (bool)medium.IsChecked) ||
+                 (gameTimer.Text == levelTimes[0].ToString() && (bool)easy.IsChecked) )
             {
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = ("YOU RAN OUT OF TIME!");
@@ -362,8 +371,6 @@ namespace MyoUWP
                 eMyo.Fill = redBrush;
 
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
-                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
             }
         }
 
@@ -416,7 +423,7 @@ namespace MyoUWP
 
 
 
-        #region
+        #region CreateEllipse
         private void CreateEllipse()
         {
             Random random = new Random();
@@ -470,39 +477,7 @@ namespace MyoUWP
         }
 
 
-        #region KeyEvents
-        // Get key press events working first or as a backup if myo isn't available or can't connect
-        //private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
-        //{
-        //    if (keyCount == false)
-        //    {
-        //        myStopwatchTimer.Start();
-        //        stopWatch.Start();
-        //        readyText.Visibility = Visibility.Collapsed;
-        //    }
-
-        //    keyCount = true;
-
-        //    if (args.VirtualKey == VirtualKey.Down)
-        //    {
-        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Up)
-        //    {
-        //        eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Left)
-        //    {
-        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
-        //    }
-        //    if (args.VirtualKey == VirtualKey.Right)
-        //    {
-        //        eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
-        //    }
-        //    detectCollision(sender, args);
-        //}
-        #endregion
-
+      
 
         private void detectCollision(object sender, object e)
         {
@@ -524,8 +499,6 @@ namespace MyoUWP
                 {
                     Debug.WriteLine("Collision Detected");
                     eMyo.Fill = redBrush;
-
-                    // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
                     winGame.Visibility = Visibility.Visible;
                     gameText.Text = ("YOU CRASHED, GAME OVER");
@@ -565,8 +538,6 @@ namespace MyoUWP
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = "YOU REACHED THE ESCAPE POD!";
 
-                // Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-
                 myoMove = false;
 
                 _orientationTimer.Stop();
@@ -586,16 +557,20 @@ namespace MyoUWP
         {
             if ((bool)easy.IsChecked)
             {
-                Debug.WriteLine("Easy Was checked");
+                easyLevel = levelTimes[0];
+                Debug.WriteLine("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
-                Debug.WriteLine("Medium Was checked");
+                mediumLevel = levelTimes[1];
+                Debug.WriteLine("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
-                Debug.WriteLine("Hard Was checked");
+                hardLevel = levelTimes[2];
+                Debug.WriteLine("Hard Was checked " + hardLevel);
             }
+            difficultyStPanel.Visibility = Visibility.Collapsed;
         }
     }
 }
