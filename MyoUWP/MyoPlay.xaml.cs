@@ -42,8 +42,12 @@ namespace MyoUWP
         Rectangle ship;
 
         List<Rectangle> debrisArray = new List<Rectangle>();
+
         List<string> levelTimes;
-        Dictionary<String, String> difficulty;
+        List<string> namesList;
+        Dictionary<string, string> gameNameScores; 
+
+        Dictionary<string, string> difficulty;
         
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
@@ -425,7 +429,6 @@ namespace MyoUWP
             }
         }
 
-        
 
 
 
@@ -551,6 +554,10 @@ namespace MyoUWP
                 stopWatch.Stop();
                 debrisArray.Clear();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                enterName.Visibility = Visibility.Visible;
+
+                // EnterName_Click(sender, e);
             }
 
             rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
@@ -582,5 +589,22 @@ namespace MyoUWP
             difficultyStPanel.Visibility = Visibility.Collapsed;
             readyText.Text = "Ready? Make a Fist to Start";
         }
+
+
+
+        private void EnterName_Click(object sender, RoutedEventArgs e)
+        {
+            gameNameScores = new Dictionary<string, string>();
+
+            string usersName = name.Text;
+            gameNameScores.Add(usersName, difficultyInfo.Text);
+
+            foreach (KeyValuePair<string, string> entry in gameNameScores)
+            {
+                Debug.WriteLine("Key: " + entry.Key);
+                Debug.WriteLine("Value: " + entry.Value);
+            }
+        }
+
     }
 }
