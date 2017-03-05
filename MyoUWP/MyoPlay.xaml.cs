@@ -44,9 +44,7 @@ namespace MyoUWP
         List<Rectangle> debrisArray = new List<Rectangle>();
 
         List<string> levelTimes;
-        List<string> namesList;
         Dictionary<string, string> gameNameScores; 
-
         Dictionary<string, string> difficulty;
         
         DispatcherTimer myStopwatchTimer;
@@ -388,7 +386,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 500;
+            int numberOfRectangles = 10;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -571,19 +569,19 @@ namespace MyoUWP
             if ((bool)easy.IsChecked)
             {
                 easyLevel = levelTimes[0];
-                difficultyInfo.Text = "Level: Easy. Time: " + easyLevel;
+                difficultyInfo.Text = "Level: Easy";
                 Debug.WriteLine("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
                 mediumLevel = levelTimes[1];
-                difficultyInfo.Text = "Level: Medium. Time: " + mediumLevel;
+                difficultyInfo.Text = "Level: Medium";
                 Debug.WriteLine("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
                 hardLevel = levelTimes[2];
-                difficultyInfo.Text = "Level: Hard. Time: " + hardLevel;
+                difficultyInfo.Text = "Level: Hard";
                 Debug.WriteLine("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
@@ -597,12 +595,14 @@ namespace MyoUWP
             gameNameScores = new Dictionary<string, string>();
 
             string usersName = name.Text;
-            gameNameScores.Add(usersName, difficultyInfo.Text);
+            string finishedState = "GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
+
+            gameNameScores.Add(usersName, finishedState);
 
             foreach (KeyValuePair<string, string> entry in gameNameScores)
             {
-                Debug.WriteLine("Key: " + entry.Key);
-                Debug.WriteLine("Value: " + entry.Value);
+                Debug.WriteLine("NAME : " + entry.Key + " ---- " + entry.Value);
+                // resultEntered.Text = ("NAME : " + entry.Key + " ---- " + entry.Value);
             }
         }
 
