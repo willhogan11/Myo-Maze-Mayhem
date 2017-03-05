@@ -50,20 +50,28 @@
             </StackPanel>
         </Canvas>
 
-        <StackPanel BorderBrush="LightGray" BorderThickness="3" Orientation="Horizontal" 
-                    VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
-            <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
-           
-        </StackPanel>
-
         <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" 
                    FontWeight="Bold" FontSize="25"  TextAlignment="Center" />
 
-        <StackPanel x:Name="difficultyStPanel" Padding="30" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightSteelBlue">
+        <StackPanel BorderBrush="LightBlue" BorderThickness="5" x:Name="difficultyStPanel" Padding="30" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightSteelBlue">
             <TextBlock FontFamily="Century-Gothic" FontSize="30" Text="Choose a Difficulty:" />
-            <RadioButton x:Name="easy" Content="Easy" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
-            <RadioButton x:Name="medium" Content="Medium" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
-            <RadioButton x:Name="hard" Content="Hard" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="easy" Content="Easy (1m:30s )" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="medium" Content="Medium (1m:00s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="hard" Content="Hard (0m:30s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+        </StackPanel>
+
+        <StackPanel BorderBrush="LightBlue" BorderThickness="3" Orientation="Horizontal" 
+                    VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
+            <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0 20 110 30">
+            <TextBlock Text="Game Info:" FontWeight="ExtraBold" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right" Margin="0 30 180 10">
+            <TextBlock x:Name="difficultyInfo" FontSize="15" />
         </StackPanel>
 
     </Grid>

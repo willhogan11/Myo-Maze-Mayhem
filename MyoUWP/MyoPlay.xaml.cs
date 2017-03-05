@@ -40,44 +40,30 @@ namespace MyoUWP
         Canvas myCanvas;
         Rectangle debris;
         Rectangle ship;
+
         List<Rectangle> debrisArray = new List<Rectangle>();
+        List<string> levelTimes;
+        Dictionary<String, String> difficulty;
+        
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
+
         private long ms, ss, mm, hh, dd;
         private bool myoMove = true;
         string easyLevel;
         string mediumLevel;
         string hardLevel;
-
-        Dictionary<String, String> difficulty; // = new Dictionary<string, string>();
-        List<string> levelTimes;
+        
 
 
         public MyoPlay()
         {
             this.InitializeComponent();
+
             setupTimers();
+            PrepareGameData();
 
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            readyText.Text = "Ready? Make a Fist to Start";
-
-            difficulty = new Dictionary<string, string>();
-            difficulty.Add("easy", "01:30");
-            difficulty.Add("medium", "01:00");
-            difficulty.Add("hard", "00:30");
-
-            levelTimes = new List<string>();
-            levelTimes.Add("01:30");
-            levelTimes.Add("01:00");
-            levelTimes.Add("00:30");
-
-            foreach (KeyValuePair<string, string> entry in difficulty)
-            {
-                Debug.WriteLine("Key: " + entry.Key);
-                Debug.WriteLine("Value: " + entry.Value);
-            }
-
-            // Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
 
@@ -94,7 +80,6 @@ namespace MyoUWP
             {
                 // communication, device, exceptions, poses
                 // create the channel
-
                 _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
                                       MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
@@ -135,6 +120,27 @@ namespace MyoUWP
             {
                 Debug.WriteLine(ex.StackTrace);
                 throw;
+            }
+        }
+
+
+
+        private void PrepareGameData()
+        {
+            difficulty = new Dictionary<string, string>();
+            difficulty.Add("easy", "01:30");
+            difficulty.Add("medium", "01:00");
+            difficulty.Add("hard", "00:30");
+
+            levelTimes = new List<string>();
+            levelTimes.Add("01:30");
+            levelTimes.Add("01:00");
+            levelTimes.Add("00:30");
+
+            foreach (KeyValuePair<string, string> entry in difficulty)
+            {
+                Debug.WriteLine("Key: " + entry.Key);
+                Debug.WriteLine("Value: " + entry.Value);
             }
         }
 
@@ -378,7 +384,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 300;
+            int numberOfRectangles = 500;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -558,19 +564,23 @@ namespace MyoUWP
             if ((bool)easy.IsChecked)
             {
                 easyLevel = levelTimes[0];
+                difficultyInfo.Text = "Level: Easy. Time: " + easyLevel;
                 Debug.WriteLine("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
                 mediumLevel = levelTimes[1];
+                difficultyInfo.Text = "Level: Medium. Time: " + mediumLevel;
                 Debug.WriteLine("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
                 hardLevel = levelTimes[2];
+                difficultyInfo.Text = "Level: Hard. Time: " + hardLevel;
                 Debug.WriteLine("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
+            readyText.Text = "Ready? Make a Fist to Start";
         }
     }
 }
