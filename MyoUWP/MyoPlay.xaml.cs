@@ -5,6 +5,7 @@ using MyoSharp.Poses;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -44,7 +45,10 @@ namespace MyoUWP
         List<Rectangle> debrisArray = new List<Rectangle>();
 
         List<string> levelTimes;
-        Dictionary<string, string> gameNameScores; 
+
+        List<string> gameNameScores;
+
+        // Dictionary<string, string> gameNameScores; 
         Dictionary<string, string> difficulty;
         
         DispatcherTimer myStopwatchTimer;
@@ -592,18 +596,44 @@ namespace MyoUWP
 
         private void EnterName_Click(object sender, RoutedEventArgs e)
         {
-            gameNameScores = new Dictionary<string, string>();
+            // gameNameScores = new Dictionary<string, string>();
+            gameNameScores = new List<string>();
 
-            string usersName = name.Text;
-            string finishedState = "GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
+            string finishedState = "Name: " + name.Text + " ---- " + " GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
 
-            gameNameScores.Add(usersName, finishedState);
+            gameNameScores.Add(finishedState);
 
-            foreach (KeyValuePair<string, string> entry in gameNameScores)
+            setupLocalStorage();
+        }
+
+
+        private async void setupLocalStorage()
+        {
+            // 1. get the link to the settings container
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            var value = localSettings.Values["scores"];
+
+            value = gameNameScores;
+
+            Debug.WriteLine(value);
+
+            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+            StorageFile highScoresFile;
+            string fileText = "";
+
+            try
             {
-                Debug.WriteLine("NAME : " + entry.Key + " ---- " + entry.Value);
-                // resultEntered.Text = ("NAME : " + entry.Key + " ---- " + entry.Value);
+                highScoresFile = await storageFolder.CreateFileAsync("highScores.txt");
+                fileText = await Windows.Storage.FileIO.ReadTextAsync(highScoresFile);
+                await Windows.Storage.FileIO.WriteTextAsync(highScoresFile, fileText + System.Environment.NewLine);
+                Debug.WriteLine(fileText.ToString());
+                Debug.WriteLine(highScoresFile.Path);
             }
+            catch (Exception)
+            {
+                highScoresFile = await storageFolder.GetFileAsync("highScores.txt");
+            }
+
         }
 
     }
