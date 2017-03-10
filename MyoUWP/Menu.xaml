@@ -115,7 +115,37 @@
                     Width="140"
                     Content="How To Play"
                     Click="howToPlayButton_Click" 
+                    Margin="0 0 0 20" />
+
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Storyboard x:Name="myStoryboard3">
+                        <DoubleAnimation Storyboard.TargetName="MyAnimatedRectangle3"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="1.0" To="0.0" Duration="0:0:1"
+                                        AutoReverse="True" RepeatBehavior="Forever" />
+                    </Storyboard>
+                </StackPanel.Resources>
+                <StackPanel Margin="0 0 0 -35">
+                    <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle3"
+                               Width="140" Height="35" Fill="white" />
+                </StackPanel>
+            </StackPanel>
+
+            <Button FontFamily="Century-Gothic"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Height="35"
+                    Foreground="White"
+                    x:Name="gamesScores"
+                    Width="140"
+                    Content="Game Scores"
+                    Click="gamesScores_Click" 
                     Margin="110,0" />
+            
 
             <TextBlock x:Name="loadingText" Foreground="White" FontFamily="Century-gothic" 
                        Margin="0 40 0 0" Width="Auto" TextAlignment="Center"/>

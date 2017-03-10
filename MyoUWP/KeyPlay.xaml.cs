@@ -31,10 +31,18 @@ namespace MyoUWP
         Rectangle debris;
         Rectangle ship;
         List<Rectangle> debrisArray = new List<Rectangle>();
+        List<string> levelTimes;
+        List<string> gameNameScores;
+
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
+
         private long ms, ss, mm, hh, dd;
         private Boolean keyCount = false;
+
+        string easyLevel;
+        string mediumLevel;
+        string hardLevel;
 
 
         // Example one Shape created on page load
@@ -90,21 +98,27 @@ namespace MyoUWP
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
 
-            if (gameTimer.Text == "00:20")
+            if ((gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
+                 (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
+                 (gameTimer.Text == "01:30" && (bool)easy.IsChecked))
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
             }
 
-            if (gameTimer.Text == "00:30")
+            if ((gameTimer.Text == levelTimes[2].ToString() && (bool)hard.IsChecked) ||
+                 (gameTimer.Text == levelTimes[1].ToString() && (bool)medium.IsChecked) ||
+                 (gameTimer.Text == levelTimes[0].ToString() && (bool)easy.IsChecked))
             {
-                myStopwatchTimer.Stop();
-                stopWatch.Stop();
-                debrisArray.Clear();
-                eMyo.Fill = redBrush;
-                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = ("YOU RAN OUT OF TIME!");
+
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+
+                debrisArray.Clear();
+                eMyo.Fill = redBrush;
+
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
         }
@@ -312,8 +326,33 @@ namespace MyoUWP
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
 
-            rect1X.Text = ("Ship X : " + ship.RadiusX.ToString());
-            rect1Y.Text = ("Ship Y : " + ship.RadiusY.ToString());
+            rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
+            rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
+        }
+
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((bool)easy.IsChecked)
+            {
+                easyLevel = levelTimes[0];
+                difficultyInfo.Text = "Level: Easy";
+                Debug.WriteLine("Easy Was checked " + easyLevel);
+            }
+            else if ((bool)medium.IsChecked)
+            {
+                mediumLevel = levelTimes[1];
+                difficultyInfo.Text = "Level: Medium";
+                Debug.WriteLine("Medium Was checked " + mediumLevel);
+            }
+            else if ((bool)hard.IsChecked)
+            {
+                hardLevel = levelTimes[2];
+                difficultyInfo.Text = "Level: Hard";
+                Debug.WriteLine("Hard Was checked " + hardLevel);
+            }
+            difficultyStPanel.Visibility = Visibility.Collapsed;
+            readyText.Text = "Ready? Use move keys to begin";
         }
     }
 }

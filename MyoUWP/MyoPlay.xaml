@@ -80,7 +80,6 @@
                     BorderBrush="LightBlue" BorderThickness="5" Background="LightSteelBlue" Padding="30">
             <TextBlock FontSize="30" Margin="0 0 0 20" FontFamily="Century-Gothic" Text="Enter your Name:" />
             <TextBox FontFamily="Century-Gothic" Margin="0 0 0 20" x:Name="name" PlaceholderText="Name Here" />
-            <!--<TextBlock x:Name="resultEntered" />-->
             <Button Click="EnterName_Click" FontFamily="Century-Gothic" HorizontalAlignment="Center" Content="ENTER" />
         </StackPanel>
 

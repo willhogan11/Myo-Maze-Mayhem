@@ -5,6 +5,7 @@ using MyoSharp.Poses;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
@@ -477,7 +478,10 @@ namespace MyoUWP
             if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
             {
                 this.debris = null;
+
+            #if DEBUG
                 Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
+            #endif
             }
             else
             {
@@ -594,7 +598,7 @@ namespace MyoUWP
 
 
 
-        private void EnterName_Click(object sender, RoutedEventArgs e)
+        private async void EnterName_Click(object sender, RoutedEventArgs e)
         {
             // gameNameScores = new Dictionary<string, string>();
             gameNameScores = new List<string>();
@@ -603,42 +607,58 @@ namespace MyoUWP
 
             gameNameScores.Add(finishedState);
 
-            setupLocalStorage(finishedState);
+
+            var folder = ApplicationData.Current.LocalFolder;
+            var newFolder = await folder.CreateFolderAsync("NewFolder", CreationCollisionOption.OpenIfExists);
+
+            var textFile = await newFolder.CreateFileAsync("text.txt");
+            await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
+
+            Debug.WriteLine(newFolder.Path);
+
+            var files = await newFolder.GetFilesAsync();
+            var desiredFile = files.FirstOrDefault(x => x.Name == "text.txt");
+            var textContent = await FileIO.ReadTextAsync(desiredFile);
+
+            Debug.WriteLine(textContent);
+
+
+            // setupLocalStorage(finishedState);
         }
 
 
-        private async void setupLocalStorage(string finishedState)
-        {
-            // 1. get the link to the settings container
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            var value = localSettings.Values["scores"];
+        //private async void setupLocalStorage(string finishedState)
+        //{
+        //    // 1. get the link to the settings container
+        //    ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        //    var value = localSettings.Values["scores"];
 
-            value = gameNameScores;
+        //    value = gameNameScores;
 
-            Debug.WriteLine(value.ToString());
+        //    Debug.WriteLine(value.ToString());
 
-            StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-            StorageFile ScoresFile;
-            string fileText = "";
+        //    StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+        //    StorageFile ScoresFile;
+        //    string fileText = "";
 
-            try
-            {
-                ScoresFile = await storageFolder.GetFileAsync("Scores.txt");
-                fileText = await Windows.Storage.FileIO.ReadTextAsync(ScoresFile);
-                await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-            }
-            catch (Exception)
-            {
-                ScoresFile = await storageFolder.CreateFileAsync("Scores.txt");
-                await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-            }
+        //    try
+        //    {
+        //        ScoresFile = await storageFolder.GetFileAsync("Scores.txt");
+        //        fileText = await Windows.Storage.FileIO.ReadTextAsync(ScoresFile);
+        //        await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        ScoresFile = await storageFolder.CreateFileAsync("Scores.txt");
+        //        await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
+        //    }
 
-            Debug.WriteLine("This is the fileText : " + finishedState.ToString());
-            Debug.WriteLine(ScoresFile.Path);
+        //    Debug.WriteLine("This is the fileText : " + finishedState.ToString());
+        //    Debug.WriteLine(ScoresFile.Path);
 
-            // file open, now write to it using the writeTextAsync
-            // await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-            
-        }
+        //    // file open, now write to it using the writeTextAsync
+        //    // await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
+
+        //}
     }
 }

@@ -67,6 +67,7 @@ namespace MyoUWP
             myStoryboard.Begin();
             myStoryboard1.Begin();
             myStoryboard2.Begin();
+            myStoryboard3.Begin();
         }
 
 
@@ -93,6 +94,16 @@ namespace MyoUWP
         private void howToPlayButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(HowToPlay));
+        }
+
+
+        private void gamesScores_Click(object sender, RoutedEventArgs e)
+        {
+            /* Steps here: 
+             * 1. Retrieve the scores data from local storage on click
+             * 2. Put the values in a list or String with new lines 
+             * 3. Display on screen in a ListBox / TextBlock
+             */
         }
     }
 }

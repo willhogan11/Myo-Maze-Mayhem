@@ -45,6 +45,21 @@
             </StackPanel>
         </Canvas>
 
+        <StackPanel Visibility="Visible" BorderBrush="LightBlue" BorderThickness="5" x:Name="difficultyStPanel" Padding="30" 
+                    Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightSteelBlue">
+            <TextBlock FontFamily="Century-Gothic" FontSize="30" Text="Choose a Difficulty:" />
+            <RadioButton x:Name="easy" Content="Easy (1m:30s )" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="medium" Content="Medium (1m:00s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="hard" Content="Hard (0m:30s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right" Margin="0 30 180 10">
+            <TextBlock x:Name="difficultyInfo" FontSize="15" />
+        </StackPanel>
+
+
         <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Vertical" 
                     VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
 
@@ -52,30 +67,6 @@
         </StackPanel>
 
         <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
-                   FontSize="25" Text="Ready? Move to Start" TextAlignment="Center" />
-
-        <!--<TextBlock
-        Name="MyFadingText"
-        Margin="20" 
-        Width="640" Height="100" FontSize="48" FontWeight="Bold" Foreground="Maroon">
-        This is fading text
-         Animates the text block's opacity. 
-            <TextBlock.Triggers>
-                <EventTrigger RoutedEvent="TextBlock.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                  Storyboard.TargetName="MyFadingText" 
-                  Storyboard.TargetProperty="(TextBlock.Opacity)"
-                  From="1.0" To="0.0" Duration="0:0:5" 
-                  AutoReverse="True" RepeatBehavior="Forever" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </TextBlock.Triggers>
-        </TextBlock>-->
-
-
-
+                   FontSize="25" TextAlignment="Center" />
     </Grid>
 </Page>
