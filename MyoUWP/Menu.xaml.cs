@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -71,6 +74,15 @@ namespace MyoUWP
         }
 
 
+        private void StopAnimation()
+        {
+            myStoryboard.Stop();
+            myStoryboard1.Stop();
+            myStoryboard2.Stop();
+            myStoryboard3.Stop();
+        }
+
+
         private async void connectMyoButton_Click(object sender, RoutedEventArgs e)
         {
             loadingText.Text += "LOADING GAME\nPLEASE WAIT.....";
@@ -97,13 +109,32 @@ namespace MyoUWP
         }
 
 
-        private void gamesScores_Click(object sender, RoutedEventArgs e)
+        private async void gamesScores_Click(object sender, RoutedEventArgs e)
         {
             /* Steps here: 
              * 1. Retrieve the scores data from local storage on click
              * 2. Put the values in a list or String with new lines 
              * 3. Display on screen in a ListBox / TextBlock
              */
+
+            var folder = ApplicationData.Current.LocalFolder;
+            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
+
+            var files = await scoresFolder.GetFilesAsync();
+            var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
+            var textContent = await FileIO.ReadTextAsync(desiredFile);
+
+            Debug.WriteLine(textContent);
+
+            connectMyoButton.Visibility = Visibility.Collapsed;
+            startButton.Visibility = Visibility.Collapsed;
+            howToPlayButton.Visibility = Visibility.Collapsed;
+            gamesScores.Visibility = Visibility.Collapsed;
+            scoresText.Visibility = Visibility.Visible;
+
+            scoresText.Text = textContent;
+
+            StopAnimation();
         }
     }
 }

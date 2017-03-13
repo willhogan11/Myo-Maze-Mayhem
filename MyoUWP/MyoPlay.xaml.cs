@@ -66,10 +66,8 @@ namespace MyoUWP
         public MyoPlay()
         {
             this.InitializeComponent();
-
             setupTimers();
             PrepareGameData();
-
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
@@ -362,7 +360,7 @@ namespace MyoUWP
 
             if ( (gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
                  (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
-                 (gameTimer.Text == "01:30" && (bool)easy.IsChecked) )
+                 (gameTimer.Text == "01:20" && (bool)easy.IsChecked) )
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
@@ -562,8 +560,6 @@ namespace MyoUWP
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
                 enterName.Visibility = Visibility.Visible;
-
-                // EnterName_Click(sender, e);
             }
 
             rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -20,13 +22,6 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class KeyPlay : Page
     {
-        public KeyPlay()
-        {
-            this.InitializeComponent();
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-        }
-
-
         Canvas myCanvas;
         Rectangle debris;
         Rectangle ship;
@@ -39,10 +34,18 @@ namespace MyoUWP
 
         private long ms, ss, mm, hh, dd;
         private Boolean keyCount = false;
-
         string easyLevel;
         string mediumLevel;
         string hardLevel;
+
+
+
+        public KeyPlay()
+        {
+            this.InitializeComponent();            
+            PrepareGameData();
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
 
 
         // Example one Shape created on page load
@@ -50,8 +53,15 @@ namespace MyoUWP
         {
             CreateShip();
             CreateAllDebris();
+        }
 
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+
+        private void PrepareGameData()
+        {
+            levelTimes = new List<string>();
+            levelTimes.Add("01:30");
+            levelTimes.Add("01:00");
+            levelTimes.Add("00:30");
         }
 
 
@@ -100,7 +110,7 @@ namespace MyoUWP
 
             if ((gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
                  (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
-                 (gameTimer.Text == "01:30" && (bool)easy.IsChecked))
+                 (gameTimer.Text == "01:20" && (bool)easy.IsChecked))
             {
                 gameTimer.Foreground = redBrush;
                 gameTimer.FontSize = 35;
@@ -112,6 +122,8 @@ namespace MyoUWP
             {
                 winGame.Visibility = Visibility.Visible;
                 gameText.Text = ("YOU RAN OUT OF TIME!");
+
+                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
 
                 myStopwatchTimer.Stop();
                 stopWatch.Stop();
@@ -166,6 +178,8 @@ namespace MyoUWP
                 cvsRoller.Children.Add(ship);
             }
         }
+
+        
 
 
 
@@ -324,6 +338,8 @@ namespace MyoUWP
                 stopWatch.Stop();
                 debrisArray.Clear();
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                enterName.Visibility = Visibility.Visible;
             }
 
             rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
@@ -331,7 +347,7 @@ namespace MyoUWP
         }
 
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void Radiobutton_Checked(object sender, RoutedEventArgs e)
         {
             if ((bool)easy.IsChecked)
             {
@@ -352,7 +368,39 @@ namespace MyoUWP
                 Debug.WriteLine("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             readyText.Text = "Ready? Use move keys to begin";
+        }
+
+
+        private async void EnterName_Click(object sender, RoutedEventArgs e)
+        {
+            gameNameScores = new List<string>();
+
+            string finishedState = "Name: " + name.Text + " ---- " + " GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
+
+            gameNameScores.Add(finishedState);
+
+
+            var folder = ApplicationData.Current.LocalFolder;
+            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
+
+            Debug.WriteLine(scoresFolder.Path);
+
+            try
+            {
+                var textFile = await scoresFolder.CreateFileAsync("scores.txt");
+                await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
+            }
+            catch (Exception)
+            {
+                folder = ApplicationData.Current.LocalFolder;
+                scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
+
+                var files = await scoresFolder.GetFilesAsync();
+                var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
+                await FileIO.AppendTextAsync(desiredFile, finishedState + System.Environment.NewLine);
+            }
         }
     }
 }

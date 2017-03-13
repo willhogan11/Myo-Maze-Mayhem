@@ -11,18 +11,20 @@
 
     <Grid x:Name="layoutRoot" Width="Auto" Background="LightSteelBlue">
 
-        <StackPanel Orientation="Vertical" Margin="150 0 0 0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="rect1X" Width="150" Foreground="Black" FontSize="15" />
-                <TextBlock x:Name="rect1Y" Width="150" Foreground="Black" FontSize="15" />
-            </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="180 20 0 0">
+            <TextBlock Text="Rover Coordinates:" FontWeight="ExtraBold" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="180 40 0 0">
+            <TextBlock x:Name="rect1X" Width="150" Foreground="Black" FontSize="15" />
+            <TextBlock x:Name="rect1Y" Width="150" Foreground="Black" FontSize="15" />
         </StackPanel>
 
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
 
             <StackPanel x:Name="objectHolder" Height="550" Width="1000"></StackPanel>
 
-            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />
+            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="920" Canvas.Top="50" />
             <Rectangle x:Name="blockObject" Height="80" Width="100" Fill="Brown" Canvas.Left="250" Canvas.Top="50" />
 
             <Rectangle x:Name="randomBlock" Fill="Brown" Height="50" Width="50" Canvas.Left="700" Canvas.Top="300" />
@@ -45,12 +47,12 @@
             </StackPanel>
         </Canvas>
 
-        <StackPanel Visibility="Visible" BorderBrush="LightBlue" BorderThickness="5" x:Name="difficultyStPanel" Padding="30" 
+        <StackPanel Canvas.ZIndex="1" BorderBrush="LightBlue" BorderThickness="5" x:Name="difficultyStPanel" Padding="30" 
                     Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Background="LightSteelBlue">
             <TextBlock FontFamily="Century-Gothic" FontSize="30" Text="Choose a Difficulty:" />
-            <RadioButton x:Name="easy" Content="Easy (1m:30s )" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
-            <RadioButton x:Name="medium" Content="Medium (1m:00s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
-            <RadioButton x:Name="hard" Content="Hard (0m:30s)" GroupName="DifficultyGroup" Checked="RadioButton_Checked" />
+            <RadioButton x:Name="easy" Content="Easy (1m:30s )" GroupName="DifficultyGroup" Checked="Radiobutton_Checked" />
+            <RadioButton x:Name="medium" Content="Medium (1m:00s)" GroupName="DifficultyGroup" Checked="Radiobutton_Checked" />
+            <RadioButton x:Name="hard" Content="Hard (0m:30s)" GroupName="DifficultyGroup" Checked="Radiobutton_Checked" />
         </StackPanel>
 
 
@@ -59,14 +61,25 @@
             <TextBlock x:Name="difficultyInfo" FontSize="15" />
         </StackPanel>
 
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0 20 110 30">
+            <TextBlock Text="Game Info:" FontWeight="ExtraBold" Width="150" Foreground="Black" FontSize="15" />
+        </StackPanel>
+
 
         <StackPanel BorderBrush="Blue" BorderThickness="4" Orientation="Vertical" 
                     VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0 0 0 5">
-
             <TextBlock x:Name="gameTimer" FontFamily="Century-Gothic" Text="00:00" TextAlignment="Center" FontSize="30" />
         </StackPanel>
 
         <TextBlock Margin="0 20 0 0" x:Name="readyText" Foreground="Black" FontWeight="Bold"
                    FontSize="25" TextAlignment="Center" />
+
+        <StackPanel Visibility="Collapsed" x:Name="enterName" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                    BorderBrush="LightBlue" BorderThickness="5" Background="LightSteelBlue" Padding="30">
+            <TextBlock FontSize="30" Margin="0 0 0 20" FontFamily="Century-Gothic" Text="Enter your Name:" />
+            <TextBox FontFamily="Century-Gothic" Margin="0 0 0 20" x:Name="name" PlaceholderText="Name Here" />
+            <Button Click="EnterName_Click" FontFamily="Century-Gothic" HorizontalAlignment="Center" Content="ENTER" />
+        </StackPanel>
+        
     </Grid>
 </Page>
