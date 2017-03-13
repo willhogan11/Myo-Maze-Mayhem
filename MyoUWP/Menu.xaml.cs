@@ -87,6 +87,7 @@ namespace MyoUWP
 
         private async void connectMyoButton_Click(object sender, RoutedEventArgs e)
         {
+            myStoryboard.Stop();
             loadingText.Text += "LOADING GAME\nPLEASE WAIT.....";
             MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
             await message.ShowAsync();
@@ -97,6 +98,7 @@ namespace MyoUWP
 
         private async void startButton_Click(object sender, RoutedEventArgs e)
         {
+            myStoryboard1.Stop();
             loadingText.Text += "LOADING GAME\nPLEASE WAIT.....";
             MessageDialog message = new MessageDialog("LOADING GAME\nPLEASE WAIT.....");
             await message.ShowAsync();

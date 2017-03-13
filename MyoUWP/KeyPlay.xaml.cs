@@ -156,7 +156,6 @@ namespace MyoUWP
                 SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
 
                 myCanvas.Background = lightGrayBrush;
-                // myCanvas.Width = 800;
 
                 layoutRoot.Children.Add(myCanvas);
             }
@@ -182,7 +181,6 @@ namespace MyoUWP
         
 
 
-
         #region
         private void CreateEllipse()
         {
@@ -203,6 +201,7 @@ namespace MyoUWP
             myCanvas.Children.Add(ellipse);
         }
         #endregion
+
 
 
 
@@ -294,7 +293,6 @@ namespace MyoUWP
                     (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
                 {
                     Debug.WriteLine("Collision Detected");
-                    // ship.Fill = redBrush;
                     eMyo.Fill = redBrush;
 
                     Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
@@ -352,19 +350,19 @@ namespace MyoUWP
             if ((bool)easy.IsChecked)
             {
                 easyLevel = levelTimes[0];
-                difficultyInfo.Text = "Level: Easy";
+                difficultyInfo.Text = "Easy";
                 Debug.WriteLine("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
                 mediumLevel = levelTimes[1];
-                difficultyInfo.Text = "Level: Medium";
+                difficultyInfo.Text = "Med";
                 Debug.WriteLine("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
                 hardLevel = levelTimes[2];
-                difficultyInfo.Text = "Level: Hard";
+                difficultyInfo.Text = "Hard";
                 Debug.WriteLine("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
@@ -376,8 +374,8 @@ namespace MyoUWP
         private async void EnterName_Click(object sender, RoutedEventArgs e)
         {
             gameNameScores = new List<string>();
-
-            string finishedState = "Name: " + name.Text + " ---- " + " GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
+            string gameType = "Key Play";
+            string finishedState = name.Text + "\t\t" + gameTimer.Text + "\t\t" + difficultyInfo.Text + "\t\t" + gameType;
 
             gameNameScores.Add(finishedState);
 

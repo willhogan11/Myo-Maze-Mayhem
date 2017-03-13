@@ -7,6 +7,7 @@
 
     <Application.Resources>
         <ImageBrush x:Key="myoBrush" ImageSource="Assets/myo.png" Stretch="Fill" Opacity="0.75" />
+        <ImageBrush x:Key="myoScoresBrush" ImageSource="Assets/myo.png" Stretch="Fill" Opacity="0.85" />
         <ImageBrush x:Key="marsBrush" ImageSource="Assets/mars.jpg" Stretch="Fill" Opacity="0.75" />
     </Application.Resources>
 

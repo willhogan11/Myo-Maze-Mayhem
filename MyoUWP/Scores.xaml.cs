@@ -31,16 +31,23 @@ namespace MyoUWP
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var folder = ApplicationData.Current.LocalFolder;
-            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
+            try
+            {
+                var folder = ApplicationData.Current.LocalFolder;
+                var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
 
-            var files = await scoresFolder.GetFilesAsync();
-            var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
-            var textContent = await FileIO.ReadTextAsync(desiredFile);
+                var files = await scoresFolder.GetFilesAsync();
+                var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
+                var textContent = await FileIO.ReadTextAsync(desiredFile);
 
-            Debug.WriteLine(textContent);
+                Debug.WriteLine(textContent);
 
-            scoresText.Text = textContent;
+                scoresText.Text = textContent;
+            }
+            catch (Exception)
+            {
+                scoresText.Text = "NO SCORES SAVED YET\nWIN A GAME FIRST....";
+            }
         }
     }
 }

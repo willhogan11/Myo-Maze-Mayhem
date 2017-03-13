@@ -8,11 +8,17 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded">
 
-    <Grid Background="Black">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
         <TextBlock Text="Game Scores" HorizontalAlignment="Center" FontFamily="Century-Gothic" 
                    Foreground="White" FontSize="35" FontWeight="ExtraBold" Margin="0 30 0 0" />
 
-        <TextBlock x:Name="scoresText" TextAlignment="DetectFromContent" FontSize="20" 
-                   Foreground="White" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBlock FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Century-Gothic" Margin="0 100 390 0" Foreground="White" Text="Name"/>
+        <TextBlock FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Century-Gothic" Margin="0 100 150 0" Foreground="White" Text="Time"/>
+        <TextBlock FontSize="20" FontStyle="Italic" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="Century-Gothic" Margin="0 100 -90 0" Foreground="White" Text="Level"/>
+        <TextBlock FontSize="20" FontStyle="Italic" HorizontalAlignment="Center"  FontWeight="Bold" FontFamily="Century-Gothic" Margin="0 100 -370 0" Foreground="White" Text="Game Type"/>
+
+        <StackPanel HorizontalAlignment="Center" Margin="0 150 0 0">
+            <TextBlock x:Name="scoresText" FontSize="20" Foreground="White"  HorizontalAlignment="Center" />
+        </StackPanel>
     </Grid>
 </Page>
