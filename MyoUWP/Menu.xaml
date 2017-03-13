@@ -145,15 +145,9 @@
                     Content="Game Scores"
                     Click="gamesScores_Click" 
                     Margin="110,0" />
-            
 
             <TextBlock x:Name="loadingText" Foreground="White" FontFamily="Century-gothic" 
                        Margin="0 40 0 0" Width="Auto" TextAlignment="Center"/>
-
-            <TextBlock Visibility="Collapsed" x:Name="scoresText" TextAlignment="DetectFromContent" FontSize="20" 
-                       Foreground="White" Margin="0 0 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Text="Name: Will Hogan ----  GAME COMPLETED IN: 00:07 ---- Level: Easy" />
-
         </StackPanel>
 
     </Grid>

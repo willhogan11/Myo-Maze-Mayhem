@@ -401,6 +401,8 @@ namespace MyoUWP
                 var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
                 await FileIO.AppendTextAsync(desiredFile, finishedState + System.Environment.NewLine);
             }
+
+            enterName.Visibility = Visibility.Collapsed;
         }
     }
 }
