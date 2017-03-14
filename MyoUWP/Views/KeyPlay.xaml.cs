@@ -373,37 +373,22 @@ namespace MyoUWP
         }
 
 
-        private async void EnterName_Click(object sender, RoutedEventArgs e)
+        private void EnterName_Click(object sender, RoutedEventArgs e)
         {
+            ScoresStorage scoreStorage = new ScoresStorage();
+
             gameNameScores = new List<string>();
             string gameType = "Key Play";
             string finishedState = name.Text + "\t\t" + gameTimer.Text + "\t\t" + difficultyInfo.Text + "\t\t" + gameType;
 
             gameNameScores.Add(finishedState);
 
+            scoreStorage.WriteScoreToFile(finishedState);
 
-            var folder = ApplicationData.Current.LocalFolder;
-            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
-
-            // Debug.WriteLine(scoresFolder.Path);
-            dbg(scoresFolder.Path);
-
-            try
-            {
-                var textFile = await scoresFolder.CreateFileAsync("scores.txt");
-                await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
-            }
-            catch (Exception)
-            {
-                folder = ApplicationData.Current.LocalFolder;
-                scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
-
-                var files = await scoresFolder.GetFilesAsync();
-                var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
-                await FileIO.AppendTextAsync(desiredFile, finishedState + System.Environment.NewLine);
-            }
+            // ScoreStorage(finishedState);
 
             enterName.Visibility = Visibility.Collapsed;
         }
+
     }
 }
