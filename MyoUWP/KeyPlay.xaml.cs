@@ -225,7 +225,7 @@ namespace MyoUWP
             if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
             {
                 this.debris = null;
-                Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
+                dbg("Debris Removed from Escape Pod or Mars Base");
             }
             else
             {
@@ -269,21 +269,23 @@ namespace MyoUWP
         }
 
 
+
+        private void dbg(string str, Object strOpt = null)
+        {
+            Debug.WriteLine(str);
+        }
+
+
+
         private void detectCollision(object sender, object e)
         {
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
             SolidColorBrush whiteBrush = new SolidColorBrush(Windows.UI.Colors.White);
 
-            debris.RadiusX = (float)Canvas.GetLeft(randomBlock);
-            debris.RadiusY = (float)Canvas.GetTop(randomBlock);
-            debris.Width = (float)randomBlock.Width;
-            debris.Height = (float)randomBlock.Height;
-
             ship.RadiusX = (float)Canvas.GetLeft(eMyo);
             ship.RadiusY = (float)Canvas.GetTop(eMyo);
             ship.Width = (float)eMyo.Width;
             ship.Height = (float)eMyo.Height;
-
 
             for (int i = 0; i < debrisArray.Count; i++)
             {
@@ -292,7 +294,7 @@ namespace MyoUWP
                     (ship.RadiusY + ship.Height >= debrisArray[i].RadiusY) &&
                     (ship.RadiusY <= debrisArray[i].RadiusY + debrisArray[i].Height))
                 {
-                    Debug.WriteLine("Collision Detected");
+                    dbg("Collision Detected");
                     eMyo.Fill = redBrush;
 
                     Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
@@ -351,19 +353,19 @@ namespace MyoUWP
             {
                 easyLevel = levelTimes[0];
                 difficultyInfo.Text = "Easy";
-                Debug.WriteLine("Easy Was checked " + easyLevel);
+                dbg("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
                 mediumLevel = levelTimes[1];
                 difficultyInfo.Text = "Med";
-                Debug.WriteLine("Medium Was checked " + mediumLevel);
+                dbg("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
                 hardLevel = levelTimes[2];
                 difficultyInfo.Text = "Hard";
-                Debug.WriteLine("Hard Was checked " + hardLevel);
+                dbg("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
@@ -383,7 +385,8 @@ namespace MyoUWP
             var folder = ApplicationData.Current.LocalFolder;
             var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
 
-            Debug.WriteLine(scoresFolder.Path);
+            // Debug.WriteLine(scoresFolder.Path);
+            dbg(scoresFolder.Path);
 
             try
             {

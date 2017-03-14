@@ -31,7 +31,7 @@
         <Canvas HorizontalAlignment="Center" x:Name="cvsRoller" Height="550" Width="1000" VerticalAlignment="Center" Background="{StaticResource marsBrush}">
 
             <!--<Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />-->
-            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="920" Canvas.Top="50" />
+            <Rectangle x:Name="eMyo" Height="25" Width="25" Fill="white" Canvas.Left="20" Canvas.Top="500" />
 
             <StackPanel BorderBrush="Blue" Padding="3" BorderThickness="4" 
                         Background="Beige" Width="70" Height="60" Margin="930 0 0 0">
@@ -78,8 +78,9 @@
 
         <StackPanel Visibility="Collapsed" x:Name="enterName" HorizontalAlignment="Center" VerticalAlignment="Top" 
                     BorderBrush="LightBlue" BorderThickness="5" Background="LightSteelBlue" Padding="30">
-            <TextBlock FontSize="30" Margin="0 0 0 20" FontFamily="Century-Gothic" Text="Enter your Name:" />
-            <TextBox FontFamily="Century-Gothic" Margin="0 0 0 20" x:Name="name" PlaceholderText="Name Here" />
+            <TextBlock FontSize="30" Margin="0 0 0 20" FontFamily="Century-Gothic" Text="Enter your Initials:" />
+            <TextBlock FontSize="12" Margin="0 0 0 0" FontFamily="Century-Gothic" Text="Max 3 Characters" Foreground="Red" />
+            <TextBox FontFamily="Century-Gothic" Margin="0 0 0 20" MaxLength="3" x:Name="name" PlaceholderText="Initials Here" />
             <Button Click="EnterName_Click" FontFamily="Century-Gothic" HorizontalAlignment="Center" Content="ENTER" />
         </StackPanel>
 

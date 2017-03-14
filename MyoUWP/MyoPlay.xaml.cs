@@ -389,7 +389,7 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 10;
+            int numberOfRectangles = 600;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
@@ -404,10 +404,7 @@ namespace MyoUWP
             {
                 myCanvas = new Canvas();
                 SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
-
                 myCanvas.Background = lightGrayBrush;
-                // myCanvas.Width = 800;
-
                 layoutRoot.Children.Add(myCanvas);
             }
         }
@@ -566,6 +563,11 @@ namespace MyoUWP
             rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
         }
 
+        private void dbg(string str)
+        {
+            Debug.WriteLine(str);
+        }
+
 
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -573,19 +575,19 @@ namespace MyoUWP
             if ((bool)easy.IsChecked)
             {
                 easyLevel = levelTimes[0];
-                difficultyInfo.Text = "Level: Easy";
+                difficultyInfo.Text = "Easy";
                 Debug.WriteLine("Easy Was checked " + easyLevel);
             }
             else if ((bool)medium.IsChecked)
             {
                 mediumLevel = levelTimes[1];
-                difficultyInfo.Text = "Level: Medium";
+                difficultyInfo.Text = "Med";
                 Debug.WriteLine("Medium Was checked " + mediumLevel);
             }
             else if ((bool)hard.IsChecked)
             {
                 hardLevel = levelTimes[2];
-                difficultyInfo.Text = "Level: Hard";
+                difficultyInfo.Text = "Hard";
                 Debug.WriteLine("Hard Was checked " + hardLevel);
             }
             difficultyStPanel.Visibility = Visibility.Collapsed;
@@ -596,65 +598,35 @@ namespace MyoUWP
 
         private async void EnterName_Click(object sender, RoutedEventArgs e)
         {
-            // gameNameScores = new Dictionary<string, string>();
             gameNameScores = new List<string>();
-
-            string finishedState = "Name: " + name.Text + " ---- " + " GAME COMPLETED IN: " + gameTimer.Text + " ---- " + difficultyInfo.Text;
+            string gameType = "Myo Play";
+            string finishedState = name.Text + "\t\t" + gameTimer.Text + "\t\t" + difficultyInfo.Text + "\t\t" + gameType;
 
             gameNameScores.Add(finishedState);
 
 
             var folder = ApplicationData.Current.LocalFolder;
-            var newFolder = await folder.CreateFolderAsync("NewFolder", CreationCollisionOption.OpenIfExists);
+            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
 
-            var textFile = await newFolder.CreateFileAsync("text.txt");
-            await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
+            Debug.WriteLine(scoresFolder.Path);
 
-            Debug.WriteLine(newFolder.Path);
+            try
+            {
+                var textFile = await scoresFolder.CreateFileAsync("scores.txt");
+                await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
+            }
+            catch (Exception)
+            {
+                folder = ApplicationData.Current.LocalFolder;
+                scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
 
-            var files = await newFolder.GetFilesAsync();
-            var desiredFile = files.FirstOrDefault(x => x.Name == "text.txt");
-            var textContent = await FileIO.ReadTextAsync(desiredFile);
+                var files = await scoresFolder.GetFilesAsync();
+                var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
+                await FileIO.AppendTextAsync(desiredFile, finishedState + System.Environment.NewLine);
+            }
 
-            Debug.WriteLine(textContent);
+            enterName.Visibility = Visibility.Collapsed;
 
-
-            // setupLocalStorage(finishedState);
         }
-
-
-        //private async void setupLocalStorage(string finishedState)
-        //{
-        //    // 1. get the link to the settings container
-        //    ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        //    var value = localSettings.Values["scores"];
-
-        //    value = gameNameScores;
-
-        //    Debug.WriteLine(value.ToString());
-
-        //    StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
-        //    StorageFile ScoresFile;
-        //    string fileText = "";
-
-        //    try
-        //    {
-        //        ScoresFile = await storageFolder.GetFileAsync("Scores.txt");
-        //        fileText = await Windows.Storage.FileIO.ReadTextAsync(ScoresFile);
-        //        await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        ScoresFile = await storageFolder.CreateFileAsync("Scores.txt");
-        //        await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-        //    }
-
-        //    Debug.WriteLine("This is the fileText : " + finishedState.ToString());
-        //    Debug.WriteLine(ScoresFile.Path);
-
-        //    // file open, now write to it using the writeTextAsync
-        //    // await Windows.Storage.FileIO.WriteTextAsync(ScoresFile, finishedState + System.Environment.NewLine);
-
-        //}
     }
 }
