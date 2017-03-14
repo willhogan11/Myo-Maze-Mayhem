@@ -107,6 +107,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\GameObjects.cs" />
     <Compile Include="Classes\myHeldPose.cs" />
     <Compile Include="Views\GamePlay.xaml.cs">
       <DependentUpon>GamePlay.xaml</DependentUpon>

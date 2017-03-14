@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Windows.Storage;
-using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 
@@ -73,15 +68,6 @@ namespace MyoUWP
             myStoryboard1.Begin();
             myStoryboard2.Begin();
             myStoryboard3.Begin();
-        }
-
-
-        private void StopAnimation()
-        {
-            myStoryboard.Stop();
-            myStoryboard1.Stop();
-            myStoryboard2.Stop();
-            myStoryboard3.Stop();
         }
 
 

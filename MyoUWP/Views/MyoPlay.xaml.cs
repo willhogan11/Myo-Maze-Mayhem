@@ -2,11 +2,10 @@
 using MyoSharp.Device;
 using MyoSharp.Exceptions;
 using MyoSharp.Poses;
+using MyoUWP.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -42,15 +41,13 @@ namespace MyoUWP
         Canvas myCanvas;
         Rectangle debris;
         Rectangle ship;
+        GameObjects gameObjects;
 
         List<Rectangle> debrisArray = new List<Rectangle>();
 
         List<string> levelTimes;
 
         List<string> gameNameScores;
-
-        // Dictionary<string, string> gameNameScores; 
-        Dictionary<string, string> difficulty;
         
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
@@ -74,7 +71,9 @@ namespace MyoUWP
 
         private void Page_Loading(FrameworkElement sender, object args)
         {
-            CreateShip();
+            // CreateShip();
+            gameObjects = new GameObjects();
+            ship = gameObjects.CreateShip(ship, eMyo, cvsRoller);
             CreateAllDebris();
         }
 
@@ -132,21 +131,10 @@ namespace MyoUWP
 
         private void PrepareGameData()
         {
-            difficulty = new Dictionary<string, string>();
-            difficulty.Add("easy", "01:30");
-            difficulty.Add("medium", "01:00");
-            difficulty.Add("hard", "00:30");
-
             levelTimes = new List<string>();
             levelTimes.Add("01:30");
             levelTimes.Add("01:00");
             levelTimes.Add("00:30");
-
-            foreach (KeyValuePair<string, string> entry in difficulty)
-            {
-                Debug.WriteLine("Key: " + entry.Key);
-                Debug.WriteLine("Value: " + entry.Value);
-            }
         }
 
 
@@ -389,43 +377,14 @@ namespace MyoUWP
 
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 600;
+            int numberOfRectangles = 800;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
-                CreateDebris();
+                gameObjects.CreateDebris(debris, debrisArray, cvsRoller);
             }
         }
 
-
-        private void CreateCanvas()
-        {
-            if (myCanvas == null)
-            {
-                myCanvas = new Canvas();
-                SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
-                myCanvas.Background = lightGrayBrush;
-                layoutRoot.Children.Add(myCanvas);
-            }
-        }
-
-
-       
-        private void CreateShip()
-        {
-            if (ship == null)
-            {
-                SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                ship = new Rectangle();
-                ship.RadiusX = (float)Canvas.GetLeft(eMyo);
-                ship.RadiusY = (float)Canvas.GetTop(eMyo);
-                ship.Width = (float)eMyo.Width;
-                ship.Height = (float)eMyo.Height;
-                ship.Fill = blackBrush;
-
-                cvsRoller.Children.Add(ship);
-            }
-        }
 
 
 
@@ -451,40 +410,6 @@ namespace MyoUWP
         }
         #endregion
 
-
-
-        private void CreateDebris()
-        {
-            Random random = new Random();
-            debris = new Rectangle();
-            SolidColorBrush brownBrush = new SolidColorBrush(Windows.UI.Colors.Brown);
-
-            debris.Width = 25;
-            debris.Height = 25;
-
-            CompositeTransform transform = new CompositeTransform();
-            transform.TranslateX = random.Next(0, 975);
-            transform.TranslateY = random.Next(0, 525);
-
-            debris.RenderTransform = transform;
-            debris.RadiusX = transform.TranslateX;
-            debris.RadiusY = transform.TranslateY;
-
-            if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
-            {
-                this.debris = null;
-
-            #if DEBUG
-                Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
-            #endif
-            }
-            else
-            {
-                debris.Fill = brownBrush;
-                debrisArray.Add(debris);
-                cvsRoller.Children.Add(debris);
-            }
-        }
 
 
       
@@ -596,37 +521,19 @@ namespace MyoUWP
 
 
 
-        private async void EnterName_Click(object sender, RoutedEventArgs e)
+        private void EnterName_Click(object sender, RoutedEventArgs e)
         {
+            ScoresStorage scoreStorage = new ScoresStorage();
+
             gameNameScores = new List<string>();
             string gameType = "Myo Play";
             string finishedState = name.Text + "\t\t" + gameTimer.Text + "\t\t" + difficultyInfo.Text + "\t\t" + gameType;
 
             gameNameScores.Add(finishedState);
 
-
-            var folder = ApplicationData.Current.LocalFolder;
-            var scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
-
-            Debug.WriteLine(scoresFolder.Path);
-
-            try
-            {
-                var textFile = await scoresFolder.CreateFileAsync("scores.txt");
-                await FileIO.WriteTextAsync(textFile, finishedState + System.Environment.NewLine);
-            }
-            catch (Exception)
-            {
-                folder = ApplicationData.Current.LocalFolder;
-                scoresFolder = await folder.CreateFolderAsync("ScoresFolder", CreationCollisionOption.OpenIfExists);
-
-                var files = await scoresFolder.GetFilesAsync();
-                var desiredFile = files.FirstOrDefault(x => x.Name == "scores.txt");
-                await FileIO.AppendTextAsync(desiredFile, finishedState + System.Environment.NewLine);
-            }
+            scoreStorage.WriteScoreToFile(finishedState);
 
             enterName.Visibility = Visibility.Collapsed;
-
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using MyoUWP.Classes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -38,6 +37,7 @@ namespace MyoUWP
         string mediumLevel;
         string hardLevel;
 
+        GameObjects gameObjects;
 
 
         public KeyPlay()
@@ -51,7 +51,8 @@ namespace MyoUWP
         // Example one Shape created on page load
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CreateShip();
+            gameObjects = new GameObjects();
+            ship = gameObjects.CreateShip(ship, eMyo, cvsRoller);
             CreateAllDebris();
         }
 
@@ -143,42 +144,10 @@ namespace MyoUWP
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
-                CreateDebris();
+                gameObjects.CreateDebris(debris, debrisArray, cvsRoller);
             }
         }
 
-
-        private void CreateCanvas()
-        {
-            if (myCanvas == null)
-            {
-                myCanvas = new Canvas();
-                SolidColorBrush lightGrayBrush = new SolidColorBrush(Windows.UI.Colors.LightGray);
-
-                myCanvas.Background = lightGrayBrush;
-
-                layoutRoot.Children.Add(myCanvas);
-            }
-        }
-
-
-        private void CreateShip()
-        {
-            if (ship == null)
-            {
-                SolidColorBrush blackBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                ship = new Rectangle();
-                ship.RadiusX = (float)Canvas.GetLeft(eMyo);
-                ship.RadiusY = (float)Canvas.GetTop(eMyo);
-                ship.Width = (float)eMyo.Width;
-                ship.Height = (float)eMyo.Height;
-                ship.Fill = blackBrush;
-
-                cvsRoller.Children.Add(ship);
-            }
-        }
-
-        
 
 
         #region
@@ -202,38 +171,6 @@ namespace MyoUWP
         }
         #endregion
 
-
-
-
-        private void CreateDebris()
-        {
-            Random random = new Random();
-            debris = new Rectangle();
-            SolidColorBrush brownBrush = new SolidColorBrush(Windows.UI.Colors.Brown);
-
-            debris.Width = 25;
-            debris.Height = 25;
-
-            CompositeTransform transform = new CompositeTransform();
-            transform.TranslateX = random.Next(0, 975);
-            transform.TranslateY = random.Next(0, 525);
-
-            debris.RenderTransform = transform;
-            debris.RadiusX = transform.TranslateX;
-            debris.RadiusY = transform.TranslateY;
-
-            if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
-            {
-                this.debris = null;
-                dbg("Debris Removed from Escape Pod or Mars Base");
-            }
-            else
-            {
-                debris.Fill = brownBrush;
-                debrisArray.Add(debris);
-                cvsRoller.Children.Add(debris);
-            }
-        }
 
 
 
@@ -347,6 +284,7 @@ namespace MyoUWP
         }
 
 
+
         private void Radiobutton_Checked(object sender, RoutedEventArgs e)
         {
             if ((bool)easy.IsChecked)
@@ -373,6 +311,8 @@ namespace MyoUWP
         }
 
 
+
+
         private void EnterName_Click(object sender, RoutedEventArgs e)
         {
             ScoresStorage scoreStorage = new ScoresStorage();
@@ -385,10 +325,7 @@ namespace MyoUWP
 
             scoreStorage.WriteScoreToFile(finishedState);
 
-            // ScoreStorage(finishedState);
-
             enterName.Visibility = Visibility.Collapsed;
         }
-
     }
 }
