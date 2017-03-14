@@ -44,7 +44,8 @@ namespace MyoUWP.Classes
             transform.TranslateX = random.Next(0, 975);
             transform.TranslateY = random.Next(0, 525);
 
-            debris.RenderTransform = transform;
+            debris.RenderTransform = transform;     
+
             debris.RadiusX = transform.TranslateX;
             debris.RadiusY = transform.TranslateY;
 

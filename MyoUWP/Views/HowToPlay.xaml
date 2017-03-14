@@ -10,13 +10,10 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
 
         <StackPanel>
-
-            <TextBlock Margin="30 20 0 0" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
-
-            <StackPanel Padding="5" Width="Auto">
+            <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
+            <ScrollViewer Width="900" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
                 <TextBlock TextWrapping="Wrap" x:Name="story" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
-            </StackPanel>
+            </ScrollViewer>
         </StackPanel>
-
     </Grid>
 </Page>
