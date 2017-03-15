@@ -18,6 +18,7 @@ namespace MyoUWP
         {
             this.InitializeComponent();
             Story();
+            GameInstructions();
         }
 
 
@@ -44,7 +45,7 @@ namespace MyoUWP
 
 
 
-        private void Story()
+        private void Story ()
         {
             story.Text =
                 "Its the year 2034 and humans are beginning to colonise Mars.\n\nUpon receiving news from NASA back on earth, that a storm of " +
@@ -54,6 +55,11 @@ namespace MyoUWP
                 "debris or it literally is Game Over!\nThe World is counting on you........"; 
         }
 
+        private void GameInstructions ()
+        {
+            howToPlay.Text =
+                "There are two ways to play the game.\nYou can play using the Arrow Keys on the keyboard of your laptop or PC";
+        }
 
 
         private void HowToPlay_BackRequested(object sender, BackRequestedEventArgs e)

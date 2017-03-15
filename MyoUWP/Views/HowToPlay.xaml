@@ -8,12 +8,19 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
-
+       
+        
         <StackPanel>
-            <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
-            <ScrollViewer Width="900" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
-                <TextBlock TextWrapping="Wrap" x:Name="story" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
+             <ScrollViewer Width="900" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
+                    <TextBlock TextWrapping="Wrap" x:Name="story" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
+                    <TextBlock FontSize="30" Text="How to Play" Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" />
+                    <TextBlock TextWrapping="Wrap" x:Name="howToPlay" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
+                    <Image Source="/Assets/arrowKeys.png" Height="150" Width="150" HorizontalAlignment="Left" />
+                </StackPanel>
             </ScrollViewer>
-        </StackPanel>
+
+            </StackPanel>
     </Grid>
 </Page>
