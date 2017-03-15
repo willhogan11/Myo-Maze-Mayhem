@@ -11,13 +11,41 @@
        
         
         <StackPanel>
-             <ScrollViewer Width="900" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
+             <ScrollViewer Width="1000" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
                     <TextBlock TextWrapping="Wrap" x:Name="story" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
                     <TextBlock FontSize="30" Text="How to Play" Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" />
                     <TextBlock TextWrapping="Wrap" x:Name="howToPlay" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
-                    <Image Source="/Assets/arrowKeys.png" Height="150" Width="150" HorizontalAlignment="Left" />
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock TextAlignment="Left" Margin="30 20 0 0" Text="Key Play Controls:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                        <Image Margin="30 0 0 0" Source="/Assets/arrowmac.png" Height="250" Width="250" HorizontalAlignment="Left" />
+                    </StackPanel>
+                        
+                    <TextBlock TextWrapping="Wrap" x:Name="myoPlay" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Margin="30 20 0 0" Text="Start Game:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                            <Image Margin="30 20 0 0" Source="/Assets/fistGesture.jpg" Height="150" Width="150" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Margin="30 20 0 0" Text="Move Down:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                            <Image Margin="30 20 0 0" Source="/Assets/openHand.jpg" Height="150" Width="150" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Margin="30 20 0 0" Text="Move Right:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                            <Image Margin="30 20 0 0" Source="/Assets/myoMoveRight.jpg" Height="150" Width="150" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Margin="30 20 0 0" Text="Move Left:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                            <Image Margin="30 20 0 0" Source="/Assets/myoMoveLeft.jpg" Height="150" Width="150" HorizontalAlignment="Left" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock TextAlignment="Center" Margin="30 20 0 0" Text="Move Up:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
+                            <Image Margin="30 20 0 0" Source="/Assets/myoMoveUp.jpg" Height="150" Width="150" HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
 

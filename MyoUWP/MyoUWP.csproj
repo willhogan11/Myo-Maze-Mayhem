@@ -92,13 +92,14 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\arrowKeys.png" />
-    <Content Include="Assets\arrowKeysjpg.jpg" />
+    <Content Include="Assets\arrowmac.png" />
+    <Content Include="Assets\fistGesture.jpg" />
     <Content Include="Assets\mars.jpg" />
-    <Content Include="Assets\maze.jpg" />
     <Content Include="Assets\myo.png" />
-    <Content Include="Assets\pitch.jpg" />
-    <Content Include="Assets\roll.jpg" />
+    <Content Include="Assets\myoMoveLeft.jpg" />
+    <Content Include="Assets\myoMoveRight.jpg" />
+    <Content Include="Assets\myoMoveUp.jpg" />
+    <Content Include="Assets\openHand.jpg" />
     <Content Include="x64\myo.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
