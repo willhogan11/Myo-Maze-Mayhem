@@ -24,6 +24,7 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class Scores : Page
     {
+        // Create an instance of the ScoresStorage class
         ScoresStorage scoresStorage;
 
         public Scores()
@@ -31,6 +32,7 @@ namespace MyoUWP
             this.InitializeComponent();
         }
 
+        // On page load, initialise the scoresStorage class and call the function that passes in the Textblock text and reads the scores out to the page
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             scoresStorage = new ScoresStorage();

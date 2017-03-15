@@ -10,9 +10,13 @@ namespace MyoUWP.Classes
 {
     public class GameObjects
     {
-
         Rectangle debris = new Rectangle();
 
+
+        /* A Function that Creates a Ship object
+         * If ship is null, create it using the various properties
+         * Add it to the canvas
+         * return the ship object */
         public Rectangle CreateShip(Rectangle ship, Rectangle eMyo, Canvas cvsRoller)
         {
             if (ship == null)
@@ -31,6 +35,12 @@ namespace MyoUWP.Classes
         }
 
 
+        /* A function that deals with creating debris objects
+         * Steps:
+         * Create a Debris object using width, height and so on.
+         * Randomly generate a location within the canvas for the object to appear
+         * If this particular debris object is created on the escape pod or base, set to null and move on to next one
+         * Add to canvas */
         public void CreateDebris(Rectangle debris, List<Rectangle> debrisArray, Canvas cvsRoller)
         {
             Random random = new Random();

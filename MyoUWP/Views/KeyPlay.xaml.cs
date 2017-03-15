@@ -21,15 +21,15 @@ namespace MyoUWP
     /// </summary>
     public sealed partial class KeyPlay : Page
     {
-        Canvas myCanvas;
+        // Instance variable declaration
         Rectangle debris;
         Rectangle ship;
         List<Rectangle> debrisArray = new List<Rectangle>();
         List<string> levelTimes;
         List<string> gameNameScores;
-
         DispatcherTimer myStopwatchTimer;
         Stopwatch stopWatch;
+        GameObjects gameObjects;
 
         private long ms, ss, mm, hh, dd;
         private Boolean keyCount = false;
@@ -37,9 +37,8 @@ namespace MyoUWP
         string mediumLevel;
         string hardLevel;
 
-        GameObjects gameObjects;
 
-
+        // Constructor to init game
         public KeyPlay()
         {
             this.InitializeComponent();            
@@ -48,7 +47,11 @@ namespace MyoUWP
         }
 
 
-        // Example one Shape created on page load
+        /* On Page load event:
+         * Create a New GameObjects class instance
+         * Assign the in game ship instance to a gameObjects ship creation
+         * Create the Debris objects
+         *  */
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             gameObjects = new GameObjects();
@@ -57,6 +60,7 @@ namespace MyoUWP
         }
 
 
+        // Add the various Game level time limits to a List called levelTimes
         private void PrepareGameData()
         {
             levelTimes = new List<string>();
@@ -66,6 +70,7 @@ namespace MyoUWP
         }
 
 
+        // Setup a game timer......
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (stopWatch == null)
@@ -84,60 +89,29 @@ namespace MyoUWP
         }
 
 
-
+        // Setup a stopwatch timer that updates the Textblock with real time data
+        // Update the textblock with the time elapsed
+        // figure out the elapsed time using the timer properties
         private void MyStopwatchTimer_Tick(object sender, object e)
         {
-            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
-
-            // update the textblock with the time elapsed
-            // figure out the elapsed time using the timer properties
-            // some maths division and modulus
             ms = stopWatch.ElapsedMilliseconds;
-
             ss = ms / 1000;
             ms = ms % 1000;
-
             mm = ss / 60;
             ss = ss % 60;
-
             hh = mm % 60;
             mm = mm % 60;
-
             dd = hh / 24;
             hh = hh % 24;
 
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
-
-            if ((gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
-                 (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
-                 (gameTimer.Text == "01:20" && (bool)easy.IsChecked))
-            {
-                gameTimer.Foreground = redBrush;
-                gameTimer.FontSize = 35;
-            }
-
-            if ((gameTimer.Text == levelTimes[2].ToString() && (bool)hard.IsChecked) ||
-                 (gameTimer.Text == levelTimes[1].ToString() && (bool)medium.IsChecked) ||
-                 (gameTimer.Text == levelTimes[0].ToString() && (bool)easy.IsChecked))
-            {
-                winGame.Visibility = Visibility.Visible;
-                gameText.Text = ("YOU RAN OUT OF TIME!");
-
-                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-
-                myStopwatchTimer.Stop();
-                stopWatch.Stop();
-
-                debrisArray.Clear();
-                eMyo.Fill = redBrush;
-
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            }
+            GameTimeRanOut();
         }
 
 
-
+        // Create all Debris objects Function
+        // Create an amount of debris objects to be created
         private void CreateAllDebris()
         {
             int numberOfRectangles = 900;
@@ -149,8 +123,7 @@ namespace MyoUWP
         }
 
 
-
-        #region
+        // Create an Ellipse object
         private void CreateEllipse()
         {
             Random random = new Random();
@@ -166,15 +139,18 @@ namespace MyoUWP
 
             Color color = Color.FromArgb(255, (byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
             ellipse.Fill = new SolidColorBrush(color);
-
-            myCanvas.Children.Add(ellipse);
+            // myCanvas.Children.Add(ellipse);
         }
-        #endregion
 
 
 
 
-        // Get key press events working first or as a backup if myo isn't available or can't connect
+        /* This function uses key events to control the ship:
+         * Check if there has been any key pressed, if not start game timer to begin game
+         * Set keyCount to true
+         * Register Up, Down, Left and Right key events when  pressed
+         * Call the DetectCollision function to check if each or any movement collides with an object
+         *  */
         private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs args)
         {
             if (keyCount == false)
@@ -207,13 +183,19 @@ namespace MyoUWP
 
 
 
+        // A function for Debug
         private void dbg(string str, Object strOpt = null)
         {
             Debug.WriteLine(str);
         }
 
 
-
+        #region HowGameCanFinish
+        /* This function detects collisions between the ship and debris objects. 
+         * Steps:
+         * Get the ships X and Y coordinates from the Canvas
+         * In a loop, Check that the ships coordinates don't touch any of the Debris objects
+         * If it does end the game */
         private void detectCollision(object sender, object e)
         {
             SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
@@ -247,7 +229,78 @@ namespace MyoUWP
                 }
             }
 
+            CanvasEdgeDetection();
+            WinGame();
 
+            rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
+            rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
+        }
+
+
+
+        /* A function to keep trakc of game timer
+         * Steps:
+         * If the timer is 10 seconds away from a particular difficulty level limit, set timer text to red
+         * If the timer reaches the level limit, end the game
+         * */
+        private void GameTimeRanOut()
+        {
+            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+
+            if ((gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
+                    (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
+                    (gameTimer.Text == "01:20" && (bool)easy.IsChecked))
+            {
+                gameTimer.Foreground = redBrush;
+                gameTimer.FontSize = 35;
+            }
+
+            if ((gameTimer.Text == levelTimes[2].ToString() && (bool)hard.IsChecked) ||
+                    (gameTimer.Text == levelTimes[1].ToString() && (bool)medium.IsChecked) ||
+                    (gameTimer.Text == levelTimes[0].ToString() && (bool)easy.IsChecked))
+            {
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = ("YOU RAN OUT OF TIME!");
+
+                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+
+                debrisArray.Clear();
+                eMyo.Fill = redBrush;
+
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
+        }
+        
+
+
+        // A function that fires when a user reaches the escape pod
+        // Reset the various game variables and make the back button visible
+        private void WinGame()
+        {
+            if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
+            {
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = "YOU REACHED THE ESCAPE POD!";
+                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+                debrisArray.Clear();
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                enterName.Visibility = Visibility.Visible;
+            }
+        }
+        #endregion
+
+
+
+        // A function that checks if the ship has reached the canvas edge
+        // Repaint the ship at the edge should it collide with the canvas edge
+        private void CanvasEdgeDetection()
+        {
             if (ship.RadiusX <= 0)
             {
                 eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
@@ -264,29 +317,14 @@ namespace MyoUWP
             {
                 eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
             }
-
-
-            if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
-            {
-                winGame.Visibility = Visibility.Visible;
-                gameText.Text = "YOU REACHED THE ESCAPE POD!";
-                Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
-                myStopwatchTimer.Stop();
-                stopWatch.Stop();
-                debrisArray.Clear();
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
-                enterName.Visibility = Visibility.Visible;
-            }
-
-            rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
-            rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
         }
 
 
 
+        /* A function that deals with which game difficulty is chosen
+         * When a difficulty has been picked, start the game when a key event is triggered */
         private void Radiobutton_Checked(object sender, RoutedEventArgs e)
-        {
+        {   
             if ((bool)easy.IsChecked)
             {
                 easyLevel = levelTimes[0];
@@ -312,7 +350,11 @@ namespace MyoUWP
 
 
 
-
+        /* A function that allows a user to enter their name for the scores page, should they complete the game
+         * Steps:
+         * Create a new instance of the ScoresStorage class
+         * Get a hold of the finished state of the game, ie time completed in, game difficulty etc
+         * Write or appends the score to the Write method of the ScoredStorage class instance */
         private void EnterName_Click(object sender, RoutedEventArgs e)
         {
             ScoresStorage scoreStorage = new ScoresStorage();

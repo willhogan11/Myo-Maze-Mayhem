@@ -8,10 +8,8 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource myoBrush}">
-       
-        
         <StackPanel>
-             <ScrollViewer Width="1000" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Width="1000" Padding="5" Height="600" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <TextBlock Margin="0 50 0 0" HorizontalAlignment="Center" FontFamily="Century gothic" Foreground="White" FontSize="30" Text="The Story....."/>
                     <TextBlock TextWrapping="Wrap" x:Name="story" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
@@ -22,7 +20,7 @@
                         <TextBlock TextAlignment="Left" Margin="30 20 0 0" Text="Key Play Controls:" FontSize="15" FontWeight="Bold" Foreground="White" FontFamily="Century Gothic" />
                         <Image Margin="30 0 0 0" Source="/Assets/arrowmac.png" Height="250" Width="250" HorizontalAlignment="Left" />
                     </StackPanel>
-                        
+
                     <TextBlock TextWrapping="Wrap" x:Name="myoPlay" Margin="30 20 0 0" FontSize="20" Foreground="White" FontFamily="Century Gothic" />
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical">
@@ -48,7 +46,6 @@
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
-
-            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

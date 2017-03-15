@@ -44,14 +44,13 @@ namespace MyoUWP
         }
 
 
-
+        // Navigate back if possible, and if the event has not already been handled...
         private void Menu_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
                 return;
 
-            // Navigate back if possible, and if the event has not already been handled...
             if (rootFrame.CanGoBack && e.Handled == false)
             {
                 e.Handled = true;
@@ -60,7 +59,7 @@ namespace MyoUWP
         }
 
 
-        // Start an animation that fades in and out on the "Tap to Begin" textBlock when the object loads
+        // Start an animation on 4 menu buttons that fades in and out on each textBlock when the object loads
         // Adapted from[ref] https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.animation.doubleanimation.aspx
         private void Start_Animation(object sender, RoutedEventArgs e)
         {
@@ -71,6 +70,8 @@ namespace MyoUWP
         }
 
 
+        // Stops the animation and asynchronously navigates to Myo Game Play
+        // This gives the game a chance to load the various components, whilst informing the user that the game is loading
         private async void connectMyoButton_Click(object sender, RoutedEventArgs e)
         {
             myStoryboard.Stop();
@@ -82,6 +83,8 @@ namespace MyoUWP
         }
 
 
+        // Stops the animation and asynchronously navigates to Key Game Play
+        // This gives the game a chance to load the various components, whilst informing the user that the game is loading
         private async void startButton_Click(object sender, RoutedEventArgs e)
         {
             myStoryboard1.Stop();
@@ -93,12 +96,13 @@ namespace MyoUWP
         }
 
 
+        // Navigate to the How to Play page 
         private void howToPlayButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(HowToPlay));
         }
 
-
+        // Navigate to the Scores page
         private void gamesScores_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Scores));
