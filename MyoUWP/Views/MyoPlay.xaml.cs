@@ -51,9 +51,9 @@ namespace MyoUWP
         string easyLevel;
         string mediumLevel;
         string hardLevel;
-        
 
 
+        // Constructor to init game
         public MyoPlay()
         {
             this.InitializeComponent();
@@ -63,6 +63,11 @@ namespace MyoUWP
         }
 
 
+        /* On Page load event:
+         * Create a New GameObjects class instance
+         * Assign the in game ship instance to a gameObjects ship creation
+         * Create the Debris objects
+         */
         private void Page_Loading(FrameworkElement sender, object args)
         {
             gameObjects = new GameObjects();
@@ -71,6 +76,17 @@ namespace MyoUWP
         }
 
 
+        // Add the various Game level time limits to a List called levelTimes
+        private void PrepareGameData()
+        {
+            levelTimes = new List<string>();
+            levelTimes.Add("01:30");
+            levelTimes.Add("01:00");
+            levelTimes.Add("00:30");
+        }
+
+
+        // Function that makes a connection to the Myo Armband
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -121,18 +137,9 @@ namespace MyoUWP
         }
 
 
-
-        private void PrepareGameData()
-        {
-            levelTimes = new List<string>();
-            levelTimes.Add("01:30");
-            levelTimes.Add("01:00");
-            levelTimes.Add("00:30");
-        }
-
-
-
-
+        
+        // Function that disconnects from the Myo Armband
+        // When disconnected Stop all timers
         private async void _myoHub_MyoDisconnected(object sender, MyoEventArgs e)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -145,7 +152,8 @@ namespace MyoUWP
         }
 
 
-
+        // Function to detail what happens when connected to the Myo Armband
+        // Displays Orientation data on a TextBlock, along with Pose information
         private async void _myoHub_MyoConnected(object sender, MyoEventArgs e)
         {
             e.Myo.Vibrate(VibrationType.Long);
@@ -162,7 +170,6 @@ namespace MyoUWP
             // unlock the Myo so that it doesn't keep locking between our poses
             e.Myo.Unlock(UnlockType.Hold);
             
-
             try
             {
                 var sequence = PoseSequence.Create(e.Myo, Pose.FingersSpread, Pose.WaveIn);
@@ -172,11 +179,11 @@ namespace MyoUWP
             {
                 string strMsg = myoErr.Message;
             }
-
         }
 
 
 
+        // Function that sets up a Dispatch Timer associated with the Myo Armband
         #region timers methods
         private void setupTimers()
         {
@@ -189,7 +196,8 @@ namespace MyoUWP
         }
 
 
-
+        // Function that deals with What happens when the certain gestures / poses are made using the Myo Armband
+        // Detect for collision when during movement
         private void _orientationTimer_Tick(object sender, object e)
         {
             if (_currentRoll < 0)
@@ -215,7 +223,7 @@ namespace MyoUWP
 
 
 
-
+        // Displays Accelerometer data to screen
         #region Accelerometer Orientation Data
         private async void Myo_OrientationDataAcquired(object sender, OrientationDataEventArgs e)
         {
@@ -233,9 +241,8 @@ namespace MyoUWP
 
 
 
-
+        // A function that when called, displays which pose has just been completed and updates Textblock in real time
         #region Pose related methods
-
         private async void Sequence_PoseSequenceCompleted(object sender, PoseSequenceEventArgs e)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -256,6 +263,11 @@ namespace MyoUWP
         }
 
 
+
+        // A function that deals what happens when gestures are made using the Myo Armband
+        // The only ones relevant are Fist and Fingers spread gestures
+        // Fist starts game and relevant timers
+        // Fingers spread gesture moves ship downwards a specified number of pixels each time the gesture is made
         private async void Myo_PoseChanged(object sender, PoseEventArgs e)
         {
             Pose curr = e.Pose;
@@ -264,8 +276,6 @@ namespace MyoUWP
                 tblUpdates.Text = curr.ToString();
                 switch (curr)
                 {
-                    case Pose.Rest:
-                        break;
                     case Pose.Fist:
                         if(myoMove)
                         {
@@ -275,16 +285,8 @@ namespace MyoUWP
                             readyText.Visibility = Visibility.Collapsed;
                         }          
                         break;
-                    case Pose.WaveIn:
-                        break;
-                    case Pose.WaveOut:
-                        break;
                     case Pose.FingersSpread:
                         eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 5);
-                        break;
-                    case Pose.DoubleTap:
-                        break;
-                    case Pose.Unknown:
                         break;
                     default:
                         break;

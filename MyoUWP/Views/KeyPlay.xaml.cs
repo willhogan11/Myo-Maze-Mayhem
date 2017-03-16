@@ -51,7 +51,7 @@ namespace MyoUWP
          * Create a New GameObjects class instance
          * Assign the in game ship instance to a gameObjects ship creation
          * Create the Debris objects
-         *  */
+         */
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             gameObjects = new GameObjects();
