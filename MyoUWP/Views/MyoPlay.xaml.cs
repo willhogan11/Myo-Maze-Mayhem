@@ -96,45 +96,38 @@ namespace MyoUWP
         {
             try
             {
-                //if (_myoChannel == null)
-                //{
-                //    Frame.Navigate(typeof(Menu));
-                //    MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
-                //    await message.ShowAsync();
-                //}
-                //else
-                //{
+                // communication, device, exceptions, poses
+                // create the channel
+                _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(), MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-                    // communication, device, exceptions, poses
-                    // create the channel
-                    _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                      MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
-
+                if (_myoChannel == null)
+                {
+                    Frame.Navigate(typeof(Menu));
+                    MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
+                    await message.ShowAsync();
+                }
+                else
+                {
                     // create the hub with the channel
                     _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
+
                     // create the event handlers for connect and disconnect
                     _myoHub.MyoConnected += _myoHub_MyoConnected;
                     _myoHub.MyoDisconnected += _myoHub_MyoDisconnected;
 
                     // start listening 
                     _myoChannel.StartListening();
-
-                if(_myoHub == null || _myoChannel == null)
-                {
-                    Debug.WriteLine("Null......");
-                }
-
-                // }
-               
+                }               
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.StackTrace);
+
                 Frame.Navigate(typeof(Menu));
                 MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
                 await message.ShowAsync();
 
-                throw;
+                return;
             }
         }
 
@@ -429,6 +422,14 @@ namespace MyoUWP
         }
 
 
+
+
+        /* A function that deals with creating debris objects
+         * Steps:
+         * Create a Debris object using width, height and so on.
+         * Randomly generate a location within the canvas for the object to appear
+         * If this particular debris object is created on the escape pod or base, set to null and move on to next one
+         * Add to canvas */
         private void CreateDebris()
         {
             Random random = new Random();
@@ -490,7 +491,7 @@ namespace MyoUWP
 
 
 
-        /* A function to keep trakc of game timer
+        /* A function to keep track of game timer
          * Steps:
          * If the timer is 10 seconds away from a particular difficulty level limit, set timer text to red
          * If the timer reaches the level limit, end the game

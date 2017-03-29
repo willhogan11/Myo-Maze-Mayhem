@@ -31,7 +31,7 @@
 
 
         <!--  Adapted from [ref] https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.animation.doubleanimation.aspx -->
-        <StackPanel Margin="0 450 0 0">
+        <StackPanel Margin="0 500 0 0">
             <StackPanel>
                 <StackPanel.Resources>
                     <Storyboard x:Name="myStoryboard">
@@ -41,9 +41,9 @@
                                         AutoReverse="True" RepeatBehavior="Forever" />
                     </Storyboard>
                 </StackPanel.Resources>
-                <StackPanel Margin="0 0 0 -35">
+                <StackPanel Margin="0 0 0 -55">
                     <Rectangle Loaded="Start_Animation" x:Name="MyAnimatedRectangle"
-                               Width="58" Height="35" Fill="white" />
+                               Width="95" Height="55" Fill="white" />
                 </StackPanel>
             </StackPanel>
 
@@ -51,12 +51,12 @@
                     FontFamily="Century-Gothic"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center"
-                    FontSize="14"
+                    FontSize="25"
                     FontWeight="Bold"
-                    Height="35"
+                    Height="55"
                     Width="Auto"
                     x:Name="begin"
-                    Content="Begin" />
+                    Content="START" />
 
             <TextBlock TextAlignment="Center" Width="150" Foreground="White" FontSize="12" x:Name="testText" />
         </StackPanel>
