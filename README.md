@@ -9,6 +9,8 @@
 - **Current College Year:** 4rd Year 
 - **Project Title:** Myo Mars Mayhem
 
+---
+
 ## Introduction
 
 ### Story...
@@ -30,15 +32,34 @@ as an option when the Application launches.
 ### Purpose of the Application
 The purpose of this project is to experiment with various hand arm gestures using the Myo Armband. My project incorporates a multi-faceted goal approach, for one part of my application I’ll be creating something that allows a user to wear and connect a Myo Armband, which will enable users to navigate through a canvas of objects and try and get towards a goal/exit. Another part will be to deal with collision detection, which will notify users when they have collided with another object. This involves a bit of tricky trial and error testing using various mathematical algorithms and arrangements. 
 
+---
 
 ## Hardware / Software used in the Application
 I’m going to be using the Myo Armband. The device will connect via Bluetooth to the user’s laptop/desktop. The user will connect their device using the Myo interface. When the game Myo Play game launches, the user will be automatically connected, before the gameplay starts. 
+
 
 ### Tech used
 Visual Studio 2015
 - C#, XAML (Menu pages and Animation page for the actual game) and theMyo Armband
 -	GitHub for tracking issues, milestones, and commits. 
 -	ZenHub – A GitHub integration tool, akin to Kanban board style, drag and drop tasks etc.
+
+---
+
+## System Architecture
+
+### Architecture Diagram
+<div align="center">
+  <img src="https://github.com/willhogan11/Myo-Maze-Mayhem/blob/master/MyoMarsMadnessArc.png" height="700" width="445" />
+</div>
+
+
+### Class Diagram
+<div align="center">
+  <img src="https://github.com/willhogan11/Myo-Maze-Mayhem/blob/master/myoClassDiagram.jpg" height="505" width="1027" />
+</div>
+
+---
 
 ## Conclusions and Recommendations
 
