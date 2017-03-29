@@ -27,9 +27,7 @@ namespace MyoUWP
     {
         // Myo Related variable Declarations
         IChannel _myoChannel;
-        IChannel _myoChannel1;
         IHub _myoHub;
-        IHub _myoHub1;
         double _currentRoll;
         double _currentYaw;
         double _currentPitch;
@@ -59,6 +57,10 @@ namespace MyoUWP
             this.InitializeComponent();
             setupTimers();
             PrepareGameData();
+
+            gameObjects = new GameObjects();
+            ship = gameObjects.CreateShip(ship, eMyo, cvsRoller);
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
@@ -70,9 +72,12 @@ namespace MyoUWP
          */
         private void Page_Loading(FrameworkElement sender, object args)
         {
-            gameObjects = new GameObjects();
-            ship = gameObjects.CreateShip(ship, eMyo, cvsRoller);
-            CreateAllDebris();
+            int numberOfRectangles = 700;
+
+            for (int i = 0; i < numberOfRectangles; i++)
+            {
+                CreateDebris();
+            }
         }
 
 
@@ -91,19 +96,20 @@ namespace MyoUWP
         {
             try
             {
-                // communication, device, exceptions, poses
-                // create the channel
-                _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
+                //if (_myoChannel == null)
+                //{
+                //    Frame.Navigate(typeof(Menu));
+                //    MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
+                //    await message.ShowAsync();
+                //}
+                //else
+                //{
+
+                    // communication, device, exceptions, poses
+                    // create the channel
+                    _myoChannel = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
                                       MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
 
-                if (_myoChannel == null)
-                {
-                    Frame.Navigate(typeof(Menu));
-                    MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
-                    await message.ShowAsync();
-                }
-                else
-                {
                     // create the hub with the channel
                     _myoHub = MyoSharp.Device.Hub.Create(_myoChannel);
                     // create the event handlers for connect and disconnect
@@ -113,25 +119,21 @@ namespace MyoUWP
                     // start listening 
                     _myoChannel.StartListening();
 
-
-                    // create the channel
-                    _myoChannel1 = Channel.Create(ChannelDriver.Create(ChannelBridge.Create(),
-                                            MyoErrorHandlerDriver.Create(MyoErrorHandlerBridge.Create())));
-
-                    // create the hub with the channel
-                    _myoHub1 = MyoSharp.Device.Hub.Create(_myoChannel1);
-                    // create the event handlers for connect and disconnect
-                    _myoHub1.MyoConnected += _myoHub_MyoConnected;
-                    _myoHub1.MyoDisconnected += _myoHub_MyoDisconnected;
-
-                    // start listening 
-                    _myoChannel1.StartListening();
+                if(_myoHub == null || _myoChannel == null)
+                {
+                    Debug.WriteLine("Null......");
                 }
+
+                // }
                
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.StackTrace);
+                Frame.Navigate(typeof(Menu));
+                MessageDialog message = new MessageDialog("You can't connect to the Myo right now.\nTry Again......");
+                await message.ShowAsync();
+
                 throw;
             }
         }
@@ -142,6 +144,7 @@ namespace MyoUWP
         // When disconnected Stop all timers
         private async void _myoHub_MyoDisconnected(object sender, MyoEventArgs e)
         {
+            e.Myo.Vibrate(VibrationType.Long);
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 tblUpdates.Text = tblUpdates.Text + System.Environment.NewLine + "Myo disconnected";
@@ -150,6 +153,7 @@ namespace MyoUWP
             _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
             _orientationTimer.Stop();
         }
+
 
 
         // Function to detail what happens when connected to the Myo Armband
@@ -322,6 +326,8 @@ namespace MyoUWP
         // figure out the elapsed time using the timer properties
         private void MyStopwatchTimer_Tick(object sender, object e)
         {
+            SolidColorBrush redBrush = new SolidColorBrush(Windows.UI.Colors.Red);
+
             ms = stopWatch.ElapsedMilliseconds;
 
             ss = ms / 1000;
@@ -338,9 +344,38 @@ namespace MyoUWP
 
             gameTimer.Text = mm.ToString("00") + ":" + ss.ToString("00");
 
-            GameTimeRanOut();     
-        }
+            if ((gameTimer.Text == "00:20" && (bool)hard.IsChecked) ||
+                (gameTimer.Text == "00:50" && (bool)medium.IsChecked) ||
+                (gameTimer.Text == "01:20" && (bool)easy.IsChecked))
+            {
+                gameTimer.Foreground = redBrush;
+                gameTimer.FontSize = 35;
+            }
 
+            if ((gameTimer.Text == levelTimes[2].ToString() && (bool)hard.IsChecked) ||
+                 (gameTimer.Text == levelTimes[1].ToString() && (bool)medium.IsChecked) ||
+                 (gameTimer.Text == levelTimes[0].ToString() && (bool)easy.IsChecked))
+            {
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = ("YOU RAN OUT OF TIME!");
+                myoMove = false;
+
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+                _orientationTimer.Stop();
+
+                _myoHub.MyoConnected -= _myoHub_MyoConnected;
+                _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+                _myoChannel.StopListening();
+
+                debrisArray.Clear();
+                eMyo.Fill = redBrush;
+
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                // GameTimeRanOut();     
+            }
+        }
 
 
         private void GameTimeRanOut()
@@ -367,6 +402,10 @@ namespace MyoUWP
                 stopWatch.Stop();
                 _orientationTimer.Stop();
 
+                _myoHub.MyoConnected -= _myoHub_MyoConnected;
+                _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+                _myoChannel.StopListening();
+
                 debrisArray.Clear();
                 eMyo.Fill = redBrush;
 
@@ -380,11 +419,46 @@ namespace MyoUWP
         // Create an amount of debris objects to be created
         private void CreateAllDebris()
         {
-            int numberOfRectangles = 800;
+            int numberOfRectangles = 500;
 
             for (int i = 0; i < numberOfRectangles; i++)
             {
-                gameObjects.CreateDebris(debris, debrisArray, cvsRoller);
+                CreateDebris();
+                // gameObjects.CreateDebris(debris, debrisArray, cvsRoller);
+            }
+        }
+
+
+        private void CreateDebris()
+        {
+            Random random = new Random();
+            debris = new Rectangle();
+            SolidColorBrush brownBrush = new SolidColorBrush(Windows.UI.Colors.Brown);
+
+            debris.Width = 25;
+            debris.Height = 25;
+
+            CompositeTransform transform = new CompositeTransform();
+            transform.TranslateX = random.Next(0, 975);
+            transform.TranslateY = random.Next(0, 525);
+
+            debris.RenderTransform = transform;
+            debris.RadiusX = transform.TranslateX;
+            debris.RadiusY = transform.TranslateY;
+
+            if (debris.RadiusX >= 900 && debris.RadiusY <= 65 || debris.RadiusX <= 65 && debris.RadiusY >= 460)
+            {
+                this.debris = null;
+
+#if DEBUG
+                Debug.WriteLine("Debris Removed from Escape Pod or Mars Base");
+#endif
+            }
+            else
+            {
+                debris.Fill = brownBrush;
+                debrisArray.Add(debris);
+                cvsRoller.Children.Add(debris);
             }
         }
 
@@ -410,6 +484,9 @@ namespace MyoUWP
 
             myCanvas.Children.Add(ellipse);
         }
+
+
+
 
 
 
@@ -449,12 +526,55 @@ namespace MyoUWP
                     myStopwatchTimer.Stop();
                     stopWatch.Stop();
 
+                    _myoHub.MyoConnected -= _myoHub_MyoConnected;
+                    _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+                    _myoChannel.StopListening();
+
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                 }
-            }       
+            }
 
-            CanvasEdgeDetection();
-            WinGame();
+            // CanvasEdgeDetection();
+            // WinGame();
+
+            if (ship.RadiusX <= 0)
+            {
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) + 2);
+            }
+            if (ship.RadiusY <= 0)
+            {
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) + 2);
+            }
+            if (ship.RadiusX + eMyo.Width >= cvsRoller.Width)
+            {
+                eMyo.SetValue(Canvas.LeftProperty, (double)eMyo.GetValue(Canvas.LeftProperty) - 2);
+            }
+            if (ship.RadiusY + eMyo.Height >= cvsRoller.Height)
+            {
+                eMyo.SetValue(Canvas.TopProperty, (double)eMyo.GetValue(Canvas.TopProperty) - 2);
+            }
+
+
+            if (ship.RadiusX >= 930 && ship.RadiusY <= 34)
+            {
+                winGame.Visibility = Visibility.Visible;
+                gameText.Text = "YOU REACHED THE ESCAPE POD!";
+
+                myoMove = false;
+
+                _orientationTimer.Stop();
+                myStopwatchTimer.Stop();
+                stopWatch.Stop();
+
+                _myoHub.MyoConnected -= _myoHub_MyoConnected;
+                _myoHub.MyoDisconnected -= _myoHub_MyoDisconnected;
+                _myoChannel.StopListening();
+
+                debrisArray.Clear();
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+                enterName.Visibility = Visibility.Visible;
+            }
 
             rect1X.Text = ("Rover X : " + ship.RadiusX.ToString());
             rect1Y.Text = ("Rover Y : " + ship.RadiusY.ToString());
